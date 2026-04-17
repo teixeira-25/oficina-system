@@ -110,6 +110,41 @@ class OficinaApp:
         
         return False
     
+    def editar_registro(self, indice, marca, modelo, ano, placa, servico, descricao=""):
+        """
+        Edita um registro existente
+        
+        Args:
+            indice (int): Índice do registro a editar
+            marca (str): Marca do carro
+            modelo (str): Modelo do carro
+            ano (str): Ano do carro
+            placa (str): Placa do carro
+            servico (str): Tipo de serviço
+            descricao (str): Descrição adicional do serviço
+        
+        Returns:
+            bool: True se editado com sucesso, False caso contrário
+        """
+        try:
+            registros = self.obter_registros()
+            if 0 <= indice < len(registros):
+                # Manter a data original, apenas atualizar os dados
+                data_original = registros[indice][6]
+                novo_registro = [marca, modelo, ano, placa, servico, descricao, data_original]
+                registros[indice] = tuple(novo_registro)
+                
+                with open(self.arquivo_csv, 'w', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(["Marca", "Modelo", "Ano", "Placa", "Serviço", "Descrição", "Data"])
+                    writer.writerows(registros)
+                
+                return True
+        except Exception as e:
+            print(f"Erro ao editar registro: {e}")
+        
+        return False
+    
     def obter_registros_por_placa(self, placa):
         """
         Obtém todos os registros de um carro específico

@@ -161,8 +161,124 @@ class InterfaceOficina:
         scrollbar = ttk.Scrollbar(janela_registros, orient=tk.VERTICAL, command=tree.yview)
         tree.configure(yscroll=scrollbar.set)
         
+        # Frame para botões
+        frame_botoes_registros = ttk.Frame(janela_registros)
+        frame_botoes_registros.pack(side=tk.BOTTOM, fill=tk.X, padx=5, pady=5)
+        
+        def editar_selecionado():
+            selecimento = tree.selection()
+            if not selecimento:
+                messagebox.showwarning("Aviso", "Selecione um registro para editar!")
+                return
+            indice = tree.index(selecimento[0])
+            self.editar_registro_dialog(indice, registros[indice], janela_registros)
+        
+        def deletar_selecionado():
+            selecimento = tree.selection()
+            if not selecimento:
+                messagebox.showwarning("Aviso", "Selecione um registro para deletar!")
+                return
+            
+            if messagebox.askyesno("Confirmar", "Tem certeza que deseja deletar este registro?"):
+                indice = tree.index(selecimento[0])
+                if self.app.deletar_registro(indice):
+                    messagebox.showinfo("Sucesso", "Registro deletado com sucesso!")
+                    tree.delete(selecimento[0])
+                else:
+                    messagebox.showerror("Erro", "Não foi possível deletar o registro.")
+        
+        btn_editar = ttk.Button(frame_botoes_registros, text="✏️ Editar", command=editar_selecionado)
+        btn_editar.pack(side=tk.LEFT, padx=5)
+        
+        btn_deletar = ttk.Button(frame_botoes_registros, text="🗑️ Deletar", command=deletar_selecionado)
+        btn_deletar.pack(side=tk.LEFT, padx=5)
+        
         tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    
+    def editar_registro_dialog(self, indice, registro, janela_pai):
+        """Abre um diálogo para editar um registro"""
+        janela_edicao = tk.Toplevel(janela_pai)
+        janela_edicao.title("Editar Registro")
+        janela_edicao.geometry("500x400")
+        janela_edicao.resizable(False, False)
+        
+        # Frame principal
+        frame_edicao = ttk.Frame(janela_edicao, padding="15")
+        frame_edicao.pack(fill=tk.BOTH, expand=True)
+        
+        # Título
+        titulo = ttk.Label(frame_edicao, text="Editar Dados do Registro", 
+                          font=("Arial", 12, "bold"))
+        titulo.pack(pady=(0, 15))
+        
+        # Campos de entrada
+        ttk.Label(frame_edicao, text="Marca:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        entry_marca = ttk.Entry(frame_edicao, width=35)
+        entry_marca.grid(row=0, column=1, sticky=tk.EW, pady=5, padx=10)
+        entry_marca.insert(0, registro[0])
+        
+        ttk.Label(frame_edicao, text="Modelo:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        entry_modelo = ttk.Entry(frame_edicao, width=35)
+        entry_modelo.grid(row=1, column=1, sticky=tk.EW, pady=5, padx=10)
+        entry_modelo.insert(0, registro[1])
+        
+        ttk.Label(frame_edicao, text="Ano:").grid(row=2, column=0, sticky=tk.W, pady=5)
+        entry_ano = ttk.Entry(frame_edicao, width=35)
+        entry_ano.grid(row=2, column=1, sticky=tk.EW, pady=5, padx=10)
+        entry_ano.insert(0, registro[2])
+        
+        ttk.Label(frame_edicao, text="Placa:").grid(row=3, column=0, sticky=tk.W, pady=5)
+        entry_placa = ttk.Entry(frame_edicao, width=35)
+        entry_placa.grid(row=3, column=1, sticky=tk.EW, pady=5, padx=10)
+        entry_placa.insert(0, registro[3])
+        
+        ttk.Label(frame_edicao, text="Serviço:").grid(row=4, column=0, sticky=tk.W, pady=5)
+        combo_servico = ttk.Combobox(frame_edicao, width=32, state="readonly",
+                                    values=self.app.get_tipos_servico())
+        combo_servico.grid(row=4, column=1, sticky=tk.EW, pady=5, padx=10)
+        combo_servico.set(registro[4])
+        
+        ttk.Label(frame_edicao, text="Descrição:").grid(row=5, column=0, sticky=tk.NW, pady=5)
+        text_descricao = tk.Text(frame_edicao, width=37, height=4, font=("Arial", 10))
+        text_descricao.grid(row=5, column=1, sticky=tk.EW, pady=5, padx=10)
+        text_descricao.insert("1.0", registro[5])
+        
+        frame_edicao.columnconfigure(1, weight=1)
+        
+        # Frame de botões
+        frame_botoes_edicao = ttk.Frame(frame_edicao)
+        frame_botoes_edicao.grid(row=6, column=0, columnspan=2, pady=20)
+        
+        def salvar_edicao():
+            marca = entry_marca.get().strip()
+            modelo = entry_modelo.get().strip()
+            ano = entry_ano.get().strip()
+            placa = entry_placa.get().strip()
+            servico = combo_servico.get()
+            descricao = text_descricao.get("1.0", tk.END).strip()
+            
+            if not all([marca, modelo, ano, placa, servico]):
+                messagebox.showwarning("Aviso", "Preencha todos os campos obrigatórios!")
+                return
+            
+            try:
+                int(ano)
+            except ValueError:
+                messagebox.showerror("Erro", "O ano deve ser um número válido!")
+                return
+            
+            if self.app.editar_registro(indice, marca, modelo, ano, placa, servico, descricao):
+                messagebox.showinfo("Sucesso", "Registro editado com sucesso!")
+                janela_edicao.destroy()
+            else:
+                messagebox.showerror("Erro", "Não foi possível editar o registro.")
+        
+        btn_salvar = ttk.Button(frame_botoes_edicao, text="Salvar", command=salvar_edicao)
+        btn_salvar.pack(side=tk.LEFT, padx=5)
+        
+        btn_cancelar = ttk.Button(frame_botoes_edicao, text="Cancelar", command=janela_edicao.destroy)
+        btn_cancelar.pack(side=tk.LEFT, padx=5)
 
 
 def main():
