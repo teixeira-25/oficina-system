@@ -154,7 +154,7 @@ class InterfaceOficina:
             # Janela de edição
             janela = tk.Toplevel(self.root)
             janela.title("Editar Cliente")
-            janela.geometry("400x200")
+            janela.geometry("400x220")
             janela.resizable(False, False)
             
             frame = ttk.Frame(janela, padding="15")
@@ -162,17 +162,21 @@ class InterfaceOficina:
             
             ttk.Label(frame, text="✏️ Editar Cliente", font=("Arial", 12, "bold")).pack(pady=(0, 15))
             
-            ttk.Label(frame, text="Nome:").grid(row=0, column=0, sticky=tk.W, pady=5)
-            entry_nome_ed = ttk.Entry(frame, width=30)
-            entry_nome_ed.grid(row=0, column=1, sticky=tk.EW, pady=5, padx=10)
+            # Frame para Nome
+            frame_nome = ttk.Frame(frame)
+            frame_nome.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_nome, text="Nome:", width=12).pack(side=tk.LEFT)
+            entry_nome_ed = ttk.Entry(frame_nome)
+            entry_nome_ed.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
             entry_nome_ed.insert(0, cliente['nome'])
             
-            ttk.Label(frame, text="Telefone:").grid(row=1, column=0, sticky=tk.W, pady=5)
-            entry_tel_ed = ttk.Entry(frame, width=30)
-            entry_tel_ed.grid(row=1, column=1, sticky=tk.EW, pady=5, padx=10)
+            # Frame para Telefone
+            frame_tel = ttk.Frame(frame)
+            frame_tel.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_tel, text="Telefone:", width=12).pack(side=tk.LEFT)
+            entry_tel_ed = ttk.Entry(frame_tel)
+            entry_tel_ed.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
             entry_tel_ed.insert(0, cliente['telefone'])
-            
-            frame.columnconfigure(1, weight=1)
             
             def salvar():
                 nome = entry_nome_ed.get().strip()
@@ -190,10 +194,10 @@ class InterfaceOficina:
                     messagebox.showerror("Erro", "Erro ao editar cliente!")
             
             frame_btn = ttk.Frame(frame)
-            frame_btn.grid(row=2, column=0, columnspan=2, pady=20)
+            frame_btn.pack(fill=tk.X, pady=(20, 0))
             
-            ttk.Button(frame_btn, text="Salvar", command=salvar).pack(side=tk.LEFT, padx=5)
-            ttk.Button(frame_btn, text="Cancelar", command=janela.destroy).pack(side=tk.LEFT, padx=5)
+            ttk.Button(frame_btn, text="✓ Salvar", command=salvar).pack(side=tk.LEFT, padx=5)
+            ttk.Button(frame_btn, text="✕ Cancelar", command=janela.destroy).pack(side=tk.LEFT, padx=5)
         
         def deletar_cliente():
             selecionado = tree_clientes.selection()
@@ -360,7 +364,7 @@ class InterfaceOficina:
             # Janela de edição
             janela = tk.Toplevel(self.root)
             janela.title("Editar Carro")
-            janela.geometry("450x280")
+            janela.geometry("450x300")
             janela.resizable(False, False)
             
             frame = ttk.Frame(janela, padding="15")
@@ -368,27 +372,37 @@ class InterfaceOficina:
             
             ttk.Label(frame, text="✏️ Editar Carro", font=("Arial", 12, "bold")).pack(pady=(0, 15))
             
-            ttk.Label(frame, text="Marca:").grid(row=0, column=0, sticky=tk.W, pady=5)
-            entry_marca_ed = ttk.Entry(frame, width=35)
-            entry_marca_ed.grid(row=0, column=1, sticky=tk.EW, pady=5, padx=10)
+            # Frame para Marca
+            frame_marca = ttk.Frame(frame)
+            frame_marca.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_marca, text="Marca:", width=12).pack(side=tk.LEFT)
+            entry_marca_ed = ttk.Entry(frame_marca)
+            entry_marca_ed.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
             entry_marca_ed.insert(0, carro['marca'])
             
-            ttk.Label(frame, text="Modelo:").grid(row=1, column=0, sticky=tk.W, pady=5)
-            entry_modelo_ed = ttk.Entry(frame, width=35)
-            entry_modelo_ed.grid(row=1, column=1, sticky=tk.EW, pady=5, padx=10)
+            # Frame para Modelo
+            frame_modelo = ttk.Frame(frame)
+            frame_modelo.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_modelo, text="Modelo:", width=12).pack(side=tk.LEFT)
+            entry_modelo_ed = ttk.Entry(frame_modelo)
+            entry_modelo_ed.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
             entry_modelo_ed.insert(0, carro['modelo'])
             
-            ttk.Label(frame, text="Ano:").grid(row=2, column=0, sticky=tk.W, pady=5)
-            entry_ano_ed = ttk.Entry(frame, width=35)
-            entry_ano_ed.grid(row=2, column=1, sticky=tk.EW, pady=5, padx=10)
+            # Frame para Ano
+            frame_ano = ttk.Frame(frame)
+            frame_ano.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_ano, text="Ano:", width=12).pack(side=tk.LEFT)
+            entry_ano_ed = ttk.Entry(frame_ano, width=10)
+            entry_ano_ed.pack(side=tk.LEFT, padx=5)
             entry_ano_ed.insert(0, carro['ano'])
             
-            ttk.Label(frame, text="Placa:").grid(row=3, column=0, sticky=tk.W, pady=5)
-            entry_placa_ed = ttk.Entry(frame, width=35)
-            entry_placa_ed.grid(row=3, column=1, sticky=tk.EW, pady=5, padx=10)
+            # Frame para Placa
+            frame_placa = ttk.Frame(frame)
+            frame_placa.pack(fill=tk.X, pady=5)
+            ttk.Label(frame_placa, text="Placa:", width=12).pack(side=tk.LEFT)
+            entry_placa_ed = ttk.Entry(frame_placa, width=15)
+            entry_placa_ed.pack(side=tk.LEFT, padx=5)
             entry_placa_ed.insert(0, carro['placa'])
-            
-            frame.columnconfigure(1, weight=1)
             
             def salvar():
                 marca = entry_marca_ed.get().strip()
@@ -415,10 +429,10 @@ class InterfaceOficina:
                     messagebox.showerror("Erro", "Erro ao editar!")
             
             frame_btn = ttk.Frame(frame)
-            frame_btn.grid(row=4, column=0, columnspan=2, pady=20)
+            frame_btn.pack(fill=tk.X, pady=(20, 0))
             
-            ttk.Button(frame_btn, text="Salvar", command=salvar).pack(side=tk.LEFT, padx=5)
-            ttk.Button(frame_btn, text="Cancelar", command=janela.destroy).pack(side=tk.LEFT, padx=5)
+            ttk.Button(frame_btn, text="✓ Salvar", command=salvar).pack(side=tk.LEFT, padx=5)
+            ttk.Button(frame_btn, text="✕ Cancelar", command=janela.destroy).pack(side=tk.LEFT, padx=5)
         
         def deletar_carro():
             selecionado = tree_carros.selection()
