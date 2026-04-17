@@ -363,7 +363,7 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
         valor_unitario = col_unit.number_input("Valor Unitário", min_value=0.0, step=0.01, value=float(registro["Valor Unitario"] or 0.0), key=f"peca_valor_{editor_state_key}_{indice}", label_visibility="collapsed")
         total = round(quantidade * valor_unitario, 2)
         col_total.markdown("<div style='height: 0.2rem;'></div>", unsafe_allow_html=True)
-        col_total.markdown(f"<div style='font-weight: 600; padding-top: 0.25rem;'>{formatar_moeda(total)}</div>", unsafe_allow_html=True)
+        col_total.markdown(f"<div style='font-weight: 600; padding-top: 0.00rem;'>{formatar_moeda(total)}</div>", unsafe_allow_html=True)
 
         registros_atuais[indice] = {
             "Peca": nome,

@@ -13,9 +13,29 @@
         "servicos": [
           {
             "id": "5692e8e1",
-            "servico": "Alinhamento",
+            "servico": "Troca de Óleo",
             "descricao": "Cliente solicitou verificacao geral.",
-            "data": "08/04/2026 18:38"
+            "data": "08/04/2026 18:38",
+            "pecas": [
+              {
+                "nome": "FIlto de oleo",
+                "preco": 20.0,
+                "quantidade": 1,
+                "total": 20.0
+              },
+              {
+                "nome": "Oleo",
+                "preco": 25.0,
+                "quantidade": 4,
+                "total": 100.0
+              },
+              {
+                "nome": "Tampa De Reservatório",
+                "preco": 25.0,
+                "quantidade": 1,
+                "total": 25.0
+              }
+            ]
           },
           {
             "id": "387bdc8b",
