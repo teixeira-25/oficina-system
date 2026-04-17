@@ -561,7 +561,7 @@ class InterfaceOficina:
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
         tree_servicos = ttk.Treeview(frame_tree, columns=("Serviço", "Descrição", "Data"), 
-                                    height=18, show="tree headings", yscrollcommand=scrollbar.set)
+                                    height=10, show="tree headings", yscrollcommand=scrollbar.set)
         tree_servicos.column("#0", width=0, stretch=tk.NO)
         tree_servicos.column("Serviço", anchor=tk.W, width=200)
         tree_servicos.column("Descrição", anchor=tk.W, width=350)
@@ -580,6 +580,61 @@ class InterfaceOficina:
         frame_botoes = ttk.Frame(frame_lista)
         frame_botoes.pack(fill=tk.X, pady=(10, 0))
         
+        def editar_servico():
+            selecionado = tree_servicos.selection()
+            if not selecionado:
+                messagebox.showwarning("Aviso", "Selecione um serviço!")
+                return
+            
+            servico_id = selecionado[0]
+            servicos = self.gerenciador.obter_servicos_carro(self.cliente_atual, self.carro_atual)
+            servico_atual = None
+            for s in servicos:
+                if s['id'] == servico_id:
+                    servico_atual = s
+                    break
+            
+            if not servico_atual:
+                messagebox.showerror("Erro", "Serviço não encontrado!")
+                return
+            
+            # Criar janela modal para editar
+            janela_edit = tk.Toplevel(self.root)
+            janela_edit.title("Editar Serviço")
+            janela_edit.geometry("500x300")
+            janela_edit.resizable(False, False)
+            
+            ttk.Label(janela_edit, text="Tipo de Serviço:", font=("Arial", 10)).pack(padx=10, pady=(10, 0), anchor=tk.W)
+            combo_servico = ttk.Combobox(janela_edit, width=50, state="readonly",
+                                        values=self.gerenciador.get_tipos_servico())
+            combo_servico.set(servico_atual['servico'])
+            combo_servico.pack(padx=10, pady=(0, 10))
+            
+            ttk.Label(janela_edit, text="Descrição:", font=("Arial", 10)).pack(padx=10, pady=(0, 0), anchor=tk.W)
+            text_desc = tk.Text(janela_edit, width=50, height=8, font=("Arial", 10))
+            text_desc.pack(padx=10, pady=(0, 10))
+            text_desc.insert("1.0", servico_atual['descricao'])
+            
+            def salvar_edicao():
+                novo_servico = combo_servico.get()
+                nova_desc = text_desc.get("1.0", tk.END).strip()
+                
+                if not novo_servico:
+                    messagebox.showwarning("Aviso", "Selecione um tipo de serviço!")
+                    return
+                
+                if self.gerenciador.editar_servico(self.cliente_atual, self.carro_atual, servico_id, novo_servico, nova_desc):
+                    messagebox.showinfo("Sucesso", "Serviço atualizado!")
+                    self.atualizar_lista_servicos(tree_servicos)
+                    janela_edit.destroy()
+                else:
+                    messagebox.showerror("Erro", "Erro ao atualizar serviço!")
+            
+            frame_botoes_edit = ttk.Frame(janela_edit)
+            frame_botoes_edit.pack(fill=tk.X, padx=10, pady=10)
+            ttk.Button(frame_botoes_edit, text="✓ Salvar", command=salvar_edicao).pack(side=tk.LEFT, padx=2)
+            ttk.Button(frame_botoes_edit, text="✕ Cancelar", command=janela_edit.destroy).pack(side=tk.LEFT, padx=2)
+        
         def deletar_servico():
             selecionado = tree_servicos.selection()
             if not selecionado:
@@ -594,6 +649,7 @@ class InterfaceOficina:
                 else:
                     messagebox.showerror("Erro", "Erro ao deletar!")
         
+        ttk.Button(frame_botoes, text="✎ Editar", command=editar_servico).pack(side=tk.LEFT, padx=2)
         ttk.Button(frame_botoes, text="🗑️ Deletar", command=deletar_servico).pack(side=tk.LEFT, padx=2)
     
     def atualizar_lista_servicos(self, tree):
