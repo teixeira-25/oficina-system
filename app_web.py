@@ -149,6 +149,69 @@ st.markdown("""
     .scroll-container::-webkit-scrollbar-thumb:hover {
         background: var(--primary-light);
     }
+    
+    /* Dashboard */
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        border-radius: 0.75rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+        color: white;
+    }
+    
+    .dashboard-logo {
+        font-size: 1.875rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .dashboard-clock {
+        font-size: 1.5rem;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+    
+    /* Menu Cards */
+    .menu-card {
+        background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+        border: 2px solid var(--neutral-border);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .menu-card:hover {
+        border-color: var(--primary-light);
+        box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+        transform: translateY(-4px);
+    }
+    
+    .menu-card-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .menu-card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+    
+    .menu-card-desc {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -161,11 +224,16 @@ gerenciador = get_gerenciador()
 
 # Inicializar estado de navegação
 if "pagina_atual" not in st.session_state:
-    st.session_state.pagina_atual = "clientes"
+    st.session_state.pagina_atual = "dashboard"
 if "cliente_atual" not in st.session_state:
     st.session_state.cliente_atual = None
 if "carro_atual" not in st.session_state:
     st.session_state.carro_atual = None
+
+# Função para voltar à dashboard
+def voltar_dashboard():
+    st.session_state.pagina_atual = "dashboard"
+    st.rerun()
 
 # Função para voltar
 def voltar():
@@ -175,32 +243,129 @@ def voltar():
         st.session_state.pagina_atual = "clientes"
         st.session_state.cliente_atual = None
 
-# ==================== BARRA DE NAVEGAÇÃO ====================
-col_nav1, col_nav2, col_nav3, col_nav4 = st.columns(4)
+# Função para obter hora atual
+def obter_hora_digital():
+    from datetime import datetime
+    return datetime.now().strftime("%H:%M:%S")
 
-with col_nav1:
-    if st.button("👥 Clientes", use_container_width=True, type="primary" if st.session_state.pagina_atual == "clientes" else "secondary"):
-        st.session_state.pagina_atual = "clientes"
-        st.session_state.cliente_atual = None
-        st.session_state.carro_atual = None
-        st.rerun()
+# ==================== PÁGINA 0: DASHBOARD ====================
+if st.session_state.pagina_atual == "dashboard":
+    # Header com logo e relógio
+    st.markdown(f"""
+    <div class="dashboard-header">
+        <div class="dashboard-logo">
+        🔧 SisOficina
+        </div>
+        <div class="dashboard-clock" id="clock">{obter_hora_digital()}</div>
+    </div>
+    
+    <script>
+        function atualizarRelogio() {{
+            const elementos = document.querySelectorAll('#clock');
+            elementos.forEach(el => {{
+                const agora = new Date();
+                const tempo = agora.getHours().toString().padStart(2, '0') + ':' +
+                             agora.getMinutes().toString().padStart(2, '0') + ':' +
+                             agora.getSeconds().toString().padStart(2, '0');
+                el.textContent = tempo;
+            }});
+        }}
+        setInterval(atualizarRelogio, 1000);
+    </script>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("")
+    st.markdown("### 📋 O que você deseja fazer?")
+    st.markdown("---")
+    
+    # Menu principal em grid
+    col1, col2 = st.columns(2)
+    col3, col4 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div class="menu-card" onclick="document.querySelector('[data-testid=stButton]').click()">
+            <div class="menu-card-icon">👥</div>
+            <div class="menu-card-title">Registro de Clientes</div>
+            <div class="menu-card-desc">Gerenciar clientes, carros e serviços</div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("Entrar no Registro", key="btn_clientes_dash", use_container_width=True, type="primary"):
+            st.session_state.pagina_atual = "clientes"
+            st.session_state.cliente_atual = None
+            st.session_state.carro_atual = None
+            st.rerun()
+    
+    with col2:
+        st.markdown("""
+        <div class="menu-card">
+            <div class="menu-card-icon">🕐</div>
+            <div class="menu-card-title">Histórico de Serviços</div>
+            <div class="menu-card-desc">Visualizar todos os serviços realizados</div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("Ver Histórico", key="btn_historico_dash", use_container_width=True):
+            st.session_state.pagina_atual = "historico"
+            st.rerun()
+    
+    with col3:
+        st.markdown("""
+        <div class="menu-card">
+            <div class="menu-card-icon">📊</div>
+            <div class="menu-card-title">Relatórios Mensais</div>
+            <div class="menu-card-desc">Análise mensal com gráficos e estatísticas</div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("Ver Relatórios", key="btn_relatorios_dash", use_container_width=True):
+            st.session_state.pagina_atual = "relatorios"
+            st.rerun()
+    
+    with col4:
+        st.markdown("""
+        <div class="menu-card">
+            <div class="menu-card-icon">⚙️</div>
+            <div class="menu-card-title">Configurações</div>
+            <div class="menu-card-desc">Informações do sistema</div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("Acessar Configurações", key="btn_config_dash", use_container_width=True):
+            st.session_state.pagina_atual = "configuracoes"
+            st.rerun()
+    
+    st.divider()
+    st.markdown("<p style='text-align: center; color: #6b7280; font-size: 0.875rem;'>Sistema de Gerenciamento de Oficina • 2026</p>", unsafe_allow_html=True)
 
-with col_nav2:
-    if st.button("🕐 Histórico", use_container_width=True, type="primary" if st.session_state.pagina_atual == "historico" else "secondary"):
-        st.session_state.pagina_atual = "historico"
-        st.rerun()
+# ==================== BARRA DE NAVEGAÇÃO (Para outras páginas) ====================
+elif st.session_state.pagina_atual != "dashboard":
+    col_nav_home, col_nav1, col_nav2, col_nav3, col_nav4 = st.columns([0.5, 1, 1, 1, 1])
+    
+    with col_nav_home:
+        if st.button("🏠", use_container_width=True, help="Voltar ao menu principal"):
+            voltar_dashboard()
+    
+    with col_nav1:
+        if st.button("👥 Clientes", use_container_width=True, type="primary" if st.session_state.pagina_atual == "clientes" else "secondary"):
+            st.session_state.pagina_atual = "clientes"
+            st.session_state.cliente_atual = None
+            st.session_state.carro_atual = None
+            st.rerun()
 
-with col_nav3:
-    if st.button("📊 Relatórios", use_container_width=True, type="primary" if st.session_state.pagina_atual == "relatorios" else "secondary"):
-        st.session_state.pagina_atual = "relatorios"
-        st.rerun()
+    with col_nav2:
+        if st.button("🕐 Histórico", use_container_width=True, type="primary" if st.session_state.pagina_atual == "historico" else "secondary"):
+            st.session_state.pagina_atual = "historico"
+            st.rerun()
 
-with col_nav4:
-    if st.button("⚙️ Configurações", use_container_width=True, type="secondary"):
-        st.session_state.pagina_atual = "configuracoes"
-        st.rerun()
+    with col_nav3:
+        if st.button("📊 Relatórios", use_container_width=True, type="primary" if st.session_state.pagina_atual == "relatorios" else "secondary"):
+            st.session_state.pagina_atual = "relatorios"
+            st.rerun()
 
-st.divider()
+    with col_nav4:
+        if st.button("⚙️ Configurações", use_container_width=True, type="secondary"):
+            st.session_state.pagina_atual = "configuracoes"
+            st.rerun()
+    
+    st.divider()
 
 # ==================== PÁGINA 1: CLIENTES ====================
 if st.session_state.pagina_atual == "clientes":
