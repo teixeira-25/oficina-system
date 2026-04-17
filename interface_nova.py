@@ -6,8 +6,8 @@ class InterfaceOficina:
     def __init__(self, root):
         self.root = root
         self.root.title("Sistema de Oficina - Gerenciamento de Clientes")
-        self.root.geometry("900x700")
-        self.root.resizable(False, False)
+        self.root.geometry("900x800")
+        self.root.resizable(True, True)
         
         self.gerenciador = GerenciadorClientes()
         
@@ -123,7 +123,7 @@ class InterfaceOficina:
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
         tree_clientes = ttk.Treeview(frame_tree, columns=("Nome", "Telefone", "Carros"), 
-                                    height=18, show="tree headings", yscrollcommand=scrollbar.set)
+                                    height=14, show="tree headings", yscrollcommand=scrollbar.set)
         tree_clientes.column("#0", width=0, stretch=tk.NO)
         tree_clientes.column("Nome", anchor=tk.W, width=300)
         tree_clientes.column("Telefone", anchor=tk.CENTER, width=150)
@@ -307,7 +307,7 @@ class InterfaceOficina:
         
         # Frame para lista de carros
         frame_lista = ttk.LabelFrame(self.frame_conteudo, text="Carros Cadastrados", padding="10")
-        frame_lista.pack(fill=tk.BOTH, expand=True, padx=0, pady=0)
+        frame_lista.pack(fill=tk.BOTH, expand=True, padx=0, pady=(5, 0))
         
         # Treeview
         frame_tree = ttk.Frame(frame_lista)
@@ -317,7 +317,7 @@ class InterfaceOficina:
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
         tree_carros = ttk.Treeview(frame_tree, columns=("Marca", "Modelo", "Ano", "Placa", "Serviços"), 
-                                  height=16, show="tree headings", yscrollcommand=scrollbar.set)
+                                  height=12, show="tree headings", yscrollcommand=scrollbar.set)
         tree_carros.column("#0", width=0, stretch=tk.NO)
         tree_carros.column("Marca", anchor=tk.W, width=120)
         tree_carros.column("Modelo", anchor=tk.W, width=120)
