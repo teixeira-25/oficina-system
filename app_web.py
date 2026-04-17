@@ -340,6 +340,10 @@ def sanitizar_linhas_pecas_editor(registros):
     return linhas_preenchidas
 
 
+def existe_linha_vazia(registros):
+    return any(not str(registro.get("Peca", "")).strip() for registro in registros)
+
+
 @st.dialog("Serviço", width="large")
 def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     tipos_servico = gerenciador.get_tipos_servico()
@@ -364,9 +368,25 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     indice_tipo = tipos_servico.index(tipo_inicial) if tipo_inicial in tipos_servico else 0
 
     tipo_servico = st.selectbox("Tipo de Serviço", tipos_servico, index=indice_tipo)
+    col_add, col_remove = st.columns(2)
+    if col_add.button("＋ Adicionar peça", use_container_width=True):
+        registros_atuais = st.session_state[editor_state_key]
+        if not existe_linha_vazia(registros_atuais):
+            registros_atuais.append({"Peca": "", "Quantidade": 1, "Valor Unitario": 0.0, "Total": 0.0})
+            st.session_state[editor_state_key] = registros_atuais
+        st.rerun()
+
+    if col_remove.button("－ Remover última", use_container_width=True):
+        registros_atuais = sanitizar_linhas_pecas_editor(st.session_state[editor_state_key])
+        preenchidas = [registro for registro in registros_atuais if str(registro.get("Peca", "")).strip()]
+        if preenchidas:
+            preenchidas.pop()
+        st.session_state[editor_state_key] = sanitizar_linhas_pecas_editor(preenchidas)
+        st.rerun()
+
     pecas_editadas = st.data_editor(
         st.session_state[editor_state_key],
-        num_rows="dynamic",
+        num_rows="fixed",
         use_container_width=True,
         hide_index=True,
         disabled=["Total"],
@@ -380,11 +400,6 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     )
     registros_editor = pecas_editadas.to_dict("records") if hasattr(pecas_editadas, "to_dict") else pecas_editadas
     registros_sanitizados = sanitizar_linhas_pecas_editor(registros_editor)
-
-    if registros_sanitizados != registros_editor:
-        st.session_state[editor_state_key] = registros_sanitizados
-        st.session_state.pop(editor_widget_key, None)
-        st.rerun()
 
     st.session_state[editor_state_key] = registros_sanitizados
     pecas = normalizar_pecas_editor(pecas_editadas)
