@@ -7,23 +7,25 @@ st.set_page_config(page_title="Sistema de Oficina", layout="wide", initial_sideb
 # CSS Customizado para Design Profissional
 st.markdown("""
 <style>
-    /* Cores Profissionais */
+    /* Cores Red Car */
     :root {
-        --primary-color: #1e40af;
-        --primary-light: #3b82f6;
+        --primary-color: #dc2626;
+        --primary-light: #ef4444;
         --danger-color: #dc2626;
         --success-color: #16a34a;
         --warning-color: #f59e0b;
-        --neutral-light: #f9fafb;
-        --neutral-border: #e5e7eb;
-        --text-primary: #111827;
+        --neutral-light: #ffffff;
+        --neutral-border: #d1d5db;
+        --gray-primary: #666666;
+        --gray-secondary: #757575;
+        --text-primary: #1f2937;
         --text-secondary: #6b7280;
     }
     
     /* Elementos Principais */
     .main {
         padding: 2rem;
-        background-color: #f9fafb;
+        background-color: #ffffff;
     }
     
     h1, h2, h3 {
@@ -40,22 +42,22 @@ st.markdown("""
     
     /* Cards */
     .stContainer {
-        border: 1px solid var(--neutral-border);
-        border-radius: 0.5rem;
+        border: 2px solid var(--neutral-border);
+        border-radius: 0px;
         padding: 1rem;
         background: white;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transition: all 0.2s ease;
     }
     
     .stContainer:hover {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border-color: var(--primary-light);
+        box-shadow: 0 6px 12px rgba(220, 38, 38, 0.15);
+        border-color: var(--primary-color);
     }
     
     /* Botões */
     .stButton>button {
-        border-radius: 0.375rem;
+        border-radius: 0px;
         font-weight: 500;
         transition: all 0.2s ease;
         border: none;
@@ -77,8 +79,8 @@ st.markdown("""
     .stTextInput>div>div>input,
     .stSelectbox>div>div>select,
     .stTextArea>div>div>textarea {
-        border-radius: 0.375rem;
-        border: 1px solid var(--neutral-border);
+        border-radius: 0px;
+        border: 2px solid var(--neutral-border);
         padding: 0.5rem 0.75rem;
         font-size: 0.875rem;
         transition: all 0.2s ease;
@@ -87,13 +89,13 @@ st.markdown("""
     .stTextInput>div>div>input:focus,
     .stSelectbox>div>div>select:focus,
     .stTextArea>div>div>textarea:focus {
-        border-color: var(--primary-light);
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
     }
     
-    /* Alerts */
+    /* Alert */
     .stAlert {
-        border-radius: 0.375rem;
+        border-radius: 0px;
         border-left: 4px solid;
     }
     
@@ -115,9 +117,9 @@ st.markdown("""
     
     /* Expander */
     .streamlit-expanderHeader {
-        border-radius: 0.375rem;
+        border-radius: 0px;
         background-color: var(--neutral-light);
-        border: 1px solid var(--neutral-border);
+        border: 2px solid var(--neutral-border);
     }
     
     .streamlit-expanderHeader:hover {
@@ -156,11 +158,12 @@ st.markdown("""
         justify-content: space-between;
         align-items: center;
         padding: 1.5rem 2rem;
-        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-        border-radius: 0.75rem;
+        background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+        border-radius: 0px;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
         color: white;
+        border: 3px solid #991b1b;
     }
     
     .dashboard-logo {
@@ -180,20 +183,21 @@ st.markdown("""
     
     /* Menu Cards */
     .menu-card {
-        background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
-        border: 2px solid var(--neutral-border);
-        border-radius: 0.75rem;
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+        border: 3px solid var(--gray-primary);
+        border-radius: 0px;
         padding: 2rem;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
     .menu-card:hover {
-        border-color: var(--primary-light);
-        box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
+        border-color: var(--primary-color);
+        box-shadow: 0 8px 16px rgba(220, 38, 38, 0.2);
         transform: translateY(-4px);
+        background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
     }
     
     .menu-card-icon {
@@ -251,25 +255,25 @@ def obter_hora_digital():
 # ==================== PÁGINA 0: DASHBOARD ====================
 if st.session_state.pagina_atual == "dashboard":
     # Header com logo e relógio
-    st.markdown(f"""
+    st.markdown("""
     <div class="dashboard-header">
         <div class="dashboard-logo">
-        🔧 SisOficina
+        🚗 RED CAR
         </div>
-        <div class="dashboard-clock" id="clock">{obter_hora_digital()}</div>
+        <div class="dashboard-clock" id="clock">00:00:00</div>
     </div>
     
     <script>
-        function atualizarRelogio() {{
-            const elementos = document.querySelectorAll('#clock');
-            elementos.forEach(el => {{
-                const agora = new Date();
-                const tempo = agora.getHours().toString().padStart(2, '0') + ':' +
-                             agora.getMinutes().toString().padStart(2, '0') + ':' +
-                             agora.getSeconds().toString().padStart(2, '0');
-                el.textContent = tempo;
-            }});
-        }}
+        function atualizarRelogio() {
+            const agora = new Date();
+            const tempo = agora.getHours().toString().padStart(2, '0') + ':' +
+                         agora.getMinutes().toString().padStart(2, '0') + ':' +
+                         agora.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = tempo;
+        }
+        // Atualizar imediatamente
+        atualizarRelogio();
+        // Atualizar a cada segundo
         setInterval(atualizarRelogio, 1000);
     </script>
     """, unsafe_allow_html=True)
@@ -333,7 +337,7 @@ if st.session_state.pagina_atual == "dashboard":
             st.rerun()
     
     st.divider()
-    st.markdown("<p style='text-align: center; color: #6b7280; font-size: 0.875rem;'>Sistema de Gerenciamento de Oficina • 2026</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #666666; font-size: 0.875rem; font-weight: bold;'>🚗 RED CAR • Sistema de Gerenciamento • 2026</p>", unsafe_allow_html=True)
 
 # ==================== BARRA DE NAVEGAÇÃO (Para outras páginas) ====================
 elif st.session_state.pagina_atual != "dashboard":
@@ -884,8 +888,8 @@ elif st.session_state.pagina_atual == "configuracoes":
 # Footer
 st.divider()
 st.markdown("""
-<div style='text-align: center; color: #6b7280; font-size: 0.875rem; margin-top: 2rem;'>
-    <p>🔧 <strong>Sistema de Gerenciamento de Oficina</strong> | Desenvolvido com ❤️</p>
+<div style='text-align: center; color: #666666; font-size: 0.875rem; margin-top: 2rem;'>
+    <p><strong style='color: #dc2626;'>🚗 RED CAR</strong> • Sistema de Gerenciamento | Desenvolvido com ❤️</p>
     <p style='margin-top: 0.5rem;'><em>Versão Web • 2026</em></p>
 </div>
 """, unsafe_allow_html=True)
