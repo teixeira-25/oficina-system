@@ -357,8 +357,11 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
         quantidade = col_qtd.number_input("Quantidade", min_value=1, step=1, value=int(registro["Quantidade"] or 1), key=f"peca_qtd_{editor_state_key}_{indice}", label_visibility="collapsed")
         valor_unitario = col_unit.number_input("Valor Unitário", min_value=0.0, step=0.01, value=float(registro["Valor Unitario"] or 0.0), key=f"peca_valor_{editor_state_key}_{indice}", label_visibility="collapsed")
         total = round(quantidade * valor_unitario, 2)
-        col_total.caption("Total")
-        col_total.markdown(f"**{formatar_moeda(total)}**")
+        col_total.markdown("<div style='height: 0.35rem;'></div>", unsafe_allow_html=True)
+        col_total.markdown(
+            f"<div style='padding: 0.42rem 0.75rem; border: 2px solid #d1d5db; font-weight: 600; line-height: 1.2;'>{formatar_moeda(total)}</div>",
+            unsafe_allow_html=True,
+        )
 
         registros_atuais[indice] = {
             "Peca": nome,
