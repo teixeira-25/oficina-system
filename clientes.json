@@ -1,59 +1,5046 @@
 [
   {
-    "id": "f437166b",
-    "nome": "João Silva",
-    "telefone": "11999999999",
+    "id": "7b571c9e",
+    "nome": "André Souza Teste 01",
+    "telefone": "(85) 9 00010037",
     "carros": [
       {
-        "id": "9e8d2309",
-        "marca": "Toyota",
-        "modelo": "Corolla",
-        "ano": "2020",
-        "placa": "ABC-1234",
+        "id": "e97d3d0f",
+        "marca": "Fiat",
+        "modelo": "Mobi",
+        "ano": "2015",
+        "placa": "BEM1013",
         "servicos": [
           {
-            "id": "07a90143",
+            "id": "5692e8e1",
+            "servico": "Alinhamento",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "08/04/2026 18:38"
+          },
+          {
+            "id": "387bdc8b",
             "servico": "Troca de Óleo",
-            "descricao": "Troca feita",
-            "data": "16/04/2026 21:30"
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "10/04/2026 09:37"
+          },
+          {
+            "id": "309ca668",
+            "servico": "Ar Condicionado",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "10/04/2026 17:23"
+          },
+          {
+            "id": "f5e1e500",
+            "servico": "Outro",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/04/2026 14:03"
           }
         ],
-        "data_adicao": "16/04/2026 21:30"
+        "data_adicao": "15/04/2026 13:09"
       },
       {
-        "id": "de9ca6a7",
-        "marca": "Honda",
-        "modelo": "Civic",
+        "id": "ffca3064",
+        "marca": "Ford",
+        "modelo": "Fiesta",
         "ano": "2019",
-        "placa": "XYZ-5678",
+        "placa": "BFN1124",
         "servicos": [
           {
-            "id": "15f5b7a6",
+            "id": "486a74c9",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "03/04/2026 15:11"
+          },
+          {
+            "id": "fc92eca2",
+            "servico": "Reparo de Freios",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "04/04/2026 23:45"
+          },
+          {
+            "id": "c3f29ed4",
+            "servico": "Revisão Geral",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "06/04/2026 10:04"
+          },
+          {
+            "id": "d612c63f",
+            "servico": "Reparo do Motor",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "06/04/2026 23:56"
+          },
+          {
+            "id": "98b45109",
             "servico": "Alinhamento",
-            "descricao": "",
-            "data": "16/04/2026 21:30"
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "08/04/2026 08:45"
+          },
+          {
+            "id": "ce56a35c",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "09/04/2026 03:41"
+          },
+          {
+            "id": "9479169e",
+            "servico": "Troca de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "10/04/2026 06:06"
           }
         ],
-        "data_adicao": "16/04/2026 21:30"
+        "data_adicao": "15/04/2026 00:14"
       }
     ],
-    "data_criacao": "16/04/2026 21:30"
+    "data_criacao": "16/04/2026 05:05"
   },
   {
-    "id": "747fb9be",
-    "nome": "Maria Santos",
-    "telefone": "21988888888",
+    "id": "a04b39b0",
+    "nome": "Pedro Santos Teste 02",
+    "telefone": "(85) 9 00020074",
     "carros": [
       {
-        "id": "da9582b7",
+        "id": "2c935f15",
+        "marca": "Chevrolet",
+        "modelo": "Cruze",
+        "ano": "2013",
+        "placa": "CFN2026",
+        "servicos": [
+          {
+            "id": "da6617f0",
+            "servico": "Outro",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "03/04/2026 16:10"
+          },
+          {
+            "id": "e98f54a5",
+            "servico": "Revisão Geral",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "04/04/2026 14:33"
+          },
+          {
+            "id": "e62810c1",
+            "servico": "Suspensão",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "06/04/2026 06:27"
+          },
+          {
+            "id": "2bbbc72a",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "07/04/2026 03:21"
+          }
+        ],
+        "data_adicao": "15/04/2026 06:16"
+      },
+      {
+        "id": "35758e42",
+        "marca": "Chevrolet",
+        "modelo": "Tracker",
+        "ano": "2019",
+        "placa": "CGO2137",
+        "servicos": [
+          {
+            "id": "d646658a",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "31/03/2026 07:35"
+          },
+          {
+            "id": "be09e564",
+            "servico": "Reparo de Freios",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "31/03/2026 15:21"
+          },
+          {
+            "id": "5fb1096d",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "02/04/2026 05:09"
+          },
+          {
+            "id": "455a070d",
+            "servico": "Revisão Geral",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "03/04/2026 03:46"
+          },
+          {
+            "id": "30916609",
+            "servico": "Troca de Óleo",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "04/04/2026 09:59"
+          },
+          {
+            "id": "96bc2f70",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "04/04/2026 14:30"
+          }
+        ],
+        "data_adicao": "13/04/2026 12:15"
+      },
+      {
+        "id": "62458f5b",
+        "marca": "Fiat",
+        "modelo": "Strada",
+        "ano": "2021",
+        "placa": "CHP2248",
+        "servicos": [
+          {
+            "id": "90ae81b1",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "28/03/2026 17:55"
+          },
+          {
+            "id": "1d901fa9",
+            "servico": "Reparo do Motor",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "29/03/2026 16:21"
+          },
+          {
+            "id": "95854d79",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "30/03/2026 16:46"
+          },
+          {
+            "id": "49b136a5",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "31/03/2026 15:40"
+          },
+          {
+            "id": "7e5ed2cb",
+            "servico": "Reparo de Freios",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "02/04/2026 09:55"
+          },
+          {
+            "id": "f2ac9155",
+            "servico": "Revisão Geral",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "03/04/2026 07:18"
+          }
+        ],
+        "data_adicao": "13/04/2026 11:07"
+      },
+      {
+        "id": "52b82f14",
+        "marca": "Honda",
+        "modelo": "Fit",
+        "ano": "2024",
+        "placa": "CIQ2359",
+        "servicos": [
+          {
+            "id": "db7db69c",
+            "servico": "Revisão Geral",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "25/03/2026 04:47"
+          },
+          {
+            "id": "4f9c8b79",
+            "servico": "Reparo de Freios",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "26/03/2026 07:51"
+          },
+          {
+            "id": "b5d2c54d",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "26/03/2026 16:30"
+          },
+          {
+            "id": "963798b0",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "28/03/2026 07:27"
+          },
+          {
+            "id": "a6e5247c",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "28/03/2026 15:31"
+          },
+          {
+            "id": "0ea09a91",
+            "servico": "Outro",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "29/03/2026 19:02"
+          },
+          {
+            "id": "206f36e7",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "31/03/2026 11:04"
+          },
+          {
+            "id": "0fe9d7d9",
+            "servico": "Revisão Geral",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "01/04/2026 02:23"
+          }
+        ],
+        "data_adicao": "12/04/2026 03:54"
+      }
+    ],
+    "data_criacao": "14/04/2026 17:45"
+  },
+  {
+    "id": "0e62f82c",
+    "nome": "Pedro Dias Teste 03",
+    "telefone": "(85) 90003-0111",
+    "carros": [
+      {
+        "id": "1a83192f",
+        "marca": "Volkswagen",
+        "modelo": "Polo",
+        "ano": "2022",
+        "placa": "DGO3039",
+        "servicos": [
+          {
+            "id": "99427d4e",
+            "servico": "Alinhamento",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "28/03/2026 01:49"
+          },
+          {
+            "id": "91526622",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "29/03/2026 08:35"
+          },
+          {
+            "id": "31f45bf4",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "29/03/2026 20:53"
+          },
+          {
+            "id": "b0c2bb9c",
+            "servico": "Ar Condicionado",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "30/03/2026 13:31"
+          },
+          {
+            "id": "3a78dc52",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "01/04/2026 04:51"
+          },
+          {
+            "id": "30cc2409",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "02/04/2026 03:17"
+          }
+        ],
+        "data_adicao": "13/04/2026 17:15"
+      },
+      {
+        "id": "8ce7f5b2",
+        "marca": "Chevrolet",
+        "modelo": "Tracker",
+        "ano": "2012",
+        "placa": "DHP3140",
+        "servicos": [
+          {
+            "id": "66174f54",
+            "servico": "Alinhamento",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "28/03/2026 14:19"
+          },
+          {
+            "id": "12a2c68f",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "30/03/2026 09:18"
+          },
+          {
+            "id": "8923c331",
+            "servico": "Outro",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "31/03/2026 04:46"
+          }
+        ],
+        "data_adicao": "13/04/2026 05:16"
+      }
+    ],
+    "data_criacao": "14/04/2026 07:04"
+  },
+  {
+    "id": "b0d8c7db",
+    "nome": "Felipe Dias Teste 04",
+    "telefone": "(85) 90004-0148",
+    "carros": [
+      {
+        "id": "d185ed6d",
+        "marca": "Renault",
+        "modelo": "Duster",
+        "ano": "2015",
+        "placa": "EHP4042",
+        "servicos": [
+          {
+            "id": "ee8ee12b",
+            "servico": "Suspensão",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "26/03/2026 10:25"
+          },
+          {
+            "id": "016a9e97",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "26/03/2026 12:47"
+          },
+          {
+            "id": "622d3a62",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "28/03/2026 00:23"
+          }
+        ],
+        "data_adicao": "12/04/2026 12:29"
+      },
+      {
+        "id": "c3edf4ef",
+        "marca": "Honda",
+        "modelo": "HR-V",
+        "ano": "2015",
+        "placa": "EIQ4153",
+        "servicos": [
+          {
+            "id": "3084a03d",
+            "servico": "Troca de Óleo",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "23/03/2026 08:51"
+          },
+          {
+            "id": "a2160910",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "23/03/2026 18:44"
+          },
+          {
+            "id": "76e744a4",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "24/03/2026 21:35"
+          },
+          {
+            "id": "0736bdd1",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "26/03/2026 07:23"
+          }
+        ],
+        "data_adicao": "12/04/2026 04:40"
+      }
+    ],
+    "data_criacao": "12/04/2026 22:19"
+  },
+  {
+    "id": "88ace127",
+    "nome": "Larissa Pereira Teste 05",
+    "telefone": "(85) 90005-0185",
+    "carros": [
+      {
+        "id": "fe884152",
+        "marca": "Toyota",
+        "modelo": "Hilux",
+        "ano": "2018",
+        "placa": "FIQ5055",
+        "servicos": [
+          {
+            "id": "a7be4d83",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "21/03/2026 10:13"
+          },
+          {
+            "id": "0bcc5b95",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "22/03/2026 07:38"
+          },
+          {
+            "id": "e7015fe8",
+            "servico": "Reparo do Motor",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "22/03/2026 21:32"
+          }
+        ],
+        "data_adicao": "11/04/2026 12:16"
+      },
+      {
+        "id": "28f58678",
+        "marca": "Toyota",
+        "modelo": "Yaris",
+        "ano": "2012",
+        "placa": "FJR5166",
+        "servicos": [
+          {
+            "id": "7cd3d11b",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "19/03/2026 09:12"
+          },
+          {
+            "id": "3fd77ab4",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "20/03/2026 10:18"
+          },
+          {
+            "id": "f0f82693",
+            "servico": "Elétrica",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "20/03/2026 18:52"
+          }
+        ],
+        "data_adicao": "11/04/2026 09:07"
+      },
+      {
+        "id": "f4863baf",
+        "marca": "Chevrolet",
+        "modelo": "S10",
+        "ano": "2013",
+        "placa": "FKS5277",
+        "servicos": [
+          {
+            "id": "cbec8f3b",
+            "servico": "Elétrica",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "13/03/2026 09:16"
+          },
+          {
+            "id": "9e8ca55e",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "13/03/2026 21:11"
+          },
+          {
+            "id": "f4d3ba37",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "15/03/2026 00:51"
+          },
+          {
+            "id": "0c4be025",
+            "servico": "Reparo do Motor",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "15/03/2026 14:09"
+          },
+          {
+            "id": "967bdf0e",
+            "servico": "Suspensão",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "17/03/2026 04:34"
+          },
+          {
+            "id": "4bb15bb2",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "18/03/2026 03:37"
+          },
+          {
+            "id": "7b66bc5d",
+            "servico": "Alinhamento",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "18/03/2026 16:45"
+          }
+        ],
+        "data_adicao": "10/04/2026 05:18"
+      }
+    ],
+    "data_criacao": "12/04/2026 03:42"
+  },
+  {
+    "id": "97c2c178",
+    "nome": "Camila Oliveira Teste 06",
+    "telefone": "(85) 90006-0222",
+    "carros": [
+      {
+        "id": "eec57e7c",
+        "marca": "Hyundai",
+        "modelo": "i30",
+        "ano": "2014",
+        "placa": "GJR6068",
+        "servicos": [
+          {
+            "id": "77b9133c",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "12/03/2026 13:29"
+          },
+          {
+            "id": "05ba50af",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "14/03/2026 03:32"
+          },
+          {
+            "id": "ba1a7987",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "15/03/2026 07:54"
+          },
+          {
+            "id": "ec44e538",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "15/03/2026 14:44"
+          },
+          {
+            "id": "6e3a89b6",
+            "servico": "Suspensão",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "16/03/2026 13:58"
+          },
+          {
+            "id": "56d74646",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "17/03/2026 15:59"
+          }
+        ],
+        "data_adicao": "11/04/2026 05:07"
+      },
+      {
+        "id": "a5913479",
+        "marca": "Fiat",
+        "modelo": "Strada",
+        "ano": "2016",
+        "placa": "GKS6179",
+        "servicos": [
+          {
+            "id": "98808dbe",
+            "servico": "Troca de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "13/03/2026 12:22"
+          },
+          {
+            "id": "609fe7da",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "15/03/2026 07:10"
+          },
+          {
+            "id": "d58f5c97",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "16/03/2026 03:48"
+          }
+        ],
+        "data_adicao": "09/04/2026 18:05"
+      }
+    ],
+    "data_criacao": "10/04/2026 22:15"
+  },
+  {
+    "id": "a1c2aaa8",
+    "nome": "João Souza Teste 07",
+    "telefone": "(85) 90007-0259",
+    "carros": [
+      {
+        "id": "01b3e83e",
+        "marca": "Volkswagen",
+        "modelo": "Gol",
+        "ano": "2025",
+        "placa": "HKS7071",
+        "servicos": [
+          {
+            "id": "34ea1f39",
+            "servico": "Ar Condicionado",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "08/03/2026 16:03"
+          },
+          {
+            "id": "dccc5ffc",
+            "servico": "Alinhamento",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "10/03/2026 00:01"
+          },
+          {
+            "id": "68868925",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "11/03/2026 05:07"
+          },
+          {
+            "id": "d0deb15c",
+            "servico": "Troca de Óleo",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "11/03/2026 23:53"
+          },
+          {
+            "id": "42828a1e",
+            "servico": "Elétrica",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "12/03/2026 22:42"
+          }
+        ],
+        "data_adicao": "10/04/2026 06:51"
+      },
+      {
+        "id": "648fa819",
+        "marca": "Chevrolet",
+        "modelo": "Tracker",
+        "ano": "2024",
+        "placa": "HLT7182",
+        "servicos": [
+          {
+            "id": "9fc42e9e",
+            "servico": "Outro",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "07/03/2026 22:55"
+          },
+          {
+            "id": "8e2cc681",
+            "servico": "Outro",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "09/03/2026 03:40"
+          },
+          {
+            "id": "6addcc90",
+            "servico": "Revisão Geral",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "09/03/2026 13:55"
+          },
+          {
+            "id": "12843952",
+            "servico": "Reparo do Motor",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "11/03/2026 06:03"
+          }
+        ],
+        "data_adicao": "09/04/2026 09:56"
+      }
+    ],
+    "data_criacao": "09/04/2026 20:36"
+  },
+  {
+    "id": "d07e6f76",
+    "nome": "Lucas Rocha Teste 08",
+    "telefone": "(85) 90008-0296",
+    "carros": [
+      {
+        "id": "95ecf6c1",
+        "marca": "Fiat",
+        "modelo": "Mobi",
+        "ano": "2015",
+        "placa": "ILT8084",
+        "servicos": [
+          {
+            "id": "8b649a4c",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "05/03/2026 13:57"
+          },
+          {
+            "id": "4e5fa99a",
+            "servico": "Troca de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "07/03/2026 03:28"
+          },
+          {
+            "id": "0c0671b8",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "07/03/2026 23:29"
+          }
+        ],
+        "data_adicao": "08/04/2026 18:29"
+      },
+      {
+        "id": "ac418749",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "ano": "2016",
+        "placa": "IMU8195",
+        "servicos": [
+          {
+            "id": "eea195e8",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "02/03/2026 17:38"
+          },
+          {
+            "id": "0b7a176e",
+            "servico": "Revisão Geral",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "03/03/2026 16:18"
+          },
+          {
+            "id": "0fc0e209",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "05/03/2026 00:04"
+          },
+          {
+            "id": "37ac285f",
+            "servico": "Elétrica",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "06/03/2026 10:44"
+          }
+        ],
+        "data_adicao": "08/04/2026 03:48"
+      },
+      {
+        "id": "d795ffe9",
+        "marca": "Ford",
+        "modelo": "Ka",
+        "ano": "2020",
+        "placa": "INV8206",
+        "servicos": [
+          {
+            "id": "a3c8a8e1",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "25/02/2026 14:03"
+          },
+          {
+            "id": "3f775459",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "27/02/2026 05:24"
+          },
+          {
+            "id": "aa65908a",
+            "servico": "Revisão Geral",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "27/02/2026 13:32"
+          },
+          {
+            "id": "57c05d3c",
+            "servico": "Troca de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "28/02/2026 14:24"
+          },
+          {
+            "id": "18d080fc",
+            "servico": "Suspensão",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "01/03/2026 11:53"
+          },
+          {
+            "id": "604d9402",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "02/03/2026 16:30"
+          },
+          {
+            "id": "06d4fe81",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "04/03/2026 00:23"
+          }
+        ],
+        "data_adicao": "07/04/2026 06:11"
+      }
+    ],
+    "data_criacao": "08/04/2026 17:31"
+  },
+  {
+    "id": "8faebc6b",
+    "nome": "Rafael Silva Teste 09",
+    "telefone": "(85) 90009-0333",
+    "carros": [
+      {
+        "id": "5c7f58e7",
+        "marca": "Fiat",
+        "modelo": "Mobi",
+        "ano": "2018",
+        "placa": "JMU9097",
+        "servicos": [
+          {
+            "id": "45ddf6a5",
+            "servico": "Alinhamento",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "24/02/2026 15:56"
+          },
+          {
+            "id": "1cb08b72",
+            "servico": "Alinhamento",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "26/02/2026 11:48"
+          },
+          {
+            "id": "d8566361",
+            "servico": "Alinhamento",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "27/02/2026 03:59"
+          },
+          {
+            "id": "7b2bdde7",
+            "servico": "Troca de Pneus",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "28/02/2026 08:58"
+          },
+          {
+            "id": "f45c2d7a",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "28/02/2026 14:45"
+          },
+          {
+            "id": "9d8c1754",
+            "servico": "Reparo de Freios",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "01/03/2026 19:20"
+          },
+          {
+            "id": "1e3ba608",
+            "servico": "Elétrica",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "02/03/2026 21:22"
+          }
+        ],
+        "data_adicao": "08/04/2026 09:21"
+      },
+      {
+        "id": "72355f60",
+        "marca": "Ford",
+        "modelo": "Fiesta",
+        "ano": "2023",
+        "placa": "JNV9108",
+        "servicos": [
+          {
+            "id": "d481acff",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "21/02/2026 21:34"
+          },
+          {
+            "id": "de2882ab",
+            "servico": "Outro",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "22/02/2026 18:22"
+          },
+          {
+            "id": "4dd14f92",
+            "servico": "Reparo de Freios",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "23/02/2026 21:11"
+          },
+          {
+            "id": "c2fc7dc9",
+            "servico": "Alinhamento",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "24/02/2026 21:42"
+          },
+          {
+            "id": "efc99946",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "26/02/2026 10:15"
+          },
+          {
+            "id": "aeb25308",
+            "servico": "Reparo do Motor",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "27/02/2026 05:59"
+          },
+          {
+            "id": "10d6b7d9",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "28/02/2026 08:01"
+          },
+          {
+            "id": "1584799c",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "28/02/2026 23:35"
+          }
+        ],
+        "data_adicao": "07/04/2026 03:57"
+      },
+      {
+        "id": "9278abe1",
+        "marca": "Fiat",
+        "modelo": "Strada",
+        "ano": "2022",
+        "placa": "JOW9219",
+        "servicos": [
+          {
+            "id": "ccad8fad",
+            "servico": "Alinhamento",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "23/02/2026 13:41"
+          },
+          {
+            "id": "f8590ebb",
+            "servico": "Revisão Geral",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "25/02/2026 07:41"
+          },
+          {
+            "id": "8057e010",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "26/02/2026 03:29"
+          },
+          {
+            "id": "5b51268e",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "27/02/2026 09:05"
+          }
+        ],
+        "data_adicao": "05/04/2026 13:37"
+      }
+    ],
+    "data_criacao": "08/04/2026 09:24"
+  },
+  {
+    "id": "c2f9e74e",
+    "nome": "Aline Gomes Teste 10",
+    "telefone": "(85) 90010-0370",
+    "carros": [
+      {
+        "id": "e137f89b",
+        "marca": "Renault",
+        "modelo": "Duster",
+        "ano": "2012",
+        "placa": "KNV0000",
+        "servicos": [
+          {
+            "id": "d4bfa6e7",
+            "servico": "Reparo do Motor",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "22/02/2026 20:36"
+          },
+          {
+            "id": "f6b253b6",
+            "servico": "Revisão Geral",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "23/02/2026 22:56"
+          },
+          {
+            "id": "e24139ef",
+            "servico": "Troca de Óleo",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "24/02/2026 20:50"
+          },
+          {
+            "id": "198e36a9",
+            "servico": "Reparo do Motor",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "25/02/2026 17:06"
+          }
+        ],
+        "data_adicao": "07/04/2026 03:23"
+      },
+      {
+        "id": "57d00098",
+        "marca": "Renault",
+        "modelo": "Kwid",
+        "ano": "2018",
+        "placa": "KOW0111",
+        "servicos": [
+          {
+            "id": "6ac42200",
+            "servico": "Reparo do Motor",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "19/02/2026 21:39"
+          },
+          {
+            "id": "2f9721dc",
+            "servico": "Suspensão",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "21/02/2026 09:09"
+          },
+          {
+            "id": "02acbf38",
+            "servico": "Troca de Óleo",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "21/02/2026 17:14"
+          },
+          {
+            "id": "dc0c7418",
+            "servico": "Reparo de Freios",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "22/02/2026 16:16"
+          },
+          {
+            "id": "33d6af1a",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "23/02/2026 12:40"
+          }
+        ],
+        "data_adicao": "06/04/2026 10:34"
+      },
+      {
+        "id": "40a3c3eb",
+        "marca": "Ford",
+        "modelo": "Ranger",
+        "ano": "2015",
+        "placa": "KPX0222",
+        "servicos": [
+          {
+            "id": "c2559f8e",
+            "servico": "Troca de Óleo",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "17/02/2026 04:42"
+          },
+          {
+            "id": "dfbdd91a",
+            "servico": "Troca de Óleo",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "18/02/2026 04:57"
+          },
+          {
+            "id": "5666fdc8",
+            "servico": "Suspensão",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "18/02/2026 15:48"
+          },
+          {
+            "id": "97b95cff",
+            "servico": "Troca de Óleo",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "20/02/2026 00:36"
+          },
+          {
+            "id": "5ea100e8",
+            "servico": "Reparo do Motor",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "21/02/2026 09:20"
+          },
+          {
+            "id": "4dc5043c",
+            "servico": "Revisão Geral",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "21/02/2026 23:33"
+          }
+        ],
+        "data_adicao": "04/04/2026 20:08"
+      },
+      {
+        "id": "fa4d9d96",
+        "marca": "Honda",
+        "modelo": "HR-V",
+        "ano": "2019",
+        "placa": "KQY0333",
+        "servicos": [
+          {
+            "id": "215c3bd5",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "12/02/2026 18:23"
+          },
+          {
+            "id": "48c88e51",
+            "servico": "Troca de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "13/02/2026 17:00"
+          },
+          {
+            "id": "7e502fde",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "15/02/2026 08:06"
+          },
+          {
+            "id": "503f8670",
+            "servico": "Alinhamento",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "15/02/2026 17:06"
+          },
+          {
+            "id": "13a5b30a",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "16/02/2026 23:05"
+          },
+          {
+            "id": "e32b473e",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "18/02/2026 02:14"
+          },
+          {
+            "id": "526ac421",
+            "servico": "Elétrica",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "19/02/2026 06:31"
+          },
+          {
+            "id": "eccf0a39",
+            "servico": "Troca de Pneus",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "20/02/2026 06:12"
+          }
+        ],
+        "data_adicao": "03/04/2026 14:27"
+      }
+    ],
+    "data_criacao": "07/04/2026 09:18"
+  },
+  {
+    "id": "eb379599",
+    "nome": "André Gomes Teste 11",
+    "telefone": "(85) 90011-0407",
+    "carros": [
+      {
+        "id": "a4e8786b",
+        "marca": "Ford",
+        "modelo": "EcoSport",
+        "ano": "2013",
+        "placa": "LOW1013",
+        "servicos": [
+          {
+            "id": "ac4dfd9b",
+            "servico": "Alinhamento",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "16/02/2026 02:54"
+          },
+          {
+            "id": "5fdd7e35",
+            "servico": "Outro",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "17/02/2026 00:56"
+          },
+          {
+            "id": "001f8385",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "17/02/2026 21:23"
+          },
+          {
+            "id": "281b24d9",
+            "servico": "Suspensão",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "18/02/2026 15:59"
+          },
+          {
+            "id": "08a416d6",
+            "servico": "Reparo do Motor",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "19/02/2026 12:17"
+          },
+          {
+            "id": "c3b10cf6",
+            "servico": "Revisão Geral",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "20/02/2026 13:41"
+          }
+        ],
+        "data_adicao": "05/04/2026 21:35"
+      },
+      {
+        "id": "1c270fc1",
+        "marca": "Renault",
+        "modelo": "Duster",
+        "ano": "2017",
+        "placa": "LPX1124",
+        "servicos": [
+          {
+            "id": "7b1c1e47",
+            "servico": "Troca de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "16/02/2026 18:50"
+          },
+          {
+            "id": "b573698c",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "18/02/2026 03:29"
+          },
+          {
+            "id": "66814414",
+            "servico": "Reparo de Freios",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "19/02/2026 06:19"
+          }
+        ],
+        "data_adicao": "04/04/2026 19:38"
+      }
+    ],
+    "data_criacao": "06/04/2026 09:35"
+  },
+  {
+    "id": "d6ea0aaa",
+    "nome": "Tatiane Barbosa Teste 12",
+    "telefone": "(85) 90012-0444",
+    "carros": [
+      {
+        "id": "08331842",
+        "marca": "Chevrolet",
+        "modelo": "S10",
+        "ano": "2022",
+        "placa": "MPX2026",
+        "servicos": [
+          {
+            "id": "cd7aee3a",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "09/02/2026 01:43"
+          },
+          {
+            "id": "61af7e87",
+            "servico": "Troca de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "10/02/2026 03:36"
+          },
+          {
+            "id": "98df45ec",
+            "servico": "Revisão Geral",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "10/02/2026 13:21"
+          },
+          {
+            "id": "b332faed",
+            "servico": "Revisão Geral",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "11/02/2026 12:15"
+          },
+          {
+            "id": "a518aaee",
+            "servico": "Revisão Geral",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "12/02/2026 18:17"
+          },
+          {
+            "id": "6545317b",
+            "servico": "Alinhamento",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "13/02/2026 14:13"
+          },
+          {
+            "id": "6195d5d4",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "14/02/2026 23:06"
+          },
+          {
+            "id": "ba8a3b69",
+            "servico": "Reparo de Freios",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "16/02/2026 11:45"
+          }
+        ],
+        "data_adicao": "04/04/2026 12:16"
+      },
+      {
+        "id": "667d3ba5",
+        "marca": "Volkswagen",
+        "modelo": "Polo",
+        "ano": "2015",
+        "placa": "MQY2137",
+        "servicos": [
+          {
+            "id": "ba5dabf1",
+            "servico": "Troca de Óleo",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "06/02/2026 20:20"
+          },
+          {
+            "id": "c063106a",
+            "servico": "Suspensão",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "08/02/2026 07:55"
+          },
+          {
+            "id": "45ba1555",
+            "servico": "Troca de Óleo",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "08/02/2026 13:42"
+          },
+          {
+            "id": "22a993af",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "10/02/2026 03:48"
+          },
+          {
+            "id": "15615a89",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "11/02/2026 11:05"
+          },
+          {
+            "id": "870f4eac",
+            "servico": "Alinhamento",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "12/02/2026 04:27"
+          },
+          {
+            "id": "9bf874d2",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "13/02/2026 07:57"
+          },
+          {
+            "id": "836c406a",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "13/02/2026 12:13"
+          }
+        ],
+        "data_adicao": "03/04/2026 21:29"
+      },
+      {
+        "id": "83af6ee2",
+        "marca": "Volkswagen",
+        "modelo": "Gol",
+        "ano": "2016",
+        "placa": "MRZ2248",
+        "servicos": [
+          {
+            "id": "ef446c24",
+            "servico": "Reparo de Freios",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "07/02/2026 01:55"
+          },
+          {
+            "id": "234f761c",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "07/02/2026 19:26"
+          },
+          {
+            "id": "50726339",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "08/02/2026 16:12"
+          },
+          {
+            "id": "afa5d696",
+            "servico": "Elétrica",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "10/02/2026 09:35"
+          },
+          {
+            "id": "59f52c1e",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "11/02/2026 07:41"
+          },
+          {
+            "id": "9984c4a4",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/02/2026 23:19"
+          }
+        ],
+        "data_adicao": "02/04/2026 17:23"
+      }
+    ],
+    "data_criacao": "05/04/2026 02:14"
+  },
+  {
+    "id": "54142730",
+    "nome": "Bianca Santos Teste 13",
+    "telefone": "(85) 90013-0481",
+    "carros": [
+      {
+        "id": "813843ea",
+        "marca": "Honda",
+        "modelo": "HR-V",
+        "ano": "2022",
+        "placa": "NQY3039",
+        "servicos": [
+          {
+            "id": "f31d45f4",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "08/02/2026 10:36"
+          },
+          {
+            "id": "4496d879",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "08/02/2026 13:12"
+          },
+          {
+            "id": "cb67746a",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "10/02/2026 06:50"
+          },
+          {
+            "id": "bb33e170",
+            "servico": "Troca de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/02/2026 06:35"
+          }
+        ],
+        "data_adicao": "04/04/2026 02:05"
+      },
+      {
+        "id": "99d74ccf",
+        "marca": "Fiat",
+        "modelo": "Strada",
+        "ano": "2013",
+        "placa": "NRZ3140",
+        "servicos": [
+          {
+            "id": "492368fd",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "01/02/2026 21:45"
+          },
+          {
+            "id": "8048e482",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "02/02/2026 13:25"
+          },
+          {
+            "id": "f1364275",
+            "servico": "Elétrica",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "03/02/2026 21:43"
+          },
+          {
+            "id": "77bedb3c",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "04/02/2026 16:03"
+          },
+          {
+            "id": "ba2b631e",
+            "servico": "Troca de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "06/02/2026 09:47"
+          },
+          {
+            "id": "6ae3d16b",
+            "servico": "Ar Condicionado",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "06/02/2026 15:41"
+          },
+          {
+            "id": "1f85cae4",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "07/02/2026 22:43"
+          },
+          {
+            "id": "17ed6fe1",
+            "servico": "Alinhamento",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "08/02/2026 15:13"
+          }
+        ],
+        "data_adicao": "02/04/2026 16:48"
+      },
+      {
+        "id": "cfafeb67",
+        "marca": "Ford",
+        "modelo": "Ranger",
+        "ano": "2021",
+        "placa": "NSA3251",
+        "servicos": [
+          {
+            "id": "9a423dd8",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "02/02/2026 14:58"
+          },
+          {
+            "id": "c400c7c3",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "04/02/2026 03:39"
+          },
+          {
+            "id": "1cd8197a",
+            "servico": "Troca de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "05/02/2026 06:20"
+          },
+          {
+            "id": "3e9bf7b1",
+            "servico": "Elétrica",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "05/02/2026 13:58"
+          },
+          {
+            "id": "c1071272",
+            "servico": "Troca de Óleo",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "07/02/2026 04:07"
+          }
+        ],
+        "data_adicao": "01/04/2026 20:45"
+      },
+      {
+        "id": "22ec1cc2",
+        "marca": "Renault",
+        "modelo": "Logan",
+        "ano": "2018",
+        "placa": "NTB3362",
+        "servicos": [
+          {
+            "id": "0dc12383",
+            "servico": "Reparo do Motor",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "31/01/2026 13:55"
+          },
+          {
+            "id": "919ff4b0",
+            "servico": "Revisão Geral",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "02/02/2026 01:43"
+          },
+          {
+            "id": "e1557109",
+            "servico": "Reparo do Motor",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "02/02/2026 21:45"
+          },
+          {
+            "id": "7f6c3a7c",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "04/02/2026 02:08"
+          },
+          {
+            "id": "5d499398",
+            "servico": "Revisão Geral",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "05/02/2026 06:29"
+          }
+        ],
+        "data_adicao": "31/03/2026 18:21"
+      }
+    ],
+    "data_criacao": "03/04/2026 22:47"
+  },
+  {
+    "id": "d9457579",
+    "nome": "Lucas Martins Teste 14",
+    "telefone": "(85) 90014-0518",
+    "carros": [
+      {
+        "id": "2ff1304f",
+        "marca": "Renault",
+        "modelo": "Duster",
+        "ano": "2024",
+        "placa": "ORZ4042",
+        "servicos": [
+          {
+            "id": "6d4018c9",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "03/02/2026 15:12"
+          },
+          {
+            "id": "94e2e059",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "04/02/2026 13:19"
+          },
+          {
+            "id": "34752f57",
+            "servico": "Alinhamento",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "05/02/2026 18:42"
+          }
+        ],
+        "data_adicao": "03/04/2026 04:05"
+      },
+      {
+        "id": "8e40ae48",
+        "marca": "Volkswagen",
+        "modelo": "T-Cross",
+        "ano": "2020",
+        "placa": "OSA4153",
+        "servicos": [
+          {
+            "id": "54481c93",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "01/02/2026 13:32"
+          },
+          {
+            "id": "21478b8c",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "03/02/2026 08:09"
+          },
+          {
+            "id": "dbc8cc92",
+            "servico": "Ar Condicionado",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "04/02/2026 09:36"
+          }
+        ],
+        "data_adicao": "01/04/2026 19:05"
+      },
+      {
+        "id": "b5f8d5df",
+        "marca": "Fiat",
+        "modelo": "Strada",
+        "ano": "2025",
+        "placa": "OTB4264",
+        "servicos": [
+          {
+            "id": "bf2b5d77",
+            "servico": "Elétrica",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "28/01/2026 07:22"
+          },
+          {
+            "id": "5ee9a543",
+            "servico": "Troca de Óleo",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "28/01/2026 12:31"
+          },
+          {
+            "id": "7b580569",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "29/01/2026 19:33"
+          },
+          {
+            "id": "7acb2047",
+            "servico": "Elétrica",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "31/01/2026 09:33"
+          },
+          {
+            "id": "34c87044",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "01/02/2026 04:52"
+          },
+          {
+            "id": "4efea90a",
+            "servico": "Reparo de Freios",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "01/02/2026 21:15"
+          }
+        ],
+        "data_adicao": "31/03/2026 18:20"
+      },
+      {
+        "id": "9945a767",
+        "marca": "Hyundai",
+        "modelo": "i30",
+        "ano": "2020",
+        "placa": "OUC4375",
+        "servicos": [
+          {
+            "id": "72157d5e",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "25/01/2026 07:55"
+          },
+          {
+            "id": "4f5c4864",
+            "servico": "Suspensão",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "25/01/2026 20:48"
+          },
+          {
+            "id": "2bf296ee",
+            "servico": "Reparo do Motor",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "26/01/2026 14:00"
+          },
+          {
+            "id": "502db66c",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "27/01/2026 12:52"
+          },
+          {
+            "id": "48d9c67d",
+            "servico": "Alinhamento",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "29/01/2026 10:30"
+          },
+          {
+            "id": "244bd58b",
+            "servico": "Alinhamento",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "29/01/2026 17:26"
+          },
+          {
+            "id": "6a58bb71",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "31/01/2026 00:55"
+          }
+        ],
+        "data_adicao": "30/03/2026 21:44"
+      }
+    ],
+    "data_criacao": "02/04/2026 18:52"
+  },
+  {
+    "id": "929dcdc3",
+    "nome": "Gustavo Silva Teste 15",
+    "telefone": "(85) 90015-0555",
+    "carros": [
+      {
+        "id": "9cd4846c",
+        "marca": "Volkswagen",
+        "modelo": "Virtus",
+        "ano": "2025",
+        "placa": "PSA5055",
+        "servicos": [
+          {
+            "id": "69aed132",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "25/01/2026 08:02"
+          },
+          {
+            "id": "708ed51b",
+            "servico": "Suspensão",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "26/01/2026 04:03"
+          },
+          {
+            "id": "f0c2938b",
+            "servico": "Elétrica",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "27/01/2026 04:10"
+          },
+          {
+            "id": "570e416d",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "27/01/2026 18:48"
+          },
+          {
+            "id": "969e95bb",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "29/01/2026 01:10"
+          },
+          {
+            "id": "2ce0743a",
+            "servico": "Reparo do Motor",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "30/01/2026 00:56"
+          },
+          {
+            "id": "0376eb04",
+            "servico": "Troca de Pneus",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "30/01/2026 16:06"
+          },
+          {
+            "id": "f86bd6af",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "31/01/2026 20:00"
+          }
+        ],
+        "data_adicao": "01/04/2026 15:05"
+      },
+      {
+        "id": "67933be4",
+        "marca": "Honda",
+        "modelo": "City",
+        "ano": "2014",
+        "placa": "PTB5166",
+        "servicos": [
+          {
+            "id": "c94cc2b4",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "22/01/2026 14:50"
+          },
+          {
+            "id": "86e5912d",
+            "servico": "Alinhamento",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "23/01/2026 15:34"
+          },
+          {
+            "id": "53942a64",
+            "servico": "Alinhamento",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "24/01/2026 17:41"
+          },
+          {
+            "id": "37d5370a",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "25/01/2026 16:07"
+          },
+          {
+            "id": "450d54c9",
+            "servico": "Reparo do Motor",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "27/01/2026 06:39"
+          },
+          {
+            "id": "464e1f19",
+            "servico": "Reparo do Motor",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "28/01/2026 04:17"
+          },
+          {
+            "id": "02ee1cbd",
+            "servico": "Troca de Óleo",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "29/01/2026 00:27"
+          },
+          {
+            "id": "278a3ed9",
+            "servico": "Troca de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "30/01/2026 10:30"
+          }
+        ],
+        "data_adicao": "31/03/2026 20:53"
+      },
+      {
+        "id": "44694e87",
+        "marca": "Fiat",
+        "modelo": "Mobi",
+        "ano": "2013",
+        "placa": "PUC5277",
+        "servicos": [
+          {
+            "id": "653a7322",
+            "servico": "Outro",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "23/01/2026 10:57"
+          },
+          {
+            "id": "e7a3e451",
+            "servico": "Elétrica",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "23/01/2026 17:32"
+          },
+          {
+            "id": "51c5016e",
+            "servico": "Reparo de Freios",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "25/01/2026 04:26"
+          },
+          {
+            "id": "8f07bd9b",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "25/01/2026 22:56"
+          },
+          {
+            "id": "1e038e7f",
+            "servico": "Outro",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "26/01/2026 20:56"
+          },
+          {
+            "id": "da6f2dae",
+            "servico": "Revisão Geral",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "27/01/2026 15:23"
+          }
+        ],
+        "data_adicao": "30/03/2026 14:25"
+      },
+      {
+        "id": "e01089f8",
+        "marca": "Fiat",
+        "modelo": "Argo",
+        "ano": "2021",
+        "placa": "PVD5388",
+        "servicos": [
+          {
+            "id": "a4e3f44a",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "19/01/2026 08:52"
+          },
+          {
+            "id": "a401ce51",
+            "servico": "Reparo de Freios",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "19/01/2026 17:27"
+          },
+          {
+            "id": "2c326ae2",
+            "servico": "Suspensão",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "21/01/2026 02:00"
+          },
+          {
+            "id": "01fbc826",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "21/01/2026 15:44"
+          },
+          {
+            "id": "64ef4a74",
+            "servico": "Elétrica",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "22/01/2026 14:02"
+          },
+          {
+            "id": "83330448",
+            "servico": "Revisão Geral",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "23/01/2026 15:38"
+          },
+          {
+            "id": "b9d68e66",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "25/01/2026 04:12"
+          },
+          {
+            "id": "fbbd9a26",
+            "servico": "Outro",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "25/01/2026 16:03"
+          }
+        ],
+        "data_adicao": "30/03/2026 02:30"
+      }
+    ],
+    "data_criacao": "01/04/2026 12:24"
+  },
+  {
+    "id": "ce3d8d1e",
+    "nome": "Fernanda Pereira Teste 16",
+    "telefone": "(85) 90016-0592",
+    "carros": [
+      {
+        "id": "3d7ee8cf",
+        "marca": "Hyundai",
+        "modelo": "i30",
+        "ano": "2025",
+        "placa": "QTB6068",
+        "servicos": [
+          {
+            "id": "4bea17b4",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "23/01/2026 18:27"
+          },
+          {
+            "id": "257dcaef",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "24/01/2026 14:04"
+          },
+          {
+            "id": "7503f774",
+            "servico": "Revisão Geral",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "25/01/2026 21:46"
+          },
+          {
+            "id": "5f1ee8ed",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "27/01/2026 02:03"
+          }
+        ],
+        "data_adicao": "01/04/2026 09:00"
+      },
+      {
+        "id": "5a80c696",
+        "marca": "Ford",
+        "modelo": "Ka",
+        "ano": "2016",
+        "placa": "QUC6179",
+        "servicos": [
+          {
+            "id": "d2c64297",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "18/01/2026 15:24"
+          },
+          {
+            "id": "39063dc5",
+            "servico": "Suspensão",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "19/01/2026 14:58"
+          },
+          {
+            "id": "de74142f",
+            "servico": "Ar Condicionado",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "20/01/2026 16:36"
+          },
+          {
+            "id": "cecadd1b",
+            "servico": "Alinhamento",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "22/01/2026 11:11"
+          },
+          {
+            "id": "1b262a97",
+            "servico": "Suspensão",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "23/01/2026 08:07"
+          },
+          {
+            "id": "b6fd6774",
+            "servico": "Outro",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "23/01/2026 17:26"
+          },
+          {
+            "id": "9381c34c",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "25/01/2026 00:07"
+          }
+        ],
+        "data_adicao": "31/03/2026 08:42"
+      }
+    ],
+    "data_criacao": "01/04/2026 10:48"
+  },
+  {
+    "id": "0c44e1e9",
+    "nome": "Patrícia Dias Teste 17",
+    "telefone": "(85) 90017-0629",
+    "carros": [
+      {
+        "id": "fd055667",
+        "marca": "Honda",
+        "modelo": "HR-V",
+        "ano": "2020",
+        "placa": "RUC7071",
+        "servicos": [
+          {
+            "id": "e20edd16",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "18/01/2026 16:24"
+          },
+          {
+            "id": "c7edf7bc",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "19/01/2026 22:09"
+          },
+          {
+            "id": "4f1917e9",
+            "servico": "Outro",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "20/01/2026 17:03"
+          },
+          {
+            "id": "07dd29a8",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "22/01/2026 00:08"
+          }
+        ],
+        "data_adicao": "31/03/2026 03:48"
+      },
+      {
+        "id": "e60a999c",
+        "marca": "Hyundai",
+        "modelo": "Creta",
+        "ano": "2019",
+        "placa": "RVD7182",
+        "servicos": [
+          {
+            "id": "8530d2f0",
+            "servico": "Revisão Geral",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "15/01/2026 07:00"
+          },
+          {
+            "id": "f54d6665",
+            "servico": "Suspensão",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "16/01/2026 10:00"
+          },
+          {
+            "id": "7b4b7e39",
+            "servico": "Reparo de Freios",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "16/01/2026 14:37"
+          },
+          {
+            "id": "9c74a04b",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "18/01/2026 07:56"
+          },
+          {
+            "id": "615b3274",
+            "servico": "Revisão Geral",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "19/01/2026 10:25"
+          },
+          {
+            "id": "c04e1e3f",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "20/01/2026 08:07"
+          }
+        ],
+        "data_adicao": "29/03/2026 17:37"
+      }
+    ],
+    "data_criacao": "31/03/2026 08:57"
+  },
+  {
+    "id": "63846838",
+    "nome": "Renata Pereira Teste 18",
+    "telefone": "(85) 90018-0666",
+    "carros": [
+      {
+        "id": "456e1a2e",
+        "marca": "Chevrolet",
+        "modelo": "Tracker",
+        "ano": "2017",
+        "placa": "SVD8084",
+        "servicos": [
+          {
+            "id": "6f73bd83",
+            "servico": "Troca de Óleo",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "14/01/2026 11:28"
+          },
+          {
+            "id": "8f4c0d98",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "14/01/2026 13:55"
+          },
+          {
+            "id": "62c45ce8",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "15/01/2026 18:34"
+          },
+          {
+            "id": "58c87d84",
+            "servico": "Elétrica",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "17/01/2026 02:56"
+          }
+        ],
+        "data_adicao": "30/03/2026 04:13"
+      },
+      {
+        "id": "e5e129a0",
+        "marca": "Hyundai",
+        "modelo": "HB20",
+        "ano": "2014",
+        "placa": "SWE8195",
+        "servicos": [
+          {
+            "id": "96edf76c",
+            "servico": "Alinhamento",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "10/01/2026 12:00"
+          },
+          {
+            "id": "5e7b0a9b",
+            "servico": "Elétrica",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/01/2026 21:18"
+          },
+          {
+            "id": "1b0d87e8",
+            "servico": "Reparo de Freios",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "13/01/2026 00:18"
+          },
+          {
+            "id": "7062bfca",
+            "servico": "Ar Condicionado",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "13/01/2026 12:46"
+          },
+          {
+            "id": "330734b1",
+            "servico": "Troca de Óleo",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "14/01/2026 12:24"
+          }
+        ],
+        "data_adicao": "28/03/2026 14:17"
+      },
+      {
+        "id": "9decff94",
+        "marca": "Fiat",
+        "modelo": "Strada",
+        "ano": "2022",
+        "placa": "SXF8206",
+        "servicos": [
+          {
+            "id": "48930d39",
+            "servico": "Reparo de Freios",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/01/2026 09:30"
+          },
+          {
+            "id": "8d40ab6d",
+            "servico": "Suspensão",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/01/2026 20:05"
+          },
+          {
+            "id": "1f62c297",
+            "servico": "Troca de Óleo",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "12/01/2026 23:23"
+          }
+        ],
+        "data_adicao": "27/03/2026 16:41"
+      },
+      {
+        "id": "b1f79264",
+        "marca": "Honda",
+        "modelo": "HR-V",
+        "ano": "2016",
+        "placa": "SYG8317",
+        "servicos": [
+          {
+            "id": "cc9fb9d9",
+            "servico": "Reparo de Freios",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "04/01/2026 22:04"
+          },
+          {
+            "id": "a112ee3b",
+            "servico": "Alinhamento",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "06/01/2026 00:58"
+          },
+          {
+            "id": "b82227e0",
+            "servico": "Ar Condicionado",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "06/01/2026 22:22"
+          },
+          {
+            "id": "859e0f7b",
+            "servico": "Outro",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "07/01/2026 15:09"
+          },
+          {
+            "id": "69e5d92c",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "09/01/2026 08:00"
+          },
+          {
+            "id": "d05e605c",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "09/01/2026 21:18"
+          },
+          {
+            "id": "b4e61573",
+            "servico": "Suspensão",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "10/01/2026 23:12"
+          }
+        ],
+        "data_adicao": "27/03/2026 08:30"
+      }
+    ],
+    "data_criacao": "29/03/2026 22:30"
+  },
+  {
+    "id": "086eea8b",
+    "nome": "Vanessa Ferreira Teste 19",
+    "telefone": "(85) 90019-0703",
+    "carros": [
+      {
+        "id": "056afe8b",
+        "marca": "Volkswagen",
+        "modelo": "Virtus",
+        "ano": "2013",
+        "placa": "TWE9097",
+        "servicos": [
+          {
+            "id": "166714bd",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "09/01/2026 14:43"
+          },
+          {
+            "id": "9da7a718",
+            "servico": "Outro",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "11/01/2026 07:15"
+          },
+          {
+            "id": "9b825b54",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/01/2026 22:44"
+          }
+        ],
+        "data_adicao": "28/03/2026 22:28"
+      },
+      {
+        "id": "2b97c197",
+        "marca": "Ford",
+        "modelo": "Ka",
+        "ano": "2016",
+        "placa": "TXF9108",
+        "servicos": [
+          {
+            "id": "ec7dbbce",
+            "servico": "Suspensão",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "04/01/2026 11:39"
+          },
+          {
+            "id": "0e608d6f",
+            "servico": "Ar Condicionado",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "04/01/2026 15:51"
+          },
+          {
+            "id": "6dc97034",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "05/01/2026 21:56"
+          },
+          {
+            "id": "c6b78cf7",
+            "servico": "Ar Condicionado",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "07/01/2026 08:02"
+          },
+          {
+            "id": "f80da561",
+            "servico": "Reparo de Freios",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "08/01/2026 08:28"
+          },
+          {
+            "id": "970c6a2b",
+            "servico": "Ar Condicionado",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "09/01/2026 07:08"
+          },
+          {
+            "id": "2af046bb",
+            "servico": "Troca de Pneus",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "10/01/2026 08:14"
+          }
+        ],
+        "data_adicao": "28/03/2026 03:06"
+      },
+      {
+        "id": "5f82d045",
+        "marca": "Fiat",
+        "modelo": "Toro",
+        "ano": "2017",
+        "placa": "TYG9219",
+        "servicos": [
+          {
+            "id": "78be9802",
+            "servico": "Suspensão",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "06/01/2026 09:03"
+          },
+          {
+            "id": "fc388f43",
+            "servico": "Reparo do Motor",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "07/01/2026 07:03"
+          },
+          {
+            "id": "ec5fe76b",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "07/01/2026 17:08"
+          }
+        ],
+        "data_adicao": "26/03/2026 19:37"
+      }
+    ],
+    "data_criacao": "28/03/2026 23:24"
+  },
+  {
+    "id": "78e0f8ec",
+    "nome": "Gustavo Gomes Teste 20",
+    "telefone": "(85) 90020-0740",
+    "carros": [
+      {
+        "id": "9f74d2b5",
+        "marca": "Hyundai",
+        "modelo": "i30",
+        "ano": "2023",
+        "placa": "UXF0000",
+        "servicos": [
+          {
+            "id": "eb3ae7aa",
+            "servico": "Alinhamento",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "03/01/2026 00:23"
+          },
+          {
+            "id": "b11c0b82",
+            "servico": "Reparo de Freios",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "03/01/2026 22:33"
+          },
+          {
+            "id": "713c5e93",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "04/01/2026 14:23"
+          },
+          {
+            "id": "b9510d42",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "05/01/2026 14:45"
+          },
+          {
+            "id": "6a8c8df1",
+            "servico": "Elétrica",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "07/01/2026 10:41"
+          }
+        ],
+        "data_adicao": "28/03/2026 08:32"
+      },
+      {
+        "id": "bdc791f8",
+        "marca": "Renault",
+        "modelo": "Logan",
+        "ano": "2012",
+        "placa": "UYG0111",
+        "servicos": [
+          {
+            "id": "419ff4b8",
+            "servico": "Troca de Óleo",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "01/01/2026 12:23"
+          },
+          {
+            "id": "18d942b0",
+            "servico": "Troca de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "03/01/2026 01:43"
+          },
+          {
+            "id": "c88a97bc",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "04/01/2026 07:02"
+          },
+          {
+            "id": "4f540b95",
+            "servico": "Reparo do Motor",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "05/01/2026 11:37"
+          }
+        ],
+        "data_adicao": "27/03/2026 06:42"
+      }
+    ],
+    "data_criacao": "27/03/2026 23:16"
+  },
+  {
+    "id": "453296c5",
+    "nome": "Rodrigo Almeida Teste 21",
+    "telefone": "(85) 90021-0777",
+    "carros": [
+      {
+        "id": "69849cab",
+        "marca": "Hyundai",
+        "modelo": "HB20",
+        "ano": "2018",
+        "placa": "VYG1013",
+        "servicos": [
+          {
+            "id": "4fb68243",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "25/12/2025 22:13"
+          },
+          {
+            "id": "af8b4072",
+            "servico": "Revisão Geral",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "26/12/2025 21:56"
+          },
+          {
+            "id": "2e670665",
+            "servico": "Elétrica",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "27/12/2025 12:52"
+          },
+          {
+            "id": "3c094995",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "29/12/2025 05:59"
+          },
+          {
+            "id": "92dc749b",
+            "servico": "Reparo do Motor",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "30/12/2025 08:25"
+          },
+          {
+            "id": "adecb612",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "30/12/2025 13:10"
+          },
+          {
+            "id": "ceb75d65",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "31/12/2025 17:23"
+          },
+          {
+            "id": "90a1aae5",
+            "servico": "Troca de Óleo",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "02/01/2026 11:21"
+          }
+        ],
+        "data_adicao": "26/03/2026 23:17"
+      },
+      {
+        "id": "0641e188",
+        "marca": "Honda",
+        "modelo": "City",
+        "ano": "2025",
+        "placa": "VZH1124",
+        "servicos": [
+          {
+            "id": "b93f7eb8",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "27/12/2025 05:39"
+          },
+          {
+            "id": "20aeec88",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "28/12/2025 04:44"
+          },
+          {
+            "id": "a9991795",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "29/12/2025 00:28"
+          },
+          {
+            "id": "6de1ce0f",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "29/12/2025 19:10"
+          },
+          {
+            "id": "4a91d77d",
+            "servico": "Outro",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "31/12/2025 04:29"
+          }
+        ],
+        "data_adicao": "25/03/2026 16:41"
+      },
+      {
+        "id": "2dea8e3e",
+        "marca": "Honda",
+        "modelo": "HR-V",
+        "ano": "2024",
+        "placa": "VAI1235",
+        "servicos": [
+          {
+            "id": "f07a59fd",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "22/12/2025 02:46"
+          },
+          {
+            "id": "03be2445",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "22/12/2025 21:48"
+          },
+          {
+            "id": "ae8a134f",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "23/12/2025 19:46"
+          },
+          {
+            "id": "035244f1",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "25/12/2025 03:13"
+          },
+          {
+            "id": "af20117a",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "26/12/2025 09:20"
+          },
+          {
+            "id": "319a71be",
+            "servico": "Elétrica",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "26/12/2025 15:30"
+          },
+          {
+            "id": "48a5cad4",
+            "servico": "Elétrica",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "27/12/2025 13:51"
+          },
+          {
+            "id": "6a42d4ef",
+            "servico": "Reparo de Freios",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "28/12/2025 17:02"
+          }
+        ],
+        "data_adicao": "24/03/2026 14:55"
+      },
+      {
+        "id": "05673075",
+        "marca": "Honda",
+        "modelo": "City",
+        "ano": "2019",
+        "placa": "VBJ1346",
+        "servicos": [
+          {
+            "id": "21789e29",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "21/12/2025 00:27"
+          },
+          {
+            "id": "d3ae7e77",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "21/12/2025 21:17"
+          },
+          {
+            "id": "eb78c18d",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "23/12/2025 10:35"
+          },
+          {
+            "id": "588170a8",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "23/12/2025 13:45"
+          },
+          {
+            "id": "03777a09",
+            "servico": "Reparo de Freios",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "25/12/2025 10:22"
+          },
+          {
+            "id": "f31b23e6",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "26/12/2025 01:12"
+          },
+          {
+            "id": "01354b2e",
+            "servico": "Ar Condicionado",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "26/12/2025 20:52"
+          }
+        ],
+        "data_adicao": "24/03/2026 02:26"
+      }
+    ],
+    "data_criacao": "26/03/2026 22:01"
+  },
+  {
+    "id": "78eb565c",
+    "nome": "Bruno Santos Teste 22",
+    "telefone": "(85) 90022-0814",
+    "carros": [
+      {
+        "id": "6d49f13b",
+        "marca": "Hyundai",
+        "modelo": "HB20",
+        "ano": "2017",
+        "placa": "WZH2026",
+        "servicos": [
+          {
+            "id": "fdc26983",
+            "servico": "Elétrica",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "26/12/2025 00:31"
+          },
+          {
+            "id": "ec309426",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "27/12/2025 01:45"
+          },
+          {
+            "id": "c66003f2",
+            "servico": "Ar Condicionado",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "28/12/2025 02:34"
+          }
+        ],
+        "data_adicao": "25/03/2026 15:06"
+      },
+      {
+        "id": "7ac2db66",
         "marca": "Ford",
         "modelo": "Fiesta",
         "ano": "2021",
-        "placa": "DEF-9012",
-        "servicos": [],
-        "data_adicao": "16/04/2026 21:30"
+        "placa": "WAI2137",
+        "servicos": [
+          {
+            "id": "d550ef6b",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "18/12/2025 14:29"
+          },
+          {
+            "id": "283ab89c",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "20/12/2025 01:56"
+          },
+          {
+            "id": "fbf9bc45",
+            "servico": "Reparo de Freios",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "21/12/2025 04:42"
+          },
+          {
+            "id": "4c0f16b5",
+            "servico": "Troca de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "22/12/2025 05:29"
+          },
+          {
+            "id": "bd9743cf",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "23/12/2025 11:27"
+          },
+          {
+            "id": "91db32df",
+            "servico": "Outro",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "23/12/2025 15:08"
+          },
+          {
+            "id": "9154a985",
+            "servico": "Suspensão",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "25/12/2025 07:08"
+          },
+          {
+            "id": "91f0dc8e",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "25/12/2025 18:26"
+          }
+        ],
+        "data_adicao": "24/03/2026 16:42"
+      },
+      {
+        "id": "d2ab905a",
+        "marca": "Ford",
+        "modelo": "Fiesta",
+        "ano": "2014",
+        "placa": "WBJ2248",
+        "servicos": [
+          {
+            "id": "bb60071c",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "21/12/2025 04:16"
+          },
+          {
+            "id": "c7e30f85",
+            "servico": "Outro",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "21/12/2025 21:11"
+          },
+          {
+            "id": "901ef76c",
+            "servico": "Troca de Óleo",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "23/12/2025 00:07"
+          },
+          {
+            "id": "1c74c155",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "23/12/2025 12:22"
+          }
+        ],
+        "data_adicao": "24/03/2026 04:31"
+      },
+      {
+        "id": "f19f81ed",
+        "marca": "Renault",
+        "modelo": "Sandero",
+        "ano": "2017",
+        "placa": "WCK2359",
+        "servicos": [
+          {
+            "id": "daab77da",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "14/12/2025 22:45"
+          },
+          {
+            "id": "4f286849",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "15/12/2025 20:53"
+          },
+          {
+            "id": "5e9b7954",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "17/12/2025 02:45"
+          },
+          {
+            "id": "47a04c17",
+            "servico": "Suspensão",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "18/12/2025 00:15"
+          },
+          {
+            "id": "d475e0a1",
+            "servico": "Elétrica",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "19/12/2025 03:47"
+          },
+          {
+            "id": "920f9c69",
+            "servico": "Reparo do Motor",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "20/12/2025 04:59"
+          },
+          {
+            "id": "1111e9c5",
+            "servico": "Troca de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "20/12/2025 19:17"
+          },
+          {
+            "id": "886dbeab",
+            "servico": "Elétrica",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "21/12/2025 21:01"
+          }
+        ],
+        "data_adicao": "23/03/2026 03:58"
       }
     ],
-    "data_criacao": "16/04/2026 21:30"
+    "data_criacao": "25/03/2026 20:54"
+  },
+  {
+    "id": "21054865",
+    "nome": "Camila Silva Teste 23",
+    "telefone": "(85) 90023-0851",
+    "carros": [
+      {
+        "id": "8c070476",
+        "marca": "Toyota",
+        "modelo": "Etios",
+        "ano": "2020",
+        "placa": "XAI3039",
+        "servicos": [
+          {
+            "id": "30bf5225",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "18/12/2025 21:11"
+          },
+          {
+            "id": "2ad74ad4",
+            "servico": "Troca de Óleo",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "19/12/2025 20:06"
+          },
+          {
+            "id": "e3ff060d",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "21/12/2025 07:42"
+          },
+          {
+            "id": "1db3aa42",
+            "servico": "Alinhamento",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "22/12/2025 00:51"
+          },
+          {
+            "id": "6cb93693",
+            "servico": "Alinhamento",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "23/12/2025 09:27"
+          }
+        ],
+        "data_adicao": "25/03/2026 10:53"
+      },
+      {
+        "id": "8d6e658e",
+        "marca": "Honda",
+        "modelo": "Civic",
+        "ano": "2016",
+        "placa": "XBJ3140",
+        "servicos": [
+          {
+            "id": "b44730c3",
+            "servico": "Elétrica",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "18/12/2025 09:43"
+          },
+          {
+            "id": "5120be17",
+            "servico": "Troca de Óleo",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "18/12/2025 22:10"
+          },
+          {
+            "id": "e801dc55",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "20/12/2025 02:43"
+          },
+          {
+            "id": "4ddca702",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "21/12/2025 08:01"
+          }
+        ],
+        "data_adicao": "23/03/2026 20:12"
+      },
+      {
+        "id": "242f8e77",
+        "marca": "Toyota",
+        "modelo": "Hilux",
+        "ano": "2023",
+        "placa": "XCK3251",
+        "servicos": [
+          {
+            "id": "81fd3dbb",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "15/12/2025 22:55"
+          },
+          {
+            "id": "cf404e99",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "16/12/2025 19:27"
+          },
+          {
+            "id": "1391cf5f",
+            "servico": "Revisão Geral",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "17/12/2025 17:24"
+          },
+          {
+            "id": "e8559567",
+            "servico": "Troca de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "19/12/2025 11:11"
+          }
+        ],
+        "data_adicao": "22/03/2026 20:48"
+      }
+    ],
+    "data_criacao": "24/03/2026 15:26"
+  },
+  {
+    "id": "25ad9011",
+    "nome": "Camila Ferreira Teste 24",
+    "telefone": "(85) 90024-0888",
+    "carros": [
+      {
+        "id": "7529cd78",
+        "marca": "Toyota",
+        "modelo": "Yaris",
+        "ano": "2024",
+        "placa": "YBJ4042",
+        "servicos": [
+          {
+            "id": "d5b89a48",
+            "servico": "Revisão Geral",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "16/12/2025 10:28"
+          },
+          {
+            "id": "1ec8fc7b",
+            "servico": "Suspensão",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "16/12/2025 17:03"
+          },
+          {
+            "id": "d7c4f88b",
+            "servico": "Revisão Geral",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "17/12/2025 12:08"
+          }
+        ],
+        "data_adicao": "23/03/2026 18:29"
+      },
+      {
+        "id": "4295925e",
+        "marca": "Volkswagen",
+        "modelo": "Virtus",
+        "ano": "2023",
+        "placa": "YCK4153",
+        "servicos": [
+          {
+            "id": "927e2106",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "11/12/2025 02:28"
+          },
+          {
+            "id": "56cdc7a8",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "12/12/2025 03:48"
+          },
+          {
+            "id": "eafba72c",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "13/12/2025 02:18"
+          },
+          {
+            "id": "b24a331a",
+            "servico": "Alinhamento",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "14/12/2025 04:54"
+          },
+          {
+            "id": "e102d7c3",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "15/12/2025 10:32"
+          },
+          {
+            "id": "d7037c80",
+            "servico": "Suspensão",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "16/12/2025 07:46"
+          }
+        ],
+        "data_adicao": "23/03/2026 09:55"
+      },
+      {
+        "id": "dcfa1eac",
+        "marca": "Hyundai",
+        "modelo": "i30",
+        "ano": "2013",
+        "placa": "YDL4264",
+        "servicos": [
+          {
+            "id": "25e35425",
+            "servico": "Reparo do Motor",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "09/12/2025 22:12"
+          },
+          {
+            "id": "995bf185",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "11/12/2025 09:04"
+          },
+          {
+            "id": "945769dc",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "11/12/2025 23:51"
+          },
+          {
+            "id": "da7eb292",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "13/12/2025 06:19"
+          },
+          {
+            "id": "effc6743",
+            "servico": "Reparo do Motor",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "13/12/2025 12:22"
+          }
+        ],
+        "data_adicao": "22/03/2026 06:16"
+      },
+      {
+        "id": "f2cc5650",
+        "marca": "Fiat",
+        "modelo": "Toro",
+        "ano": "2013",
+        "placa": "YEM4375",
+        "servicos": [
+          {
+            "id": "14156fc4",
+            "servico": "Reparo de Freios",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "09/12/2025 21:48"
+          },
+          {
+            "id": "cdb7087d",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "11/12/2025 06:06"
+          },
+          {
+            "id": "ba20d638",
+            "servico": "Revisão Geral",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "12/12/2025 02:22"
+          }
+        ],
+        "data_adicao": "20/03/2026 11:55"
+      }
+    ],
+    "data_criacao": "24/03/2026 00:11"
+  },
+  {
+    "id": "658ed7d5",
+    "nome": "Aline Ferreira Teste 25",
+    "telefone": "(85) 90025-0925",
+    "carros": [
+      {
+        "id": "aa03d0af",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "ano": "2022",
+        "placa": "ZCK5055",
+        "servicos": [
+          {
+            "id": "ce2035d6",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "05/12/2025 19:27"
+          },
+          {
+            "id": "8aaf1b98",
+            "servico": "Revisão Geral",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "06/12/2025 21:02"
+          },
+          {
+            "id": "7a6d9165",
+            "servico": "Elétrica",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "07/12/2025 14:22"
+          },
+          {
+            "id": "21240ae1",
+            "servico": "Revisão Geral",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "08/12/2025 17:48"
+          },
+          {
+            "id": "021d73e9",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "09/12/2025 15:27"
+          },
+          {
+            "id": "f37c672c",
+            "servico": "Elétrica",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "11/12/2025 10:42"
+          },
+          {
+            "id": "bb306129",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "12/12/2025 11:41"
+          },
+          {
+            "id": "44e2ae0e",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "12/12/2025 18:59"
+          }
+        ],
+        "data_adicao": "22/03/2026 23:30"
+      },
+      {
+        "id": "7e201540",
+        "marca": "Fiat",
+        "modelo": "Mobi",
+        "ano": "2013",
+        "placa": "ZDL5166",
+        "servicos": [
+          {
+            "id": "57866612",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "09/12/2025 05:11"
+          },
+          {
+            "id": "3c5d6a03",
+            "servico": "Reparo do Motor",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "10/12/2025 03:01"
+          },
+          {
+            "id": "3b14dfb2",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "10/12/2025 20:17"
+          }
+        ],
+        "data_adicao": "22/03/2026 02:06"
+      },
+      {
+        "id": "42bab410",
+        "marca": "Renault",
+        "modelo": "Sandero",
+        "ano": "2013",
+        "placa": "ZEM5277",
+        "servicos": [
+          {
+            "id": "15ec6393",
+            "servico": "Outro",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "05/12/2025 18:16"
+          },
+          {
+            "id": "621d1574",
+            "servico": "Suspensão",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "06/12/2025 14:28"
+          },
+          {
+            "id": "6759625e",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "08/12/2025 08:59"
+          },
+          {
+            "id": "b4ac3d18",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "09/12/2025 05:53"
+          }
+        ],
+        "data_adicao": "21/03/2026 01:53"
+      },
+      {
+        "id": "778f3e14",
+        "marca": "Fiat",
+        "modelo": "Mobi",
+        "ano": "2023",
+        "placa": "ZFN5388",
+        "servicos": [
+          {
+            "id": "61568e0c",
+            "servico": "Reparo do Motor",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "30/11/2025 07:30"
+          },
+          {
+            "id": "47d76dbd",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "30/11/2025 19:24"
+          },
+          {
+            "id": "98c064a1",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "02/12/2025 02:25"
+          },
+          {
+            "id": "9eba28f3",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "02/12/2025 15:54"
+          },
+          {
+            "id": "04d42b9f",
+            "servico": "Revisão Geral",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "03/12/2025 20:59"
+          },
+          {
+            "id": "8989cb1e",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "04/12/2025 20:49"
+          },
+          {
+            "id": "43419221",
+            "servico": "Alinhamento",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "06/12/2025 05:00"
+          },
+          {
+            "id": "fb15978b",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "07/12/2025 00:18"
+          }
+        ],
+        "data_adicao": "19/03/2026 15:46"
+      }
+    ],
+    "data_criacao": "22/03/2026 21:21"
+  },
+  {
+    "id": "b041d0ed",
+    "nome": "Vanessa Martins Teste 26",
+    "telefone": "(85) 90026-0962",
+    "carros": [
+      {
+        "id": "d61c15ab",
+        "marca": "Volkswagen",
+        "modelo": "Polo",
+        "ano": "2018",
+        "placa": "ADL6068",
+        "servicos": [
+          {
+            "id": "bf68abc8",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "02/12/2025 06:08"
+          },
+          {
+            "id": "48bcf94d",
+            "servico": "Troca de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "02/12/2025 19:09"
+          },
+          {
+            "id": "5ad543c1",
+            "servico": "Suspensão",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "04/12/2025 07:10"
+          },
+          {
+            "id": "4f743b9e",
+            "servico": "Troca de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "05/12/2025 03:38"
+          },
+          {
+            "id": "f07f7ed3",
+            "servico": "Outro",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "06/12/2025 00:17"
+          },
+          {
+            "id": "9fa1723d",
+            "servico": "Troca de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "07/12/2025 06:30"
+          },
+          {
+            "id": "bfac3104",
+            "servico": "Troca de Óleo",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "07/12/2025 19:41"
+          }
+        ],
+        "data_adicao": "21/03/2026 16:04"
+      },
+      {
+        "id": "f9fe0692",
+        "marca": "Hyundai",
+        "modelo": "HB20",
+        "ano": "2025",
+        "placa": "AEM6179",
+        "servicos": [
+          {
+            "id": "9c8121c5",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "03/12/2025 16:10"
+          },
+          {
+            "id": "7d68e5fa",
+            "servico": "Elétrica",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "04/12/2025 15:37"
+          },
+          {
+            "id": "33fdba0b",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "05/12/2025 15:01"
+          }
+        ],
+        "data_adicao": "21/03/2026 11:19"
+      }
+    ],
+    "data_criacao": "21/03/2026 15:16"
+  },
+  {
+    "id": "573caa25",
+    "nome": "Patrícia Rodrigues Teste 27",
+    "telefone": "(85) 90027-0999",
+    "carros": [
+      {
+        "id": "90911bb2",
+        "marca": "Chevrolet",
+        "modelo": "S10",
+        "ano": "2016",
+        "placa": "BEM7071",
+        "servicos": [
+          {
+            "id": "711e3a35",
+            "servico": "Revisão Geral",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "28/11/2025 01:35"
+          },
+          {
+            "id": "7f7c94cd",
+            "servico": "Revisão Geral",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "29/11/2025 07:02"
+          },
+          {
+            "id": "c7d8b3a3",
+            "servico": "Outro",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "29/11/2025 11:55"
+          },
+          {
+            "id": "20d33764",
+            "servico": "Revisão Geral",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "01/12/2025 00:55"
+          },
+          {
+            "id": "c21759df",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "01/12/2025 21:37"
+          },
+          {
+            "id": "713a5038",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "03/12/2025 06:22"
+          }
+        ],
+        "data_adicao": "20/03/2026 21:43"
+      },
+      {
+        "id": "db87c43f",
+        "marca": "Fiat",
+        "modelo": "Strada",
+        "ano": "2015",
+        "placa": "BFN7182",
+        "servicos": [
+          {
+            "id": "e202fa6d",
+            "servico": "Revisão Geral",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "28/11/2025 06:19"
+          },
+          {
+            "id": "ff8e253a",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "28/11/2025 17:04"
+          },
+          {
+            "id": "f0f8c744",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "30/11/2025 03:55"
+          },
+          {
+            "id": "bee8da69",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "01/12/2025 02:26"
+          }
+        ],
+        "data_adicao": "19/03/2026 19:21"
+      },
+      {
+        "id": "90b951fa",
+        "marca": "Renault",
+        "modelo": "Logan",
+        "ano": "2019",
+        "placa": "BGO7293",
+        "servicos": [
+          {
+            "id": "a634125f",
+            "servico": "Troca de Óleo",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "27/11/2025 02:19"
+          },
+          {
+            "id": "077365de",
+            "servico": "Alinhamento",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "27/11/2025 17:28"
+          },
+          {
+            "id": "9093dca9",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "28/11/2025 19:21"
+          }
+        ],
+        "data_adicao": "18/03/2026 15:54"
+      }
+    ],
+    "data_criacao": "20/03/2026 15:07"
+  },
+  {
+    "id": "80faa962",
+    "nome": "Larissa Rodrigues Teste 28",
+    "telefone": "(85) 90028-1036",
+    "carros": [
+      {
+        "id": "c7842012",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "ano": "2018",
+        "placa": "CFN8084",
+        "servicos": [
+          {
+            "id": "fe8ab528",
+            "servico": "Troca de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "24/11/2025 23:18"
+          },
+          {
+            "id": "ca529763",
+            "servico": "Ar Condicionado",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "26/11/2025 00:15"
+          },
+          {
+            "id": "d79955d4",
+            "servico": "Troca de Óleo",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "27/11/2025 10:14"
+          },
+          {
+            "id": "31153414",
+            "servico": "Troca de Pneus",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "27/11/2025 23:27"
+          }
+        ],
+        "data_adicao": "19/03/2026 21:02"
+      },
+      {
+        "id": "199736b4",
+        "marca": "Fiat",
+        "modelo": "Argo",
+        "ano": "2014",
+        "placa": "CGO8195",
+        "servicos": [
+          {
+            "id": "73717f02",
+            "servico": "Ar Condicionado",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "23/11/2025 19:48"
+          },
+          {
+            "id": "b4de4d2a",
+            "servico": "Revisão Geral",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "25/11/2025 05:12"
+          },
+          {
+            "id": "23abf96e",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "26/11/2025 01:15"
+          }
+        ],
+        "data_adicao": "19/03/2026 10:48"
+      },
+      {
+        "id": "a3ca1729",
+        "marca": "Volkswagen",
+        "modelo": "T-Cross",
+        "ano": "2024",
+        "placa": "CHP8206",
+        "servicos": [
+          {
+            "id": "0565f16f",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "19/11/2025 11:27"
+          },
+          {
+            "id": "2eea2a26",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "19/11/2025 13:14"
+          },
+          {
+            "id": "5653f0c3",
+            "servico": "Elétrica",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "20/11/2025 17:29"
+          },
+          {
+            "id": "fd2a3a03",
+            "servico": "Elétrica",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "22/11/2025 06:25"
+          },
+          {
+            "id": "57353a95",
+            "servico": "Ar Condicionado",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "23/11/2025 00:51"
+          },
+          {
+            "id": "7c48cf0a",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "24/11/2025 07:12"
+          }
+        ],
+        "data_adicao": "18/03/2026 01:07"
+      },
+      {
+        "id": "243c53a4",
+        "marca": "Honda",
+        "modelo": "City",
+        "ano": "2021",
+        "placa": "CIQ8317",
+        "servicos": [
+          {
+            "id": "9bd42087",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "18/11/2025 10:14"
+          },
+          {
+            "id": "889f47ee",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "19/11/2025 06:58"
+          },
+          {
+            "id": "096b2351",
+            "servico": "Elétrica",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "20/11/2025 06:17"
+          },
+          {
+            "id": "3fc58f96",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "20/11/2025 12:47"
+          },
+          {
+            "id": "cc4b2214",
+            "servico": "Outro",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "21/11/2025 16:20"
+          }
+        ],
+        "data_adicao": "16/03/2026 13:43"
+      }
+    ],
+    "data_criacao": "20/03/2026 05:49"
+  },
+  {
+    "id": "6da28ea6",
+    "nome": "Gustavo Gomes Teste 29",
+    "telefone": "(85) 90029-1073",
+    "carros": [
+      {
+        "id": "14f975fc",
+        "marca": "Volkswagen",
+        "modelo": "Virtus",
+        "ano": "2023",
+        "placa": "DGO9097",
+        "servicos": [
+          {
+            "id": "37919f08",
+            "servico": "Ar Condicionado",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "20/11/2025 01:39"
+          },
+          {
+            "id": "e8edc210",
+            "servico": "Ar Condicionado",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "20/11/2025 14:20"
+          },
+          {
+            "id": "0954329d",
+            "servico": "Troca de Óleo",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "21/11/2025 19:37"
+          },
+          {
+            "id": "f245c87f",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "22/11/2025 12:04"
+          }
+        ],
+        "data_adicao": "18/03/2026 20:52"
+      },
+      {
+        "id": "fc9e4cce",
+        "marca": "Hyundai",
+        "modelo": "i30",
+        "ano": "2022",
+        "placa": "DHP9108",
+        "servicos": [
+          {
+            "id": "0fe6c40e",
+            "servico": "Revisão Geral",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "14/11/2025 02:48"
+          },
+          {
+            "id": "2665550c",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "14/11/2025 22:58"
+          },
+          {
+            "id": "a58ef86a",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "16/11/2025 02:43"
+          },
+          {
+            "id": "3c4cb546",
+            "servico": "Reparo de Freios",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "16/11/2025 20:28"
+          },
+          {
+            "id": "696e64d6",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "17/11/2025 13:05"
+          },
+          {
+            "id": "09b99681",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "19/11/2025 02:01"
+          },
+          {
+            "id": "4c0e9801",
+            "servico": "Alinhamento",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "20/11/2025 03:15"
+          },
+          {
+            "id": "1952dfc6",
+            "servico": "Suspensão",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "20/11/2025 16:20"
+          }
+        ],
+        "data_adicao": "18/03/2026 02:05"
+      },
+      {
+        "id": "2d8b8cf7",
+        "marca": "Honda",
+        "modelo": "Fit",
+        "ano": "2019",
+        "placa": "DIQ9219",
+        "servicos": [
+          {
+            "id": "44087bba",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "11/11/2025 17:51"
+          },
+          {
+            "id": "33bc40a1",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "13/11/2025 08:07"
+          },
+          {
+            "id": "7557e523",
+            "servico": "Troca de Óleo",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "13/11/2025 22:29"
+          },
+          {
+            "id": "193e704d",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "14/11/2025 15:36"
+          },
+          {
+            "id": "ea4b61e3",
+            "servico": "Outro",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "16/11/2025 04:47"
+          },
+          {
+            "id": "d1c8b734",
+            "servico": "Troca de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "17/11/2025 08:11"
+          },
+          {
+            "id": "0ba48752",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "17/11/2025 18:06"
+          },
+          {
+            "id": "83c08749",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "19/11/2025 05:38"
+          }
+        ],
+        "data_adicao": "17/03/2026 06:24"
+      }
+    ],
+    "data_criacao": "18/03/2026 14:51"
+  },
+  {
+    "id": "31d74ecd",
+    "nome": "Larissa Dias Teste 30",
+    "telefone": "(85) 90030-1110",
+    "carros": [
+      {
+        "id": "e259b6c1",
+        "marca": "Chevrolet",
+        "modelo": "Cruze",
+        "ano": "2017",
+        "placa": "EHP0000",
+        "servicos": [
+          {
+            "id": "cf8da720",
+            "servico": "Reparo de Freios",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "13/11/2025 11:55"
+          },
+          {
+            "id": "b7b918a7",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "14/11/2025 23:00"
+          },
+          {
+            "id": "933ca32a",
+            "servico": "Outro",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "16/11/2025 06:24"
+          },
+          {
+            "id": "b96a9123",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "16/11/2025 18:03"
+          },
+          {
+            "id": "a6c3b886",
+            "servico": "Suspensão",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "18/11/2025 09:09"
+          }
+        ],
+        "data_adicao": "18/03/2026 01:54"
+      },
+      {
+        "id": "78b2b4f9",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "ano": "2016",
+        "placa": "EIQ0111",
+        "servicos": [
+          {
+            "id": "eb29e5d2",
+            "servico": "Suspensão",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "10/11/2025 06:11"
+          },
+          {
+            "id": "46831053",
+            "servico": "Troca de Óleo",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "11/11/2025 02:14"
+          },
+          {
+            "id": "413f2a41",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "11/11/2025 13:39"
+          },
+          {
+            "id": "fc225a22",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "13/11/2025 06:04"
+          },
+          {
+            "id": "dca6d4ac",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "14/11/2025 03:38"
+          },
+          {
+            "id": "4fe1aab3",
+            "servico": "Reparo de Freios",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "15/11/2025 06:56"
+          },
+          {
+            "id": "f4f48204",
+            "servico": "Elétrica",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "16/11/2025 01:32"
+          }
+        ],
+        "data_adicao": "16/03/2026 14:53"
+      },
+      {
+        "id": "b3b7cca9",
+        "marca": "Ford",
+        "modelo": "EcoSport",
+        "ano": "2020",
+        "placa": "EJR0222",
+        "servicos": [
+          {
+            "id": "bba45269",
+            "servico": "Troca de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "10/11/2025 03:09"
+          },
+          {
+            "id": "99577475",
+            "servico": "Alinhamento",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "11/11/2025 03:29"
+          },
+          {
+            "id": "a9ba2c27",
+            "servico": "Alinhamento",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "12/11/2025 03:26"
+          },
+          {
+            "id": "f2b70b17",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "12/11/2025 20:30"
+          },
+          {
+            "id": "9c78ab79",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "13/11/2025 14:44"
+          }
+        ],
+        "data_adicao": "16/03/2026 00:06"
+      },
+      {
+        "id": "56a69fcc",
+        "marca": "Chevrolet",
+        "modelo": "Onix",
+        "ano": "2022",
+        "placa": "EKS0333",
+        "servicos": [
+          {
+            "id": "73f2478f",
+            "servico": "Suspensão",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "10/11/2025 00:11"
+          },
+          {
+            "id": "7d04f993",
+            "servico": "Suspensão",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "10/11/2025 13:43"
+          },
+          {
+            "id": "a06e23aa",
+            "servico": "Reparo de Freios",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "12/11/2025 06:25"
+          }
+        ],
+        "data_adicao": "15/03/2026 04:36"
+      }
+    ],
+    "data_criacao": "18/03/2026 07:20"
+  },
+  {
+    "id": "13a133e5",
+    "nome": "Carlos Rocha Teste 31",
+    "telefone": "(85) 90031-1147",
+    "carros": [
+      {
+        "id": "4dae1274",
+        "marca": "Hyundai",
+        "modelo": "Tucson",
+        "ano": "2023",
+        "placa": "FIQ1013",
+        "servicos": [
+          {
+            "id": "8202e35a",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "07/11/2025 08:07"
+          },
+          {
+            "id": "81ffedde",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "08/11/2025 00:56"
+          },
+          {
+            "id": "bd464c58",
+            "servico": "Ar Condicionado",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "08/11/2025 17:16"
+          },
+          {
+            "id": "bf9e0fd8",
+            "servico": "Elétrica",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "10/11/2025 09:57"
+          },
+          {
+            "id": "0111171b",
+            "servico": "Ar Condicionado",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "11/11/2025 08:52"
+          },
+          {
+            "id": "21a457b4",
+            "servico": "Elétrica",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/11/2025 19:22"
+          },
+          {
+            "id": "211b7463",
+            "servico": "Reparo de Freios",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "13/11/2025 04:07"
+          }
+        ],
+        "data_adicao": "17/03/2026 05:05"
+      },
+      {
+        "id": "f6c8545d",
+        "marca": "Renault",
+        "modelo": "Kwid",
+        "ano": "2020",
+        "placa": "FJR1124",
+        "servicos": [
+          {
+            "id": "0713881e",
+            "servico": "Troca de Óleo",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "06/11/2025 00:06"
+          },
+          {
+            "id": "0cb7b3d1",
+            "servico": "Troca de Óleo",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "06/11/2025 17:46"
+          },
+          {
+            "id": "41c5173e",
+            "servico": "Troca de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "07/11/2025 23:34"
+          },
+          {
+            "id": "32d180c9",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "08/11/2025 13:59"
+          },
+          {
+            "id": "a159f75f",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "09/11/2025 17:47"
+          },
+          {
+            "id": "8f4fcdb0",
+            "servico": "Troca de Óleo",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "11/11/2025 07:18"
+          }
+        ],
+        "data_adicao": "16/03/2026 09:16"
+      },
+      {
+        "id": "3a586c69",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "ano": "2019",
+        "placa": "FKS1235",
+        "servicos": [
+          {
+            "id": "ed3731ea",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "06/11/2025 23:26"
+          },
+          {
+            "id": "a6b41bf1",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "07/11/2025 23:53"
+          },
+          {
+            "id": "01638d4c",
+            "servico": "Troca de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "09/11/2025 06:01"
+          }
+        ],
+        "data_adicao": "15/03/2026 09:07"
+      },
+      {
+        "id": "35b6d57a",
+        "marca": "Volkswagen",
+        "modelo": "T-Cross",
+        "ano": "2013",
+        "placa": "FLT1346",
+        "servicos": [
+          {
+            "id": "247a600e",
+            "servico": "Outro",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "03/11/2025 18:26"
+          },
+          {
+            "id": "6e3dc385",
+            "servico": "Troca de Óleo",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "04/11/2025 21:07"
+          },
+          {
+            "id": "58bcb845",
+            "servico": "Outro",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "06/11/2025 11:02"
+          },
+          {
+            "id": "9b115c87",
+            "servico": "Ar Condicionado",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "06/11/2025 19:42"
+          }
+        ],
+        "data_adicao": "14/03/2026 04:35"
+      }
+    ],
+    "data_criacao": "16/03/2026 21:28"
+  },
+  {
+    "id": "7b2bc93d",
+    "nome": "Carlos Ferreira Teste 32",
+    "telefone": "(85) 90032-1184",
+    "carros": [
+      {
+        "id": "8bb3ae04",
+        "marca": "Honda",
+        "modelo": "Civic",
+        "ano": "2024",
+        "placa": "GJR2026",
+        "servicos": [
+          {
+            "id": "0fd0aab3",
+            "servico": "Suspensão",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "01/11/2025 04:31"
+          },
+          {
+            "id": "1ac1af73",
+            "servico": "Outro",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "01/11/2025 17:12"
+          },
+          {
+            "id": "ec1e6ad6",
+            "servico": "Ar Condicionado",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "03/11/2025 03:58"
+          },
+          {
+            "id": "d4d635d1",
+            "servico": "Ar Condicionado",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "04/11/2025 10:42"
+          },
+          {
+            "id": "6c6c5670",
+            "servico": "Troca de Óleo",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "04/11/2025 21:36"
+          },
+          {
+            "id": "06328a6f",
+            "servico": "Reparo de Freios",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "06/11/2025 04:03"
+          },
+          {
+            "id": "e5a8efac",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "06/11/2025 16:48"
+          },
+          {
+            "id": "92102b37",
+            "servico": "Reparo do Motor",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "08/11/2025 04:37"
+          }
+        ],
+        "data_adicao": "16/03/2026 07:08"
+      },
+      {
+        "id": "6644f43c",
+        "marca": "Chevrolet",
+        "modelo": "S10",
+        "ano": "2016",
+        "placa": "GKS2137",
+        "servicos": [
+          {
+            "id": "85c69264",
+            "servico": "Troca de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "02/11/2025 06:02"
+          },
+          {
+            "id": "6eaf04c8",
+            "servico": "Outro",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "02/11/2025 22:41"
+          },
+          {
+            "id": "85e3c383",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "03/11/2025 19:30"
+          },
+          {
+            "id": "0fe4aaf2",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "05/11/2025 10:28"
+          },
+          {
+            "id": "e1aa270f",
+            "servico": "Troca de Óleo",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "05/11/2025 15:07"
+          }
+        ],
+        "data_adicao": "14/03/2026 18:20"
+      }
+    ],
+    "data_criacao": "16/03/2026 03:56"
+  },
+  {
+    "id": "394c5b8c",
+    "nome": "Juliana Rodrigues Teste 33",
+    "telefone": "(85) 90033-1221",
+    "carros": [
+      {
+        "id": "a996f95d",
+        "marca": "Volkswagen",
+        "modelo": "Virtus",
+        "ano": "2012",
+        "placa": "HKS3039",
+        "servicos": [
+          {
+            "id": "335ed6de",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "27/10/2025 20:37"
+          },
+          {
+            "id": "f7ce2020",
+            "servico": "Reparo do Motor",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "29/10/2025 09:38"
+          },
+          {
+            "id": "898e5975",
+            "servico": "Outro",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "30/10/2025 10:33"
+          },
+          {
+            "id": "91e1db4d",
+            "servico": "Reparo de Freios",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "31/10/2025 09:16"
+          },
+          {
+            "id": "e6872a7a",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "31/10/2025 15:45"
+          },
+          {
+            "id": "84b4a1a3",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "02/11/2025 04:34"
+          },
+          {
+            "id": "753eb036",
+            "servico": "Reparo do Motor",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "02/11/2025 18:17"
+          }
+        ],
+        "data_adicao": "15/03/2026 01:31"
+      },
+      {
+        "id": "d5b22e5b",
+        "marca": "Toyota",
+        "modelo": "Hilux",
+        "ano": "2015",
+        "placa": "HLT3140",
+        "servicos": [
+          {
+            "id": "cbba828a",
+            "servico": "Troca de Óleo",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "24/10/2025 12:41"
+          },
+          {
+            "id": "f8333acf",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "26/10/2025 01:24"
+          },
+          {
+            "id": "8f9e09e8",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "27/10/2025 00:52"
+          },
+          {
+            "id": "d58aa859",
+            "servico": "Revisão Geral",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "27/10/2025 21:44"
+          },
+          {
+            "id": "e549032f",
+            "servico": "Reparo de Freios",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "29/10/2025 02:34"
+          },
+          {
+            "id": "5b1f48cb",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "30/10/2025 02:26"
+          },
+          {
+            "id": "81e57a93",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "30/10/2025 22:52"
+          },
+          {
+            "id": "d3d1a3a0",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "01/11/2025 04:06"
+          }
+        ],
+        "data_adicao": "14/03/2026 11:34"
+      },
+      {
+        "id": "e117d5b6",
+        "marca": "Ford",
+        "modelo": "Ranger",
+        "ano": "2014",
+        "placa": "HMU3251",
+        "servicos": [
+          {
+            "id": "48fd2c5d",
+            "servico": "Reparo de Freios",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "26/10/2025 21:40"
+          },
+          {
+            "id": "fc3934c5",
+            "servico": "Suspensão",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "28/10/2025 03:02"
+          },
+          {
+            "id": "92bc0f9e",
+            "servico": "Alinhamento",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "28/10/2025 18:09"
+          },
+          {
+            "id": "9297f993",
+            "servico": "Revisão Geral",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "29/10/2025 23:14"
+          }
+        ],
+        "data_adicao": "12/03/2026 12:00"
+      },
+      {
+        "id": "808b0686",
+        "marca": "Hyundai",
+        "modelo": "Creta",
+        "ano": "2014",
+        "placa": "HNV3362",
+        "servicos": [
+          {
+            "id": "965f99f3",
+            "servico": "Troca de Óleo",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "20/10/2025 18:15"
+          },
+          {
+            "id": "b9453526",
+            "servico": "Suspensão",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "21/10/2025 14:19"
+          },
+          {
+            "id": "8147540f",
+            "servico": "Reparo de Freios",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "23/10/2025 10:11"
+          },
+          {
+            "id": "657ed9ab",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "24/10/2025 05:18"
+          },
+          {
+            "id": "565fced8",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "25/10/2025 09:05"
+          },
+          {
+            "id": "cc2a9618",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "26/10/2025 11:24"
+          },
+          {
+            "id": "390b7b25",
+            "servico": "Ar Condicionado",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "26/10/2025 19:48"
+          },
+          {
+            "id": "516179fb",
+            "servico": "Ar Condicionado",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "28/10/2025 05:52"
+          }
+        ],
+        "data_adicao": "11/03/2026 22:50"
+      }
+    ],
+    "data_criacao": "15/03/2026 11:17"
+  },
+  {
+    "id": "796bd410",
+    "nome": "Tatiane Ferreira Teste 34",
+    "telefone": "(85) 90034-1258",
+    "carros": [
+      {
+        "id": "3b9e87bf",
+        "marca": "Fiat",
+        "modelo": "Argo",
+        "ano": "2020",
+        "placa": "ILT4042",
+        "servicos": [
+          {
+            "id": "885bd66f",
+            "servico": "Reparo do Motor",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "21/10/2025 18:20"
+          },
+          {
+            "id": "140eaedf",
+            "servico": "Suspensão",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "23/10/2025 09:25"
+          },
+          {
+            "id": "7c7b7a24",
+            "servico": "Troca de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "23/10/2025 14:56"
+          },
+          {
+            "id": "033c3c1e",
+            "servico": "Reparo de Freios",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "24/10/2025 13:36"
+          },
+          {
+            "id": "1e2c48fa",
+            "servico": "Reparo do Motor",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "26/10/2025 00:25"
+          },
+          {
+            "id": "71632619",
+            "servico": "Elétrica",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "27/10/2025 00:33"
+          },
+          {
+            "id": "bc64e943",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "28/10/2025 04:38"
+          },
+          {
+            "id": "ebb89470",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "29/10/2025 06:44"
+          }
+        ],
+        "data_adicao": "14/03/2026 10:10"
+      },
+      {
+        "id": "adaed484",
+        "marca": "Toyota",
+        "modelo": "Hilux",
+        "ano": "2013",
+        "placa": "IMU4153",
+        "servicos": [
+          {
+            "id": "0152f361",
+            "servico": "Revisão Geral",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "22/10/2025 05:13"
+          },
+          {
+            "id": "d822dfae",
+            "servico": "Suspensão",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "23/10/2025 05:51"
+          },
+          {
+            "id": "390ae547",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "23/10/2025 18:14"
+          },
+          {
+            "id": "16792618",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "25/10/2025 03:48"
+          },
+          {
+            "id": "55060c3e",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "26/10/2025 04:37"
+          },
+          {
+            "id": "dfb3f817",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "26/10/2025 16:56"
+          }
+        ],
+        "data_adicao": "13/03/2026 07:02"
+      },
+      {
+        "id": "5db2bd59",
+        "marca": "Ford",
+        "modelo": "Ka",
+        "ano": "2016",
+        "placa": "INV4264",
+        "servicos": [
+          {
+            "id": "96e66994",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "22/10/2025 10:44"
+          },
+          {
+            "id": "6b5e46c4",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "22/10/2025 13:04"
+          },
+          {
+            "id": "49d7d5f9",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "23/10/2025 23:02"
+          },
+          {
+            "id": "25ffec81",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "24/10/2025 16:57"
+          }
+        ],
+        "data_adicao": "11/03/2026 22:36"
+      },
+      {
+        "id": "1f9a0303",
+        "marca": "Honda",
+        "modelo": "Fit",
+        "ano": "2021",
+        "placa": "IOW4375",
+        "servicos": [
+          {
+            "id": "7c555424",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "17/10/2025 03:41"
+          },
+          {
+            "id": "53d24a2c",
+            "servico": "Elétrica",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "18/10/2025 04:05"
+          },
+          {
+            "id": "2aa90316",
+            "servico": "Suspensão",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "19/10/2025 09:01"
+          },
+          {
+            "id": "2ae373e1",
+            "servico": "Reparo do Motor",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "19/10/2025 14:13"
+          },
+          {
+            "id": "a792c319",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "20/10/2025 18:26"
+          },
+          {
+            "id": "fcba41f2",
+            "servico": "Suspensão",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "21/10/2025 21:19"
+          },
+          {
+            "id": "750706b1",
+            "servico": "Elétrica",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "23/10/2025 01:49"
+          }
+        ],
+        "data_adicao": "10/03/2026 23:05"
+      }
+    ],
+    "data_criacao": "13/03/2026 15:41"
+  },
+  {
+    "id": "f1656b7a",
+    "nome": "Tatiane Araújo Teste 35",
+    "telefone": "(85) 90035-1295",
+    "carros": [
+      {
+        "id": "d670c4e6",
+        "marca": "Hyundai",
+        "modelo": "HB20",
+        "ano": "2013",
+        "placa": "JMU5055",
+        "servicos": [
+          {
+            "id": "cf9c8045",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "21/10/2025 21:15"
+          },
+          {
+            "id": "f11d3a58",
+            "servico": "Troca de Pneus",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "23/10/2025 07:45"
+          },
+          {
+            "id": "56bf9a01",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "24/10/2025 00:02"
+          }
+        ],
+        "data_adicao": "12/03/2026 18:18"
+      },
+      {
+        "id": "83b645ca",
+        "marca": "Ford",
+        "modelo": "Ka",
+        "ano": "2012",
+        "placa": "JNV5166",
+        "servicos": [
+          {
+            "id": "8bea0845",
+            "servico": "Reparo do Motor",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "20/10/2025 09:04"
+          },
+          {
+            "id": "aa6c2782",
+            "servico": "Revisão Geral",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "21/10/2025 11:32"
+          },
+          {
+            "id": "106a415c",
+            "servico": "Revisão Geral",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "21/10/2025 16:12"
+          }
+        ],
+        "data_adicao": "11/03/2026 17:53"
+      },
+      {
+        "id": "12b23c10",
+        "marca": "Chevrolet",
+        "modelo": "Tracker",
+        "ano": "2022",
+        "placa": "JOW5277",
+        "servicos": [
+          {
+            "id": "20aaeeaf",
+            "servico": "Reparo de Freios",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "14/10/2025 21:44"
+          },
+          {
+            "id": "5b850ca5",
+            "servico": "Troca de Pneus",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "15/10/2025 12:10"
+          },
+          {
+            "id": "2e3e437f",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "17/10/2025 09:27"
+          },
+          {
+            "id": "3e6f0258",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "18/10/2025 03:24"
+          },
+          {
+            "id": "00df73ba",
+            "servico": "Troca de Pneus",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "19/10/2025 07:46"
+          },
+          {
+            "id": "b6951847",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "20/10/2025 03:31"
+          }
+        ],
+        "data_adicao": "11/03/2026 07:31"
+      }
+    ],
+    "data_criacao": "13/03/2026 11:25"
+  },
+  {
+    "id": "aa70b7ec",
+    "nome": "Bruno Araújo Teste 36",
+    "telefone": "(85) 90036-1332",
+    "carros": [
+      {
+        "id": "29622412",
+        "marca": "Renault",
+        "modelo": "Logan",
+        "ano": "2018",
+        "placa": "KNV6068",
+        "servicos": [
+          {
+            "id": "a59495f3",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "11/10/2025 12:21"
+          },
+          {
+            "id": "2dfc7f6b",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "12/10/2025 17:16"
+          },
+          {
+            "id": "4250ccd3",
+            "servico": "Reparo do Motor",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "14/10/2025 07:51"
+          },
+          {
+            "id": "a15a65c4",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "14/10/2025 23:33"
+          },
+          {
+            "id": "8aaaac54",
+            "servico": "Outro",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "15/10/2025 17:00"
+          },
+          {
+            "id": "f59383a4",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "17/10/2025 01:32"
+          },
+          {
+            "id": "d3a00283",
+            "servico": "Elétrica",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "17/10/2025 20:30"
+          },
+          {
+            "id": "4750896d",
+            "servico": "Elétrica",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "19/10/2025 02:30"
+          }
+        ],
+        "data_adicao": "11/03/2026 13:37"
+      },
+      {
+        "id": "24f2f6b7",
+        "marca": "Renault",
+        "modelo": "Logan",
+        "ano": "2025",
+        "placa": "KOW6179",
+        "servicos": [
+          {
+            "id": "c0b7f17d",
+            "servico": "Alinhamento",
+            "descricao": "Ajuste realizado conforme orientacao do cliente.",
+            "data": "10/10/2025 06:09"
+          },
+          {
+            "id": "c649bb5f",
+            "servico": "Revisão Geral",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/10/2025 08:01"
+          },
+          {
+            "id": "89c9f024",
+            "servico": "Outro",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "11/10/2025 18:48"
+          },
+          {
+            "id": "85bb0a5d",
+            "servico": "Reparo de Freios",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "12/10/2025 18:18"
+          },
+          {
+            "id": "d6a30d5a",
+            "servico": "Reparo do Motor",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "13/10/2025 21:12"
+          },
+          {
+            "id": "021b5cef",
+            "servico": "Suspensão",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "14/10/2025 13:23"
+          },
+          {
+            "id": "e5ca3fc5",
+            "servico": "Balanceamento de Pneus",
+            "descricao": "Veiculo liberado apos checklist final.",
+            "data": "16/10/2025 04:34"
+          },
+          {
+            "id": "8b52592d",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Retorno para acompanhamento em 15 dias.",
+            "data": "16/10/2025 14:19"
+          }
+        ],
+        "data_adicao": "10/03/2026 16:48"
+      },
+      {
+        "id": "766296f8",
+        "marca": "Ford",
+        "modelo": "Ranger",
+        "ano": "2024",
+        "placa": "KPX6280",
+        "servicos": [
+          {
+            "id": "04fa35da",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "09/10/2025 12:41"
+          },
+          {
+            "id": "4dfb4f8f",
+            "servico": "Reparo de Freios",
+            "descricao": "Ruido identificado durante teste rapido.",
+            "data": "11/10/2025 02:24"
+          },
+          {
+            "id": "a648628d",
+            "servico": "Outro",
+            "descricao": "Preventiva agendada para revisao completa.",
+            "data": "12/10/2025 00:49"
+          },
+          {
+            "id": "8a98a701",
+            "servico": "Reparo do Motor",
+            "descricao": "Servico executado sem observacoes adicionais.",
+            "data": "12/10/2025 14:13"
+          },
+          {
+            "id": "771e0a54",
+            "servico": "Alinhamento",
+            "descricao": "Peca substituida e sistema validado.",
+            "data": "13/10/2025 21:27"
+          },
+          {
+            "id": "61ae5dd6",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Cliente solicitou verificacao geral.",
+            "data": "15/10/2025 08:34"
+          }
+        ],
+        "data_adicao": "10/03/2026 00:31"
+      }
+    ],
+    "data_criacao": "12/03/2026 01:21"
   }
 ]
