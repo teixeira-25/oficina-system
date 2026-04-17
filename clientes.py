@@ -146,6 +146,27 @@ class GerenciadorClientes:
         cliente = self.obter_cliente(cliente_id)
         return cliente['carros'] if cliente else []
     
+    def editar_carro(self, cliente_id, carro_id, marca, modelo, ano, placa):
+        """Edita um carro de um cliente"""
+        try:
+            clientes = self._ler_clientes()
+            
+            for cliente in clientes:
+                if cliente['id'] == cliente_id:
+                    for carro in cliente['carros']:
+                        if carro['id'] == carro_id:
+                            carro['marca'] = marca
+                            carro['modelo'] = modelo
+                            carro['ano'] = ano
+                            carro['placa'] = placa
+                            self._salvar_clientes(clientes)
+                            return True
+            
+            return False
+        except Exception as e:
+            print(f"Erro ao editar carro: {e}")
+            return False
+    
     def deletar_carro(self, cliente_id, carro_id):
         """Deleta um carro de um cliente"""
         try:
