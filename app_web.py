@@ -505,8 +505,10 @@ elif st.session_state.pagina_atual == "servicos":
                             st.markdown("**✏️ Editar Serviço**")
                             col_ed1, col_ed2 = st.columns([1, 2])
                             with col_ed1:
-                                tipo_ed = st.selectbox("Tipo", gerenciador.get_tipos_servico(), 
-                                                      value=srv['servico'], key=f"tipo_ed_{srv['id']}")
+                                tipos_servico = gerenciador.get_tipos_servico()
+                                idx_atual = tipos_servico.index(srv['servico']) if srv['servico'] in tipos_servico else 0
+                                tipo_ed = st.selectbox("Tipo", tipos_servico, 
+                                                      index=idx_atual, key=f"tipo_ed_{srv['id']}")
                             with col_ed2:
                                 desc_ed = st.text_area("Descrição", value=srv['descricao'], key=f"desc_ed_{srv['id']}", height=80)
                             
