@@ -171,7 +171,12 @@ class InterfaceOficina:
                 messagebox.showwarning("Aviso", "Selecione um registro para editar!")
                 return
             indice = tree.index(selecimento[0])
-            self.editar_registro_dialog(indice, registros[indice], janela_registros)
+            # Obter registro fresco do banco de dados
+            todos_registros = self.app.obter_registros()
+            if 0 <= indice < len(todos_registros):
+                self.editar_registro_dialog(indice, todos_registros[indice], janela_registros)
+            else:
+                messagebox.showerror("Erro", "Registro não encontrado!")
         
         def deletar_selecionado():
             selecimento = tree.selection()
@@ -198,9 +203,12 @@ class InterfaceOficina:
     
     def editar_registro_dialog(self, indice, registro, janela_pai):
         """Abre um diálogo para editar um registro"""
+        # Debug: imprimir dados recebidos
+        print(f"DEBUG: Indice={indice}, Registro={registro}")
+        
         janela_edicao = tk.Toplevel(janela_pai)
         janela_edicao.title("Editar Registro")
-        janela_edicao.geometry("500x400")
+        janela_edicao.geometry("500x450")
         janela_edicao.resizable(False, False)
         
         # Frame principal
@@ -216,33 +224,33 @@ class InterfaceOficina:
         ttk.Label(frame_edicao, text="Marca:").grid(row=0, column=0, sticky=tk.W, pady=5)
         entry_marca = ttk.Entry(frame_edicao, width=35)
         entry_marca.grid(row=0, column=1, sticky=tk.EW, pady=5, padx=10)
-        entry_marca.insert(0, registro[0])
+        entry_marca.insert(0, str(registro[0]))
         
         ttk.Label(frame_edicao, text="Modelo:").grid(row=1, column=0, sticky=tk.W, pady=5)
         entry_modelo = ttk.Entry(frame_edicao, width=35)
         entry_modelo.grid(row=1, column=1, sticky=tk.EW, pady=5, padx=10)
-        entry_modelo.insert(0, registro[1])
+        entry_modelo.insert(0, str(registro[1]))
         
         ttk.Label(frame_edicao, text="Ano:").grid(row=2, column=0, sticky=tk.W, pady=5)
         entry_ano = ttk.Entry(frame_edicao, width=35)
         entry_ano.grid(row=2, column=1, sticky=tk.EW, pady=5, padx=10)
-        entry_ano.insert(0, registro[2])
+        entry_ano.insert(0, str(registro[2]))
         
         ttk.Label(frame_edicao, text="Placa:").grid(row=3, column=0, sticky=tk.W, pady=5)
         entry_placa = ttk.Entry(frame_edicao, width=35)
         entry_placa.grid(row=3, column=1, sticky=tk.EW, pady=5, padx=10)
-        entry_placa.insert(0, registro[3])
+        entry_placa.insert(0, str(registro[3]))
         
         ttk.Label(frame_edicao, text="Serviço:").grid(row=4, column=0, sticky=tk.W, pady=5)
         combo_servico = ttk.Combobox(frame_edicao, width=32, state="readonly",
                                     values=self.app.get_tipos_servico())
         combo_servico.grid(row=4, column=1, sticky=tk.EW, pady=5, padx=10)
-        combo_servico.set(registro[4])
+        combo_servico.set(str(registro[4]))
         
         ttk.Label(frame_edicao, text="Descrição:").grid(row=5, column=0, sticky=tk.NW, pady=5)
         text_descricao = tk.Text(frame_edicao, width=37, height=4, font=("Arial", 10))
         text_descricao.grid(row=5, column=1, sticky=tk.EW, pady=5, padx=10)
-        text_descricao.insert("1.0", registro[5])
+        text_descricao.insert("1.0", str(registro[5]))
         
         frame_edicao.columnconfigure(1, weight=1)
         
