@@ -123,6 +123,32 @@ st.markdown("""
     .streamlit-expanderHeader:hover {
         background-color: #f3f4f6;
     }
+    
+    /* Scroll Container */
+    .scroll-container {
+        max-height: 600px;
+        overflow-y: auto;
+        padding-right: 0.5rem;
+        border-right: 1px solid var(--neutral-border);
+    }
+    
+    .scroll-container::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+        background: var(--neutral-light);
+        border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+        background: var(--neutral-border);
+        border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-light);
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -183,10 +209,23 @@ if st.session_state.pagina_atual == "clientes":
         if not clientes:
             st.info("📌 Nenhum cliente cadastrado. Comece adicionando um novo cliente!", icon="ℹ️")
         else:
-            st.markdown(f"**Total:** {len(clientes)} cliente(s)")
+            # Search Bar
+            search_cliente = st.text_input("🔍 Buscar cliente", placeholder="Nome ou telefone...", key="search_cli")
+            
+            # Filtrar clientes
+            clientes_filtrados = [
+                c for c in clientes 
+                if search_cliente.lower() in c['nome'].lower() or search_cliente.lower() in c['telefone']
+            ]
+            
+            st.markdown(f"**Total:** {len(clientes_filtrados)}/{len(clientes)} cliente(s)")
             st.divider()
             
-            for idx, cliente in enumerate(clientes):
+            # ScrollContainer com altura fixa
+            with st.container(border=False):
+                st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
+                
+                for idx, cliente in enumerate(clientes_filtrados):
                 carros = gerenciador.obter_carros_cliente(cliente['id'])
                 
                 with st.container(border=True):
@@ -239,6 +278,8 @@ if st.session_state.pagina_atual == "clientes":
                             if st.button("✕ Cancelar", key=f"cancel_{cliente['id']}", use_container_width=True):
                                 st.session_state[f"edit_{cliente['id']}"] = False
                                 st.rerun()
+                
+                st.markdown("</div>", unsafe_allow_html=True)
 
 
 # ==================== PÁGINA 2: CARROS ====================
@@ -289,14 +330,29 @@ elif st.session_state.pagina_atual == "carros":
         if not carros:
             st.info("📌 Nenhum carro cadastrado. Adicione o primeiro carro!", icon="ℹ️")
         else:
-            st.markdown(f"**Total:** {len(carros)} carro(s)")
+            # Search Bar
+            search_carro = st.text_input("🔍 Buscar carro", placeholder="Marca, modelo ou placa...", key="search_car")
+            
+            # Filtrar carros
+            carros_filtrados = [
+                c for c in carros 
+                if search_carro.lower() in c['marca'].lower() or 
+                   search_carro.lower() in c['modelo'].lower() or 
+                   search_carro.lower() in c['placa'].lower()
+            ]
+            
+            st.markdown(f"**Total:** {len(carros_filtrados)}/{len(carros)} carro(s)")
             st.divider()
             
-            for carro in carros:
-                servicos = gerenciador.obter_servicos_carro(st.session_state.cliente_atual, carro['id'])
+            # ScrollContainer com altura fixa
+            with st.container(border=False):
+                st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
                 
-                with st.container(border=True):
-                    col_info, col_actions = st.columns([2.5, 1.5])
+                for carro in carros_filtrados:
+                    servicos = gerenciador.obter_servicos_carro(st.session_state.cliente_atual, carro['id'])
+                
+                    with st.container(border=True):
+                        col_info, col_actions = st.columns([2.5, 1.5])
                     
                     with col_info:
                         st.markdown(f"**{carro['marca']} {carro['modelo']}**", help=f"ID: {carro['id']}")
@@ -349,6 +405,8 @@ elif st.session_state.pagina_atual == "carros":
                             if st.button("✕ Cancelar", key=f"cancel_car_{carro['id']}", use_container_width=True):
                                 st.session_state[f"edit_car_{carro['id']}"] = False
                                 st.rerun()
+                
+                st.markdown("</div>", unsafe_allow_html=True)
 
 
 # ==================== PÁGINA 3: SERVIÇOS ====================
@@ -403,30 +461,43 @@ elif st.session_state.pagina_atual == "servicos":
             if not servicos:
                 st.info("📌 Nenhum serviço cadastrado. Registre o primeiro serviço!", icon="ℹ️")
             else:
-                st.markdown(f"**Total:** {len(servicos)} serviço(s)")
+                # Search Bar
+                search_servico = st.text_input("🔍 Buscar serviço", placeholder="Tipo de serviço...", key="search_srv")
+                
+                # Filtrar serviços
+                servicos_filtrados = [
+                    s for s in servicos 
+                    if search_servico.lower() in s['servico'].lower()
+                ]
+                
+                st.markdown(f"**Total:** {len(servicos_filtrados)}/{len(servicos)} serviço(s)")
                 st.divider()
                 
-                for srv in servicos:
-                    with st.container(border=True):
-                        col_info, col_actions = st.columns([2.5, 1.5])
-                        
-                        with col_info:
-                            st.markdown(f"**{srv['servico']}**", help=f"ID: {srv['id']}")
-                            st.markdown(f"📅 {srv['data']}")
-                            if srv['descricao']:
-                                st.markdown(f"📝 *{srv['descricao']}*")
-                        
-                        with col_actions:
-                            col_e, col_d = st.columns(2)
-                            with col_e:
-                                if st.button("✏️", key=f"edit_srv_{srv['id']}", use_container_width=True, help="Editar"):
-                                    st.session_state[f"edit_srv_{srv['id']}"] = True
-                                    st.rerun()
-                            with col_d:
-                                if st.button("🗑️", key=f"del_srv_{srv['id']}", use_container_width=True, help="Deletar"):
-                                    if gerenciador.deletar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id']):
-                                        st.success("✅ Serviço removido", icon="✅")
+                # ScrollContainer com altura fixa
+                with st.container(border=False):
+                    st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
+                    
+                    for srv in servicos_filtrados:
+                        with st.container(border=True):
+                            col_info, col_actions = st.columns([2.5, 1.5])
+                            
+                            with col_info:
+                                st.markdown(f"**{srv['servico']}**", help=f"ID: {srv['id']}")
+                                st.markdown(f"📅 {srv['data']}")
+                                if srv['descricao']:
+                                    st.markdown(f"📝 *{srv['descricao']}*")
+                            
+                            with col_actions:
+                                col_e, col_d = st.columns(2)
+                                with col_e:
+                                    if st.button("✏️", key=f"edit_srv_{srv['id']}", use_container_width=True, help="Editar"):
+                                        st.session_state[f"edit_srv_{srv['id']}"] = True
                                         st.rerun()
+                                with col_d:
+                                    if st.button("🗑️", key=f"del_srv_{srv['id']}", use_container_width=True, help="Deletar"):
+                                        if gerenciador.deletar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id']):
+                                            st.success("✅ Serviço removido", icon="✅")
+                                            st.rerun()
                         
                         # Modal de edição
                         if st.session_state.get(f"edit_srv_{srv['id']}", False):
@@ -452,6 +523,8 @@ elif st.session_state.pagina_atual == "servicos":
                                 if st.button("✕ Cancelar", key=f"cancel_srv_{srv['id']}", use_container_width=True):
                                     st.session_state[f"edit_srv_{srv['id']}"] = False
                                     st.rerun()
+                    
+                    st.markdown("</div>", unsafe_allow_html=True)
 
 # Footer
 st.divider()
