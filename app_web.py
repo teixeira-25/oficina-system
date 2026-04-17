@@ -175,6 +175,33 @@ def voltar():
         st.session_state.pagina_atual = "clientes"
         st.session_state.cliente_atual = None
 
+# ==================== BARRA DE NAVEGAÇÃO ====================
+col_nav1, col_nav2, col_nav3, col_nav4 = st.columns(4)
+
+with col_nav1:
+    if st.button("👥 Clientes", use_container_width=True, type="primary" if st.session_state.pagina_atual == "clientes" else "secondary"):
+        st.session_state.pagina_atual = "clientes"
+        st.session_state.cliente_atual = None
+        st.session_state.carro_atual = None
+        st.rerun()
+
+with col_nav2:
+    if st.button("🕐 Histórico", use_container_width=True, type="primary" if st.session_state.pagina_atual == "historico" else "secondary"):
+        st.session_state.pagina_atual = "historico"
+        st.rerun()
+
+with col_nav3:
+    if st.button("📊 Relatórios", use_container_width=True, type="primary" if st.session_state.pagina_atual == "relatorios" else "secondary"):
+        st.session_state.pagina_atual = "relatorios"
+        st.rerun()
+
+with col_nav4:
+    if st.button("⚙️ Configurações", use_container_width=True, type="secondary"):
+        st.session_state.pagina_atual = "configuracoes"
+        st.rerun()
+
+st.divider()
+
 # ==================== PÁGINA 1: CLIENTES ====================
 if st.session_state.pagina_atual == "clientes":
     st.markdown("## 👥 Gerenciamento de Clientes")
@@ -527,6 +554,167 @@ elif st.session_state.pagina_atual == "servicos":
                                     st.rerun()
                     
                     st.markdown("</div>", unsafe_allow_html=True)
+
+# ==================== PÁGINA 4: HISTÓRICO DE SERVIÇOS ====================
+elif st.session_state.pagina_atual == "historico":
+    st.markdown("## 🕐 Histórico de Serviços")
+    st.markdown("---")
+    
+    # Search e filtros
+    col_search, col_filter = st.columns([2, 1])
+    
+    with col_search:
+        search_historico = st.text_input("🔍 Buscar por cliente, carro ou serviço", placeholder="Digite para filtrar...", key="search_hist")
+    
+    with col_filter:
+        filtro_tipo = st.selectbox("Filtrar por tipo", ["Todos"] + gerenciador.get_tipos_servico(), key="filter_tipo_hist")
+    
+    # Obter todos os serviços
+    todos_servicos = gerenciador.obter_todos_servicos()
+    
+    # Aplicar filtros
+    servicos_filtrados = []
+    for srv in todos_servicos:
+        match_search = (search_historico.lower() in srv['cliente_nome'].lower() or
+                       search_historico.lower() in srv['carro_marca'].lower() or
+                       search_historico.lower() in srv['carro_modelo'].lower() or
+                       search_historico.lower() in srv['carro_placa'].lower() or
+                       search_historico.lower() in srv['servico_tipo'].lower())
+        
+        match_tipo = filtro_tipo == "Todos" or srv['servico_tipo'] == filtro_tipo
+        
+        if match_search and match_tipo:
+            servicos_filtrados.append(srv)
+    
+    st.markdown(f"**Total de serviços:** {len(servicos_filtrados)}")
+    st.divider()
+    
+    if not servicos_filtrados:
+        st.info("📌 Nenhum serviço encontrado com os filtros aplicados.", icon="ℹ️")
+    else:
+        # Container com scroll
+        with st.container(border=False):
+            st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
+            
+            for srv in servicos_filtrados:
+                with st.container(border=True):
+                    col_info, col_details = st.columns([2, 1])
+                    
+                    with col_info:
+                        st.markdown(f"**{srv['servico_tipo']}**")
+                        st.markdown(f"👤 {srv['cliente_nome']} • 🚗 {srv['carro_marca']} {srv['carro_modelo']} ({srv['carro_placa']})")
+                        st.markdown(f"📅 {srv['data']}")
+                        if srv['descricao']:
+                            st.markdown(f"📝 *{srv['descricao']}*")
+                    
+                    with col_details:
+                        st.markdown(f"<div style='text-align: right; color: #6b7280; font-size: 0.875rem;'><strong>Ano:</strong> {srv['carro_ano']}</div>", unsafe_allow_html=True)
+            
+            st.markdown("</div>", unsafe_allow_html=True)
+
+# ==================== PÁGINA 5: RELATÓRIOS MENSAIS ====================
+elif st.session_state.pagina_atual == "relatorios":
+    st.markdown("## 📊 Relatórios Mensais")
+    st.markdown("---")
+    
+    # Obter meses com dados
+    periodos = gerenciador.obter_meses_com_dados()
+    
+    if not periodos:
+        st.info("📌 Nenhum serviço registrado no sistema ainda.", icon="ℹ️")
+    else:
+        # Seletor de período
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            # Criar opções de mês/ano
+            opcoes_periodo = [f"{mes:02d}/{ano}" for mes, ano in periodos]
+            periodo_selecionado = st.selectbox("Selecione o período", opcoes_periodo, key="periodo_rel")
+            mes, ano = map(int, periodo_selecionado.split('/'))
+        
+        with col2:
+            st.markdown("")  # Espaçamento
+            if st.button("📥 Exportar Relatório", use_container_width=True):
+                st.info("💡 Funcionalidade de exportação em desenvolvimento", icon="ℹ️")
+        
+        st.divider()
+        
+        # Gerar relatório
+        relatorio = gerenciador.gerar_relatorio_mensal(mes, ano)
+        
+        if relatorio:
+            # Estatísticas gerais
+            col_stats1, col_stats2, col_stats3 = st.columns(3)
+            
+            with col_stats1:
+                st.metric("Total de Serviços", relatorio['total_servicos'])
+            
+            with col_stats2:
+                st.metric("Tipos de Serviço", len(relatorio['tipos_servico']))
+            
+            with col_stats3:
+                st.metric("Clientes Atendidos", len(relatorio['clientes']))
+            
+            st.divider()
+            
+            # Gráficos
+            col_graph1, col_graph2 = st.columns(2)
+            
+            with col_graph1:
+                st.markdown("### 📈 Top Serviços")
+                if relatorio['tipos_servico']:
+                    import pandas as pd
+                    df_tipos = pd.DataFrame(list(relatorio['tipos_servico'].items()), columns=['Tipo', 'Quantidade'])
+                    df_tipos = df_tipos.sort_values('Quantidade', ascending=False)
+                    st.bar_chart(df_tipos.set_index('Tipo'))
+                else:
+                    st.info("Sem dados", icon="ℹ️")
+            
+            with col_graph2:
+                st.markdown("### 👥 Top Clientes")
+                if relatorio['clientes']:
+                    import pandas as pd
+                    df_clientes = pd.DataFrame(list(relatorio['clientes'].items()), columns=['Cliente', 'Quantidade'])
+                    df_clientes = df_clientes.sort_values('Quantidade', ascending=False).head(5)
+                    st.bar_chart(df_clientes.set_index('Cliente'))
+                else:
+                    st.info("Sem dados", icon="ℹ️")
+            
+            st.divider()
+            
+            # Listagem detalhada
+            st.markdown("### 📋 Serviços do Período")
+            
+            with st.container(border=False):
+                st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
+                
+                for srv in relatorio['servicos']:
+                    with st.container(border=True):
+                        col_srv_info, col_srv_details = st.columns([2.5, 1.5])
+                        
+                        with col_srv_info:
+                            st.markdown(f"**{srv['servico_tipo']}**")
+                            st.markdown(f"👤 {srv['cliente_nome']}")
+                            st.markdown(f"🚗 {srv['carro_marca']} {srv['carro_modelo']} - Placa: {srv['carro_placa']}")
+                            if srv['descricao']:
+                                st.markdown(f"📝 *{srv['descricao']}*")
+                        
+                        with col_srv_details:
+                            st.markdown(f"<div style='text-align: right;'><strong>📅</strong><br/>{srv['data']}</div>", unsafe_allow_html=True)
+                
+                st.markdown("</div>", unsafe_allow_html=True)
+
+# ==================== PÁGINA 6: CONFIGURAÇÕES ====================
+elif st.session_state.pagina_atual == "configuracoes":
+    st.markdown("## ⚙️ Configurações")
+    st.markdown("---")
+    
+    st.info("🚀 Página de configurações em desenvolvimento", icon="ℹ️")
+    
+    with st.expander("📋 Tipos de Serviço Disponíveis", expanded=False):
+        tipos = gerenciador.get_tipos_servico()
+        for i, tipo in enumerate(tipos, 1):
+            st.write(f"{i}. {tipo}")
 
 # Footer
 st.divider()

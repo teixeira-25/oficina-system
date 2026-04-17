@@ -279,3 +279,124 @@ class GerenciadorClientes:
         """Gera um ID único"""
         import uuid
         return str(uuid.uuid4())[:8]
+    
+    # ==================== FUNÇÕES DE RELATÓRIO ====================
+    
+    def obter_todos_servicos(self):
+        """
+        Retorna lista de todos os serviços com informações do cliente e carro
+        
+        Returns:
+            list: Lista de serviços com contexto
+        """
+        try:
+            clientes = self._ler_clientes()
+            todos_servicos = []
+            
+            for cliente in clientes:
+                for carro in cliente['carros']:
+                    for servico in carro['servicos']:
+                        todos_servicos.append({
+                            'servico_id': servico['id'],
+                            'servico_tipo': servico['servico'],
+                            'descricao': servico.get('descricao', ''),
+                            'data': servico['data'],
+                            'cliente_nome': cliente['nome'],
+                            'cliente_id': cliente['id'],
+                            'carro_marca': carro['marca'],
+                            'carro_modelo': carro['modelo'],
+                            'carro_placa': carro['placa'],
+                            'carro_ano': carro['ano']
+                        })
+            
+            # Ordenar por data decrescente
+            todos_servicos.sort(key=lambda x: datetime.strptime(x['data'], "%d/%m/%Y %H:%M"), reverse=True)
+            return todos_servicos
+        except Exception as e:
+            print(f"Erro ao obter todos os serviços: {e}")
+            return []
+    
+    def obter_servicos_por_periodo(self, mes, ano):
+        """
+        Retorna serviços de um período específico
+        
+        Args:
+            mes (int): Mês (1-12)
+            ano (int): Ano
+        
+        Returns:
+            list: Serviços do período
+        """
+        try:
+            todos_servicos = self.obter_todos_servicos()
+            servicos_periodo = []
+            
+            for servico in todos_servicos:
+                data_obj = datetime.strptime(servico['data'], "%d/%m/%Y %H:%M")
+                if data_obj.month == mes and data_obj.year == ano:
+                    servicos_periodo.append(servico)
+            
+            return servicos_periodo
+        except Exception as e:
+            print(f"Erro ao obter serviços por período: {e}")
+            return []
+    
+    def gerar_relatorio_mensal(self, mes, ano):
+        """
+        Gera relatório completo do mês
+        
+        Args:
+            mes (int): Mês (1-12)
+            ano (int): Ano
+        
+        Returns:
+            dict: Estatísticas do mês
+        """
+        try:
+            servicos = self.obter_servicos_por_periodo(mes, ano)
+            
+            # Contar por tipo de serviço
+            contagem_tipos = {}
+            for servico in servicos:
+                tipo = servico['servico_tipo']
+                contagem_tipos[tipo] = contagem_tipos.get(tipo, 0) + 1
+            
+            # Contar por cliente
+            contagem_clientes = {}
+            for servico in servicos:
+                cliente = servico['cliente_nome']
+                contagem_clientes[cliente] = contagem_clientes.get(cliente, 0) + 1
+            
+            return {
+                'mes': mes,
+                'ano': ano,
+                'total_servicos': len(servicos),
+                'tipos_servico': contagem_tipos,
+                'clientes': contagem_clientes,
+                'servicos': servicos
+            }
+        except Exception as e:
+            print(f"Erro ao gerar relatório mensal: {e}")
+            return None
+    
+    def obter_meses_com_dados(self):
+        """
+        Retorna lista de (mes, ano) que possuem serviços
+        
+        Returns:
+            list: Lista de tuplas (mes, ano)
+        """
+        try:
+            todos_servicos = self.obter_todos_servicos()
+            periodos = set()
+            
+            for servico in todos_servicos:
+                data_obj = datetime.strptime(servico['data'], "%d/%m/%Y %H:%M")
+                periodos.add((data_obj.month, data_obj.year))
+            
+            # Ordenar decrescente (mais recente primeiro)
+            periodos_lista = sorted(list(periodos), key=lambda x: (x[1], x[0]), reverse=True)
+            return periodos_lista
+        except Exception as e:
+            print(f"Erro ao obter meses com dados: {e}")
+            return []
