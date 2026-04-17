@@ -177,6 +177,15 @@ class InterfaceOficina:
                 self.editar_registro_dialog(indice, todos_registros[indice], janela_registros)
             else:
                 messagebox.showerror("Erro", "Registro não encontrado!")
+            
+            # Após edição, tentar recarregar a tabela se ela ainda existir
+            try:
+                tree.delete(*tree.get_children())
+                registros_atualizados = self.app.obter_registros()
+                for registro in registros_atualizados:
+                    tree.insert("", tk.END, values=registro)
+            except:
+                pass
         
         def deletar_selecionado():
             selecimento = tree.selection()
@@ -188,7 +197,8 @@ class InterfaceOficina:
                 indice = tree.index(selecimento[0])
                 if self.app.deletar_registro(indice):
                     messagebox.showinfo("Sucesso", "Registro deletado com sucesso!")
-                    tree.delete(selecimento[0])
+                    # Fechar a janela de registros para voltar à tela principal atualizada
+                    janela_registros.destroy()
                 else:
                     messagebox.showerror("Erro", "Não foi possível deletar o registro.")
         
@@ -310,7 +320,13 @@ class InterfaceOficina:
             
             if self.app.editar_registro(indice, marca, modelo, ano, placa, servico, descricao):
                 messagebox.showinfo("Sucesso", "Registro editado com sucesso!")
+                # Fechar o modal de edição
                 janela_edicao.destroy()
+                # Fechar a janela de registros para voltar à tela principal
+                try:
+                    janela_pai.destroy()
+                except:
+                    pass
             else:
                 messagebox.showerror("Erro", "Não foi possível editar o registro.")
         
