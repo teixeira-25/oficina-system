@@ -226,58 +226,58 @@ if st.session_state.pagina_atual == "clientes":
                 st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
                 
                 for idx, cliente in enumerate(clientes_filtrados):
-                carros = gerenciador.obter_carros_cliente(cliente['id'])
-                
-                with st.container(border=True):
-                    col_info, col_actions = st.columns([2.5, 1.5])
+                    carros = gerenciador.obter_carros_cliente(cliente['id'])
                     
-                    with col_info:
-                        st.markdown(f"**{cliente['nome']}**", help=f"ID: {cliente['id']}")
-                        st.markdown(f"📞 {cliente['telefone']} • 🚗 {len(carros)} carro(s)")
-                    
-                    with col_actions:
-                        col_e, col_d, col_s = st.columns(3)
-                        with col_e:
-                            if st.button("✓", key=f"enter_{cliente['id']}", use_container_width=True, help="Ver carros deste cliente"):
-                                st.session_state.cliente_atual = cliente['id']
-                                st.session_state.pagina_atual = "carros"
-                                st.rerun()
-                        with col_d:
-                            if st.button("✏️", key=f"edit_{cliente['id']}", use_container_width=True, help="Editar"):
-                                st.session_state[f"edit_{cliente['id']}"] = True
-                                st.rerun()
-                        with col_s:
-                            if st.button("🗑️", key=f"del_{cliente['id']}", use_container_width=True, help="Deletar"):
-                                if gerenciador.deletar_cliente(cliente['id']):
-                                    st.success("✅ Cliente removido", icon="✅")
-                                    st.rerun()
-                                else:
-                                    st.error("Erro ao deletar", icon="❌")
-                    
-                    # Modal de edição
-                    if st.session_state.get(f"edit_{cliente['id']}", False):
-                        st.divider()
-                        st.markdown("**✏️ Editar Cliente**")
-                        col_ed1, col_ed2 = st.columns(2)
-                        with col_ed1:
-                            nome_ed = st.text_input("Nome", value=cliente['nome'], key=f"nome_ed_{cliente['id']}")
-                        with col_ed2:
-                            tel_ed = st.text_input("Telefone", value=cliente['telefone'], key=f"tel_ed_{cliente['id']}")
+                    with st.container(border=True):
+                        col_info, col_actions = st.columns([2.5, 1.5])
                         
-                        col_s1, col_s2 = st.columns(2)
-                        with col_s1:
-                            if st.button("✓ Salvar", key=f"save_{cliente['id']}", use_container_width=True, type="primary"):
-                                if nome_ed and tel_ed:
-                                    if gerenciador.editar_cliente(cliente['id'], nome_ed, tel_ed):
-                                        st.success("✅ Atualizado", icon="✅")
-                                        st.session_state[f"edit_{cliente['id']}"] = False
+                        with col_info:
+                            st.markdown(f"**{cliente['nome']}**", help=f"ID: {cliente['id']}")
+                            st.markdown(f"📞 {cliente['telefone']} • 🚗 {len(carros)} carro(s)")
+                        
+                        with col_actions:
+                            col_e, col_d, col_s = st.columns(3)
+                            with col_e:
+                                if st.button("✓", key=f"enter_{cliente['id']}", use_container_width=True, help="Ver carros deste cliente"):
+                                    st.session_state.cliente_atual = cliente['id']
+                                    st.session_state.pagina_atual = "carros"
+                                    st.rerun()
+                            with col_d:
+                                if st.button("✏️", key=f"edit_{cliente['id']}", use_container_width=True, help="Editar"):
+                                    st.session_state[f"edit_{cliente['id']}"] = True
+                                    st.rerun()
+                            with col_s:
+                                if st.button("🗑️", key=f"del_{cliente['id']}", use_container_width=True, help="Deletar"):
+                                    if gerenciador.deletar_cliente(cliente['id']):
+                                        st.success("✅ Cliente removido", icon="✅")
                                         st.rerun()
-                                else:
-                                    st.warning("⚠️ Preencha os campos")
-                        with col_s2:
-                            if st.button("✕ Cancelar", key=f"cancel_{cliente['id']}", use_container_width=True):
-                                st.session_state[f"edit_{cliente['id']}"] = False
-                                st.rerun()
+                                    else:
+                                        st.error("Erro ao deletar", icon="❌")
+                        
+                        # Modal de edição
+                        if st.session_state.get(f"edit_{cliente['id']}", False):
+                            st.divider()
+                            st.markdown("**✏️ Editar Cliente**")
+                            col_ed1, col_ed2 = st.columns(2)
+                            with col_ed1:
+                                nome_ed = st.text_input("Nome", value=cliente['nome'], key=f"nome_ed_{cliente['id']}")
+                            with col_ed2:
+                                tel_ed = st.text_input("Telefone", value=cliente['telefone'], key=f"tel_ed_{cliente['id']}")
+                            
+                            col_s1, col_s2 = st.columns(2)
+                            with col_s1:
+                                if st.button("✓ Salvar", key=f"save_{cliente['id']}", use_container_width=True, type="primary"):
+                                    if nome_ed and tel_ed:
+                                        if gerenciador.editar_cliente(cliente['id'], nome_ed, tel_ed):
+                                            st.success("✅ Atualizado", icon="✅")
+                                            st.session_state[f"edit_{cliente['id']}"] = False
+                                            st.rerun()
+                                    else:
+                                        st.warning("⚠️ Preencha os campos")
+                            with col_s2:
+                                if st.button("✕ Cancelar", key=f"cancel_{cliente['id']}", use_container_width=True):
+                                    st.session_state[f"edit_{cliente['id']}"] = False
+                                    st.rerun()
                 
                 st.markdown("</div>", unsafe_allow_html=True)
 
