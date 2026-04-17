@@ -320,7 +320,7 @@ def preparar_pecas_editor(pecas):
     ] or [{"Peca": "", "Quantidade": 1, "Valor Unitario": 0.0, "Total": 0.0}]
 
 
-@st.dialog("Serviço")
+@st.dialog("Serviço", width="large")
 def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     tipos_servico = gerenciador.get_tipos_servico()
     titulo = "Criar Serviço" if modo == "criar" else "Editar Serviço"
@@ -337,27 +337,43 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
 
     indice_tipo = tipos_servico.index(tipo_inicial) if tipo_inicial in tipos_servico else 0
 
-    with st.form(f"form_modal_servico_{modo}_{servico_atual['id'] if servico_atual else 'novo'}"):
-        tipo_servico = st.selectbox("Tipo de Serviço", tipos_servico, index=indice_tipo)
-        pecas_editadas = st.data_editor(
-            preparar_pecas_editor(pecas_iniciais),
-            num_rows="dynamic",
+    tipo_servico = st.selectbox("Tipo de Serviço", tipos_servico, index=indice_tipo)
+    pecas_editadas = st.data_editor(
+        preparar_pecas_editor(pecas_iniciais),
+        num_rows="dynamic",
+        use_container_width=True,
+        hide_index=True,
+        disabled=["Total"],
+        column_config={
+            "Peca": st.column_config.TextColumn("Peça"),
+            "Quantidade": st.column_config.NumberColumn("Quantidade", min_value=1, step=1, format="%d"),
+            "Valor Unitario": st.column_config.NumberColumn("Valor Unitário", min_value=0.0, step=0.01, format="R$ %.2f"),
+            "Total": st.column_config.NumberColumn("Total", format="R$ %.2f"),
+        },
+        key=f"editor_pecas_{modo}_{servico_atual['id'] if servico_atual else 'novo'}",
+    )
+    pecas = normalizar_pecas_editor(pecas_editadas)
+    valor_total_pecas = sum(float(peca.get("total", 0) or 0) for peca in pecas)
+
+    if pecas:
+        st.markdown(f"**Total das peças:** {formatar_moeda(valor_total_pecas)}")
+        st.dataframe(
+            preparar_pecas_editor(pecas),
             use_container_width=True,
             hide_index=True,
-            disabled=["Total"],
             column_config={
-                "Peca": st.column_config.TextColumn("Peça"),
-                "Quantidade": st.column_config.NumberColumn("Quantidade", min_value=1, step=1, format="%d"),
-                "Valor Unitario": st.column_config.NumberColumn("Valor Unitário", min_value=0.0, step=0.01, format="R$ %.2f"),
+                "Peca": "Peça",
+                "Quantidade": "Quantidade",
+                "Valor Unitario": st.column_config.NumberColumn("Valor Unitário", format="R$ %.2f"),
                 "Total": st.column_config.NumberColumn("Total", format="R$ %.2f"),
             },
-            key=f"editor_pecas_{modo}_{servico_atual['id'] if servico_atual else 'novo'}",
         )
-        descricao = st.text_area("Descrição", value=descricao_inicial, placeholder="Detalhes do serviço realizado...", height=120)
 
-        col_salvar, col_cancelar = st.columns(2)
-        salvar = col_salvar.form_submit_button("✓ Salvar", use_container_width=True, type="primary")
-        cancelar = col_cancelar.form_submit_button("✕ Cancelar", use_container_width=True)
+    descricao = st.text_area("Descrição", value=descricao_inicial, placeholder="Detalhes do serviço realizado...", height=140)
+
+    col_salvar, col_cancelar = st.columns(2)
+    salvar = col_salvar.button("✓ Salvar", use_container_width=True, type="primary")
+    cancelar = col_cancelar.button("✕ Cancelar", use_container_width=True)
 
     if cancelar:
         if servico_atual:
@@ -367,7 +383,6 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
         st.rerun()
 
     if salvar:
-        pecas = normalizar_pecas_editor(pecas_editadas)
         if modo == "criar":
             resultado = gerenciador.adicionar_servico(
                 cliente_id=cliente_id,
