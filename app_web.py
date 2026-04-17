@@ -25,6 +25,7 @@ st.markdown("""
     /* Elementos Principais */
     .main {
         padding: 2rem;
+        padding-top: 5rem;
         background-color: #ffffff;
     }
     
@@ -152,30 +153,30 @@ st.markdown("""
         background: var(--primary-light);
     }
     
-    /* Dashboard */
-    .dashboard-header {
+    /* Top Header */
+    .top-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1.5rem 2rem;
-        background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-        border-radius: 0px;
-        margin-bottom: 2rem;
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+        padding: 1rem 2rem;
+        background-color: #666666;
         color: white;
-        border: 3px solid #991b1b;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        z-index: 999;
     }
     
-    .dashboard-logo {
-        font-size: 1.875rem;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-    
-    .dashboard-clock {
+    .top-header-logo {
         font-size: 1.5rem;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+    }
+    
+    .top-header-clock {
+        font-size: 1.25rem;
         font-family: 'Courier New', monospace;
         font-weight: bold;
         letter-spacing: 2px;
@@ -225,6 +226,9 @@ def get_gerenciador():
     return GerenciadorClientes()
 
 gerenciador = get_gerenciador()
+ALTURA_LISTA_MAXIMA = 620
+ALTURA_LISTA_MINIMA = 140
+ALTURA_ITEM_LISTA = 120
 
 # Inicializar estado de navegação
 if "pagina_atual" not in st.session_state:
@@ -252,31 +256,76 @@ def obter_hora_digital():
     from datetime import datetime
     return datetime.now().strftime("%H:%M:%S")
 
+
+def calcular_altura_lista(total_itens):
+    """Ajusta a altura da lista sem deixar grandes blocos vazios."""
+    if total_itens <= 0:
+        return ALTURA_LISTA_MINIMA
+    return min(ALTURA_LISTA_MAXIMA, max(ALTURA_LISTA_MINIMA, total_itens * ALTURA_ITEM_LISTA))
+
 # ==================== PÁGINA 0: DASHBOARD ====================
 if st.session_state.pagina_atual == "dashboard":
-    # Header com logo e relógio
-    st.markdown("""
-    <div class="dashboard-header">
-        <div class="dashboard-logo">
-        🚗 RED CAR
-        </div>
-        <div class="dashboard-clock" id="clock">00:00:00</div>
-    </div>
+    from datetime import datetime
+    import streamlit.components.v1 as components
     
-    <script>
-        function atualizarRelogio() {
-            const agora = new Date();
-            const tempo = agora.getHours().toString().padStart(2, '0') + ':' +
-                         agora.getMinutes().toString().padStart(2, '0') + ':' +
-                         agora.getSeconds().toString().padStart(2, '0');
-            document.getElementById('clock').textContent = tempo;
-        }
-        // Atualizar imediatamente
-        atualizarRelogio();
-        // Atualizar a cada segundo
-        setInterval(atualizarRelogio, 1000);
-    </script>
-    """, unsafe_allow_html=True)
+    # Criar header fixo no topo com nome da oficina e relógio
+    header_html = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            * { margin: 0; padding: 0; }
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.5rem 2rem;
+                background-color: #666666;
+                color: white;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                z-index: 9999;
+                font-family: Arial, sans-serif;
+                height: 60px;
+                box-sizing: border-box;
+            }
+            .header-logo {
+                font-size: 1.5rem;
+                font-weight: bold;
+                letter-spacing: 0.5px;
+            }
+            .header-clock {
+                font-size: 1.25rem;
+                font-family: 'Courier New', monospace;
+                font-weight: bold;
+                letter-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header-logo">RED CAR</div>
+        <div class="header-clock" id="clock">00:00:00</div>
+        
+        <script>
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('clock').textContent = hours + ':' + minutes + ':' + seconds;
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+        </script>
+    </body>
+    </html>
+    """
+    
+    # Renderizar o header
+    components.html(header_html, height=68)
     
     st.markdown("")
     st.markdown("### 📋 O que você deseja fazer?")
@@ -375,62 +424,37 @@ elif st.session_state.pagina_atual != "dashboard":
 if st.session_state.pagina_atual == "clientes":
     st.markdown("## 👥 Gerenciamento de Clientes")
     st.markdown("---")
-    
-    col_form, col_list = st.columns([1, 1], gap="large")
-    
-    # COLUNA ESQUERDA: FORMULÁRIO
-    with col_form:
-        st.markdown("### ➕ Adicionar Cliente")
-        with st.form("form_novo_cliente", clear_on_submit=True):
-            nome = st.text_input("Nome completo", placeholder="João Silva Santos")
-            telefone = st.text_input("Telefone", placeholder="(11) 98765-4321")
-            
-            submitted = st.form_submit_button("✓ Cadastrar Cliente", use_container_width=True, type="primary")
-            
-            if submitted:
-                if nome and telefone:
-                    if gerenciador.adicionar_cliente(nome, telefone):
-                        st.success("✅ Cliente cadastrado com sucesso!", icon="✅")
-                        st.rerun()
-                    else:
-                        st.error("❌ Erro ao cadastrar cliente", icon="❌")
-                else:
-                    st.warning("⚠️ Preencha todos os campos", icon="⚠️")
-    
-    # COLUNA DIREITA: LISTAGEM
-    with col_list:
-        st.markdown("### 📋 Clientes Cadastrados")
-        clientes = gerenciador.obter_clientes()
-        
-        if not clientes:
-            st.info("📌 Nenhum cliente cadastrado. Comece adicionando um novo cliente!", icon="ℹ️")
+
+    st.markdown("### 📋 Clientes Cadastrados")
+    clientes = gerenciador.obter_clientes()
+
+    if not clientes:
+        st.info("📌 Nenhum cliente cadastrado. Comece adicionando um novo cliente!", icon="ℹ️")
+    else:
+        search_cliente = st.text_input("🔍 Buscar cliente", placeholder="Nome ou telefone...", key="search_cli")
+
+        clientes_filtrados = [
+            c for c in clientes
+            if search_cliente.lower() in c['nome'].lower() or search_cliente.lower() in c['telefone']
+        ]
+
+        st.markdown(f"**Total:** {len(clientes_filtrados)}/{len(clientes)} cliente(s)")
+        st.divider()
+
+        if not clientes_filtrados:
+            st.info("📌 Nenhum cliente encontrado com o filtro informado.", icon="ℹ️")
         else:
-            # Search Bar
-            search_cliente = st.text_input("🔍 Buscar cliente", placeholder="Nome ou telefone...", key="search_cli")
-            
-            # Filtrar clientes
-            clientes_filtrados = [
-                c for c in clientes 
-                if search_cliente.lower() in c['nome'].lower() or search_cliente.lower() in c['telefone']
-            ]
-            
-            st.markdown(f"**Total:** {len(clientes_filtrados)}/{len(clientes)} cliente(s)")
-            st.divider()
-            
-            # ScrollContainer com altura fixa
-            with st.container(border=False):
-                st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
-                
-                for idx, cliente in enumerate(clientes_filtrados):
+            with st.container(height=calcular_altura_lista(len(clientes_filtrados)), border=False):
+                for cliente in clientes_filtrados:
                     carros = gerenciador.obter_carros_cliente(cliente['id'])
-                    
+
                     with st.container(border=True):
-                        col_info, col_actions = st.columns([2.5, 1.5])
-                        
+                        col_info, col_actions = st.columns([4, 2])
+
                         with col_info:
                             st.markdown(f"**{cliente['nome']}**", help=f"ID: {cliente['id']}")
                             st.markdown(f"📞 {cliente['telefone']} • 🚗 {len(carros)} carro(s)")
-                        
+
                         with col_actions:
                             col_e, col_d, col_s = st.columns(3)
                             with col_e:
@@ -449,8 +473,7 @@ if st.session_state.pagina_atual == "clientes":
                                         st.rerun()
                                     else:
                                         st.error("Erro ao deletar", icon="❌")
-                        
-                        # Modal de edição
+
                         if st.session_state.get(f"edit_{cliente['id']}", False):
                             st.divider()
                             st.markdown("**✏️ Editar Cliente**")
@@ -459,7 +482,7 @@ if st.session_state.pagina_atual == "clientes":
                                 nome_ed = st.text_input("Nome", value=cliente['nome'], key=f"nome_ed_{cliente['id']}")
                             with col_ed2:
                                 tel_ed = st.text_input("Telefone", value=cliente['telefone'], key=f"tel_ed_{cliente['id']}")
-                            
+
                             col_s1, col_s2 = st.columns(2)
                             with col_s1:
                                 if st.button("✓ Salvar", key=f"save_{cliente['id']}", use_container_width=True, type="primary"):
@@ -474,8 +497,24 @@ if st.session_state.pagina_atual == "clientes":
                                 if st.button("✕ Cancelar", key=f"cancel_{cliente['id']}", use_container_width=True):
                                     st.session_state[f"edit_{cliente['id']}"] = False
                                     st.rerun()
-                
-                st.markdown("</div>", unsafe_allow_html=True)
+
+    st.divider()
+    st.markdown("### ➕ Adicionar Cliente")
+    with st.form("form_novo_cliente", clear_on_submit=True):
+        nome = st.text_input("Nome completo", placeholder="João Silva Santos")
+        telefone = st.text_input("Telefone", placeholder="(11) 98765-4321")
+
+        submitted = st.form_submit_button("✓ Cadastrar Cliente", use_container_width=True, type="primary")
+
+        if submitted:
+            if nome and telefone:
+                if gerenciador.adicionar_cliente(nome, telefone):
+                    st.success("✅ Cliente cadastrado com sucesso!", icon="✅")
+                    st.rerun()
+                else:
+                    st.error("❌ Erro ao cadastrar cliente", icon="❌")
+            else:
+                st.warning("⚠️ Preencha todos os campos", icon="⚠️")
 
 
 # ==================== PÁGINA 2: CARROS ====================
@@ -491,118 +530,108 @@ elif st.session_state.pagina_atual == "carros":
             st.rerun()
     st.markdown("---")
     
-    col_form, col_list = st.columns([1, 1], gap="large")
-    
-    # COLUNA ESQUERDA: FORMULÁRIO
-    with col_form:
-        st.markdown("### ➕ Adicionar Carro")
-        with st.form("form_novo_carro", clear_on_submit=True):
-            marca = st.text_input("Marca", key="novo_marca", placeholder="Toyota, BMW, etc")
-            modelo = st.text_input("Modelo", key="novo_modelo", placeholder="Corolla, X5, etc")
-            ano = st.text_input("Ano", key="novo_ano", placeholder="2022")
-            placa = st.text_input("Placa", key="novo_placa", placeholder="ABC-1234")
-            
-            submitted = st.form_submit_button("✓ Cadastrar Carro", use_container_width=True, type="primary")
-            
-            if submitted:
-                if all([marca, modelo, ano, placa]):
-                    try:
-                        int(ano)
-                        if gerenciador.adicionar_carro(st.session_state.cliente_atual, marca, modelo, ano, placa):
-                            st.success("✅ Carro cadastrado!", icon="✅")
-                            st.rerun()
-                        else:
-                            st.error("❌ Erro ao cadastrar", icon="❌")
-                    except ValueError:
-                        st.error("❌ Ano deve ser numérico", icon="❌")
-                else:
-                    st.warning("⚠️ Preencha todos os campos", icon="⚠️")
-    
-    # COLUNA DIREITA: LISTAGEM
-    with col_list:
-        st.markdown("### 📋 Carros Cadastrados")
-        carros = gerenciador.obter_carros_cliente(st.session_state.cliente_atual)
-        
-        if not carros:
-            st.info("📌 Nenhum carro cadastrado. Adicione o primeiro carro!", icon="ℹ️")
+    st.markdown("### 📋 Carros Cadastrados")
+    carros = gerenciador.obter_carros_cliente(st.session_state.cliente_atual)
+
+    if not carros:
+        st.info("📌 Nenhum carro cadastrado. Adicione o primeiro carro!", icon="ℹ️")
+    else:
+        search_carro = st.text_input("🔍 Buscar carro", placeholder="Marca, modelo ou placa...", key="search_car")
+
+        carros_filtrados = [
+            c for c in carros
+            if search_carro.lower() in c['marca'].lower()
+            or search_carro.lower() in c['modelo'].lower()
+            or search_carro.lower() in c['placa'].lower()
+        ]
+
+        st.markdown(f"**Total:** {len(carros_filtrados)}/{len(carros)} carro(s)")
+        st.divider()
+
+        if not carros_filtrados:
+            st.info("📌 Nenhum carro encontrado com o filtro informado.", icon="ℹ️")
         else:
-            # Search Bar
-            search_carro = st.text_input("🔍 Buscar carro", placeholder="Marca, modelo ou placa...", key="search_car")
-            
-            # Filtrar carros
-            carros_filtrados = [
-                c for c in carros 
-                if search_carro.lower() in c['marca'].lower() or 
-                   search_carro.lower() in c['modelo'].lower() or 
-                   search_carro.lower() in c['placa'].lower()
-            ]
-            
-            st.markdown(f"**Total:** {len(carros_filtrados)}/{len(carros)} carro(s)")
-            st.divider()
-            
-            # ScrollContainer com altura fixa
-            with st.container(border=False):
-                st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
-                
+            with st.container(height=calcular_altura_lista(len(carros_filtrados)), border=False):
                 for carro in carros_filtrados:
                     servicos = gerenciador.obter_servicos_carro(st.session_state.cliente_atual, carro['id'])
-                
+
                     with st.container(border=True):
-                        col_info, col_actions = st.columns([2.5, 1.5])
-                    
-                    with col_info:
-                        st.markdown(f"**{carro['marca']} {carro['modelo']}**", help=f"ID: {carro['id']}")
-                        st.markdown(f"📋 Placa: {carro['placa']} • 📅 Ano: {carro['ano']} • 🛠️ {len(servicos)} serviço(s)")
-                    
-                    with col_actions:
-                        col_s, col_e, col_d = st.columns(3)
-                        with col_s:
-                            if st.button("✓", key=f"btn_srv_{carro['id']}", use_container_width=True, help="Ver serviços"):
-                                st.session_state.carro_atual = carro['id']
-                                st.session_state.pagina_atual = "servicos"
-                                st.rerun()
-                        with col_e:
-                            if st.button("✏️", key=f"btn_edit_car_{carro['id']}", use_container_width=True, help="Editar"):
-                                st.session_state[f"edit_car_{carro['id']}"] = True
-                                st.rerun()
-                        with col_d:
-                            if st.button("🗑️", key=f"btn_del_car_{carro['id']}", use_container_width=True, help="Deletar"):
-                                if gerenciador.deletar_carro(st.session_state.cliente_atual, carro['id']):
-                                    st.success("✅ Carro removido", icon="✅")
+                        col_info, col_actions = st.columns([4, 2])
+
+                        with col_info:
+                            st.markdown(f"**{carro['marca']} {carro['modelo']}**", help=f"ID: {carro['id']}")
+                            st.markdown(f"📋 Placa: {carro['placa']} • 📅 Ano: {carro['ano']} • 🛠️ {len(servicos)} serviço(s)")
+
+                        with col_actions:
+                            col_s, col_e, col_d = st.columns(3)
+                            with col_s:
+                                if st.button("✓", key=f"btn_srv_{carro['id']}", use_container_width=True, help="Ver serviços"):
+                                    st.session_state.carro_atual = carro['id']
+                                    st.session_state.pagina_atual = "servicos"
                                     st.rerun()
-                    
-                    # Modal de edição
-                    if st.session_state.get(f"edit_car_{carro['id']}", False):
-                        st.divider()
-                        st.markdown("**✏️ Editar Carro**")
-                        col_ed1, col_ed2 = st.columns(2)
-                        with col_ed1:
-                            marca_ed = st.text_input("Marca", value=carro['marca'], key=f"marca_ed_{carro['id']}")
-                            ano_ed = st.text_input("Ano", value=carro['ano'], key=f"ano_ed_{carro['id']}")
-                        with col_ed2:
-                            modelo_ed = st.text_input("Modelo", value=carro['modelo'], key=f"modelo_ed_{carro['id']}")
-                            placa_ed = st.text_input("Placa", value=carro['placa'], key=f"placa_ed_{carro['id']}")
-                        
-                        col_s1, col_s2 = st.columns(2)
-                        with col_s1:
-                            if st.button("✓ Salvar", key=f"save_car_{carro['id']}", use_container_width=True, type="primary"):
-                                if all([marca_ed, modelo_ed, ano_ed, placa_ed]):
-                                    try:
-                                        int(ano_ed)
-                                        if gerenciador.editar_carro(st.session_state.cliente_atual, carro['id'], marca_ed, modelo_ed, ano_ed, placa_ed):
-                                            st.success("✅ Atualizado", icon="✅")
-                                            st.session_state[f"edit_car_{carro['id']}"] = False
-                                            st.rerun()
-                                    except ValueError:
-                                        st.error("❌ Ano deve ser número", icon="❌")
-                                else:
-                                    st.warning("⚠️ Preencha os campos")
-                        with col_s2:
-                            if st.button("✕ Cancelar", key=f"cancel_car_{carro['id']}", use_container_width=True):
-                                st.session_state[f"edit_car_{carro['id']}"] = False
-                                st.rerun()
-                
-                st.markdown("</div>", unsafe_allow_html=True)
+                            with col_e:
+                                if st.button("✏️", key=f"btn_edit_car_{carro['id']}", use_container_width=True, help="Editar"):
+                                    st.session_state[f"edit_car_{carro['id']}"] = True
+                                    st.rerun()
+                            with col_d:
+                                if st.button("🗑️", key=f"btn_del_car_{carro['id']}", use_container_width=True, help="Deletar"):
+                                    if gerenciador.deletar_carro(st.session_state.cliente_atual, carro['id']):
+                                        st.success("✅ Carro removido", icon="✅")
+                                        st.rerun()
+
+                        if st.session_state.get(f"edit_car_{carro['id']}", False):
+                            st.divider()
+                            st.markdown("**✏️ Editar Carro**")
+                            col_ed1, col_ed2 = st.columns(2)
+                            with col_ed1:
+                                marca_ed = st.text_input("Marca", value=carro['marca'], key=f"marca_ed_{carro['id']}")
+                                ano_ed = st.text_input("Ano", value=carro['ano'], key=f"ano_ed_{carro['id']}")
+                            with col_ed2:
+                                modelo_ed = st.text_input("Modelo", value=carro['modelo'], key=f"modelo_ed_{carro['id']}")
+                                placa_ed = st.text_input("Placa", value=carro['placa'], key=f"placa_ed_{carro['id']}")
+
+                            col_s1, col_s2 = st.columns(2)
+                            with col_s1:
+                                if st.button("✓ Salvar", key=f"save_car_{carro['id']}", use_container_width=True, type="primary"):
+                                    if all([marca_ed, modelo_ed, ano_ed, placa_ed]):
+                                        try:
+                                            int(ano_ed)
+                                            if gerenciador.editar_carro(st.session_state.cliente_atual, carro['id'], marca_ed, modelo_ed, ano_ed, placa_ed):
+                                                st.success("✅ Atualizado", icon="✅")
+                                                st.session_state[f"edit_car_{carro['id']}"] = False
+                                                st.rerun()
+                                        except ValueError:
+                                            st.error("❌ Ano deve ser número", icon="❌")
+                                    else:
+                                        st.warning("⚠️ Preencha os campos")
+                            with col_s2:
+                                if st.button("✕ Cancelar", key=f"cancel_car_{carro['id']}", use_container_width=True):
+                                    st.session_state[f"edit_car_{carro['id']}"] = False
+                                    st.rerun()
+
+    st.divider()
+    st.markdown("### ➕ Adicionar Carro")
+    with st.form("form_novo_carro", clear_on_submit=True):
+        marca = st.text_input("Marca", key="novo_marca", placeholder="Toyota, BMW, etc")
+        modelo = st.text_input("Modelo", key="novo_modelo", placeholder="Corolla, X5, etc")
+        ano = st.text_input("Ano", key="novo_ano", placeholder="2022")
+        placa = st.text_input("Placa", key="novo_placa", placeholder="ABC-1234")
+
+        submitted = st.form_submit_button("✓ Cadastrar Carro", use_container_width=True, type="primary")
+
+        if submitted:
+            if all([marca, modelo, ano, placa]):
+                try:
+                    int(ano)
+                    if gerenciador.adicionar_carro(st.session_state.cliente_atual, marca, modelo, ano, placa):
+                        st.success("✅ Carro cadastrado!", icon="✅")
+                        st.rerun()
+                    else:
+                        st.error("❌ Erro ao cadastrar", icon="❌")
+                except ValueError:
+                    st.error("❌ Ano deve ser numérico", icon="❌")
+            else:
+                st.warning("⚠️ Preencha todos os campos", icon="⚠️")
 
 
 # ==================== PÁGINA 3: SERVIÇOS ====================
@@ -628,61 +657,36 @@ elif st.session_state.pagina_atual == "servicos":
                 st.rerun()
         st.markdown("---")
         
-        col_form, col_list = st.columns([1, 1], gap="large")
-        
-        # COLUNA ESQUERDA: FORMULÁRIO
-        with col_form:
-            st.markdown("### ➕ Adicionar Serviço")
-            with st.form("form_novo_servico", clear_on_submit=True):
-                servico = st.selectbox("Tipo de Serviço", gerenciador.get_tipos_servico(), key="novo_srv")
-                descricao = st.text_area("Descrição (opcional)", key="nova_desc", placeholder="Detalhes do serviço realizado...", height=100)
-                
-                submitted = st.form_submit_button("✓ Cadastrar Serviço", use_container_width=True, type="primary")
-                
-                if submitted:
-                    if servico:
-                        if gerenciador.adicionar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, servico, descricao):
-                            st.success("✅ Serviço cadastrado!", icon="✅")
-                            st.rerun()
-                        else:
-                            st.error("❌ Erro ao cadastrar", icon="❌")
-                    else:
-                        st.warning("⚠️ Selecione um tipo de serviço", icon="⚠️")
-        
-        # COLUNA DIREITA: LISTAGEM
-        with col_list:
-            st.markdown("### 📋 Serviços Cadastrados")
-            servicos = gerenciador.obter_servicos_carro(st.session_state.cliente_atual, st.session_state.carro_atual)
-            
-            if not servicos:
-                st.info("📌 Nenhum serviço cadastrado. Registre o primeiro serviço!", icon="ℹ️")
+        st.markdown("### 📋 Serviços Cadastrados")
+        servicos = gerenciador.obter_servicos_carro(st.session_state.cliente_atual, st.session_state.carro_atual)
+
+        if not servicos:
+            st.info("📌 Nenhum serviço cadastrado. Registre o primeiro serviço!", icon="ℹ️")
+        else:
+            search_servico = st.text_input("🔍 Buscar serviço", placeholder="Tipo de serviço...", key="search_srv")
+
+            servicos_filtrados = [
+                s for s in servicos
+                if search_servico.lower() in s['servico'].lower()
+            ]
+
+            st.markdown(f"**Total:** {len(servicos_filtrados)}/{len(servicos)} serviço(s)")
+            st.divider()
+
+            if not servicos_filtrados:
+                st.info("📌 Nenhum serviço encontrado com o filtro informado.", icon="ℹ️")
             else:
-                # Search Bar
-                search_servico = st.text_input("🔍 Buscar serviço", placeholder="Tipo de serviço...", key="search_srv")
-                
-                # Filtrar serviços
-                servicos_filtrados = [
-                    s for s in servicos 
-                    if search_servico.lower() in s['servico'].lower()
-                ]
-                
-                st.markdown(f"**Total:** {len(servicos_filtrados)}/{len(servicos)} serviço(s)")
-                st.divider()
-                
-                # ScrollContainer com altura fixa
-                with st.container(border=False):
-                    st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
-                    
+                with st.container(height=calcular_altura_lista(len(servicos_filtrados)), border=False):
                     for srv in servicos_filtrados:
                         with st.container(border=True):
-                            col_info, col_actions = st.columns([2.5, 1.5])
-                            
+                            col_info, col_actions = st.columns([4, 2])
+
                             with col_info:
                                 st.markdown(f"**{srv['servico']}**", help=f"ID: {srv['id']}")
                                 st.markdown(f"📅 {srv['data']}")
                                 if srv['descricao']:
                                     st.markdown(f"📝 *{srv['descricao']}*")
-                            
+
                             with col_actions:
                                 col_e, col_d = st.columns(2)
                                 with col_e:
@@ -694,8 +698,7 @@ elif st.session_state.pagina_atual == "servicos":
                                         if gerenciador.deletar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id']):
                                             st.success("✅ Serviço removido", icon="✅")
                                             st.rerun()
-                        
-                        # Modal de edição
+
                         if st.session_state.get(f"edit_srv_{srv['id']}", False):
                             st.divider()
                             st.markdown("**✏️ Editar Serviço**")
@@ -703,11 +706,10 @@ elif st.session_state.pagina_atual == "servicos":
                             with col_ed1:
                                 tipos_servico = gerenciador.get_tipos_servico()
                                 idx_atual = tipos_servico.index(srv['servico']) if srv['servico'] in tipos_servico else 0
-                                tipo_ed = st.selectbox("Tipo", tipos_servico, 
-                                                      index=idx_atual, key=f"tipo_ed_{srv['id']}")
+                                tipo_ed = st.selectbox("Tipo", tipos_servico, index=idx_atual, key=f"tipo_ed_{srv['id']}")
                             with col_ed2:
                                 desc_ed = st.text_area("Descrição", value=srv['descricao'], key=f"desc_ed_{srv['id']}", height=80)
-                            
+
                             col_s1, col_s2 = st.columns(2)
                             with col_s1:
                                 if st.button("✓ Salvar", key=f"save_srv_{srv['id']}", use_container_width=True, type="primary"):
@@ -721,8 +723,24 @@ elif st.session_state.pagina_atual == "servicos":
                                 if st.button("✕ Cancelar", key=f"cancel_srv_{srv['id']}", use_container_width=True):
                                     st.session_state[f"edit_srv_{srv['id']}"] = False
                                     st.rerun()
-                    
-                    st.markdown("</div>", unsafe_allow_html=True)
+
+        st.divider()
+        st.markdown("### ➕ Adicionar Serviço")
+        with st.form("form_novo_servico", clear_on_submit=True):
+            servico = st.selectbox("Tipo de Serviço", gerenciador.get_tipos_servico(), key="novo_srv")
+            descricao = st.text_area("Descrição (opcional)", key="nova_desc", placeholder="Detalhes do serviço realizado...", height=100)
+
+            submitted = st.form_submit_button("✓ Cadastrar Serviço", use_container_width=True, type="primary")
+
+            if submitted:
+                if servico:
+                    if gerenciador.adicionar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, servico, descricao):
+                        st.success("✅ Serviço cadastrado!", icon="✅")
+                        st.rerun()
+                    else:
+                        st.error("❌ Erro ao cadastrar", icon="❌")
+                else:
+                    st.warning("⚠️ Selecione um tipo de serviço", icon="⚠️")
 
 # ==================== PÁGINA 4: HISTÓRICO DE SERVIÇOS ====================
 elif st.session_state.pagina_atual == "historico":
@@ -761,10 +779,7 @@ elif st.session_state.pagina_atual == "historico":
     if not servicos_filtrados:
         st.info("📌 Nenhum serviço encontrado com os filtros aplicados.", icon="ℹ️")
     else:
-        # Container com scroll
-        with st.container(border=False):
-            st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
-            
+        with st.container(height=calcular_altura_lista(len(servicos_filtrados)), border=False):
             for srv in servicos_filtrados:
                 with st.container(border=True):
                     col_info, col_details = st.columns([2, 1])
@@ -778,8 +793,6 @@ elif st.session_state.pagina_atual == "historico":
                     
                     with col_details:
                         st.markdown(f"<div style='text-align: right; color: #6b7280; font-size: 0.875rem;'><strong>Ano:</strong> {srv['carro_ano']}</div>", unsafe_allow_html=True)
-            
-            st.markdown("</div>", unsafe_allow_html=True)
 
 # ==================== PÁGINA 5: RELATÓRIOS MENSAIS ====================
 elif st.session_state.pagina_atual == "relatorios":
@@ -853,25 +866,24 @@ elif st.session_state.pagina_atual == "relatorios":
             
             # Listagem detalhada
             st.markdown("### 📋 Serviços do Período")
-            
-            with st.container(border=False):
-                st.markdown("""<div class="scroll-container" style="max-height: 600px; overflow-y: auto;">""", unsafe_allow_html=True)
-                
-                for srv in relatorio['servicos']:
-                    with st.container(border=True):
-                        col_srv_info, col_srv_details = st.columns([2.5, 1.5])
-                        
-                        with col_srv_info:
-                            st.markdown(f"**{srv['servico_tipo']}**")
-                            st.markdown(f"👤 {srv['cliente_nome']}")
-                            st.markdown(f"🚗 {srv['carro_marca']} {srv['carro_modelo']} - Placa: {srv['carro_placa']}")
-                            if srv['descricao']:
-                                st.markdown(f"📝 *{srv['descricao']}*")
-                        
-                        with col_srv_details:
-                            st.markdown(f"<div style='text-align: right;'><strong>📅</strong><br/>{srv['data']}</div>", unsafe_allow_html=True)
-                
-                st.markdown("</div>", unsafe_allow_html=True)
+
+            if not relatorio['servicos']:
+                st.info("📌 Nenhum serviço encontrado para o período selecionado.", icon="ℹ️")
+            else:
+                with st.container(height=calcular_altura_lista(len(relatorio['servicos'])), border=False):
+                    for srv in relatorio['servicos']:
+                        with st.container(border=True):
+                            col_srv_info, col_srv_details = st.columns([2.5, 1.5])
+                            
+                            with col_srv_info:
+                                st.markdown(f"**{srv['servico_tipo']}**")
+                                st.markdown(f"👤 {srv['cliente_nome']}")
+                                st.markdown(f"🚗 {srv['carro_marca']} {srv['carro_modelo']} - Placa: {srv['carro_placa']}")
+                                if srv['descricao']:
+                                    st.markdown(f"📝 *{srv['descricao']}*")
+                            
+                            with col_srv_details:
+                                st.markdown(f"<div style='text-align: right;'><strong>📅</strong><br/>{srv['data']}</div>", unsafe_allow_html=True)
 
 # ==================== PÁGINA 6: CONFIGURAÇÕES ====================
 elif st.session_state.pagina_atual == "configuracoes":
