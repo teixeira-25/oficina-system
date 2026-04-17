@@ -419,11 +419,11 @@ elif st.session_state.pagina_atual == "servicos":
                         with col_actions:
                             col_e, col_d = st.columns(2)
                             with col_e:
-                                if st.button("✏️ Editar", key=f"edit_srv_{srv['id']}", use_container_width=True, help="Editar"):
+                                if st.button("✏️", key=f"edit_srv_{srv['id']}", use_container_width=True, help="Editar"):
                                     st.session_state[f"edit_srv_{srv['id']}"] = True
                                     st.rerun()
                             with col_d:
-                                if st.button("🗑️ Deletar", key=f"del_srv_{srv['id']}", use_container_width=True, help="Deletar"):
+                                if st.button("🗑️", key=f"del_srv_{srv['id']}", use_container_width=True, help="Deletar"):
                                     if gerenciador.deletar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id']):
                                         st.success("✅ Serviço removido", icon="✅")
                                         st.rerun()
