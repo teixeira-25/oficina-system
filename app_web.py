@@ -25,6 +25,7 @@ st.markdown("""
     /* Elementos Principais */
     .main {
         padding: 2rem;
+        padding-top: 5rem;
         background-color: #ffffff;
     }
     
@@ -152,58 +153,33 @@ st.markdown("""
         background: var(--primary-light);
     }
     
-    /* Dashboard */
-    .dashboard-header {
+    /* Top Header */
+    .top-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 2rem;
-        background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
-        border-radius: 0px;
-        margin-bottom: 2rem;
-        box-shadow: 0 6px 20px rgba(249, 115, 22, 0.25);
+        padding: 1rem 2rem;
+        background-color: #666666;
         color: white;
-        border: 3px solid #c2410c;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        z-index: 999;
     }
     
-    .dashboard-logo {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        flex-shrink: 0;
+    .top-header-logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        letter-spacing: 0.5px;
     }
     
-    .dashboard-logo-car {
-        width: 60px;
-        height: 60px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    }
-    
-    .dashboard-logo-text {
-        font-size: 2rem;
-        font-weight: 900;
-        letter-spacing: 1px;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    .dashboard-clock {
-        font-size: 1.75rem;
+    .top-header-clock {
+        font-size: 1.25rem;
         font-family: 'Courier New', monospace;
         font-weight: bold;
-        letter-spacing: 3px;
-        background: rgba(255, 255, 255, 0.15);
-        padding: 0.5rem 1.25rem;
-        border-radius: 4px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        min-width: 140px;
-        text-align: center;
+        letter-spacing: 2px;
     }
     
     /* Menu Cards */
@@ -282,75 +258,45 @@ if st.session_state.pagina_atual == "dashboard":
     from datetime import datetime
     import streamlit.components.v1 as components
     
-    # Criar componente HTML com relógio funcional
-    clock_html = """
+    # Criar header fixo no topo com nome da oficina e relógio
+    header_html = """
     <!DOCTYPE html>
     <html>
     <head>
         <style>
             * { margin: 0; padding: 0; }
             body {
-                background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 2rem;
-                border-radius: 0px;
-                box-shadow: 0 6px 20px rgba(249, 115, 22, 0.25);
+                padding: 1rem 2rem;
+                background-color: #666666;
                 color: white;
-                border: 3px solid #c2410c;
-                min-height: 100px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                z-index: 9999;
                 font-family: Arial, sans-serif;
+                height: 60px;
             }
-            .logo-container {
-                display: flex;
-                align-items: center;
-                gap: 1.5rem;
+            .header-logo {
+                font-size: 1.5rem;
+                font-weight: bold;
+                letter-spacing: 0.5px;
             }
-            .logo-text {
-                font-size: 2rem;
-                font-weight: 900;
-                letter-spacing: 1px;
-                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-                background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-            .clock {
-                font-size: 1.75rem;
+            .header-clock {
+                font-size: 1.25rem;
                 font-family: 'Courier New', monospace;
                 font-weight: bold;
-                letter-spacing: 3px;
-                background: rgba(255, 255, 255, 0.15);
-                padding: 0.5rem 1.25rem;
-                border-radius: 4px;
-                border: 2px solid rgba(255, 255, 255, 0.3);
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                min-width: 140px;
-                text-align: center;
-            }
-            svg {
-                width: 60px;
-                height: 60px;
-                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+                letter-spacing: 2px;
             }
         </style>
     </head>
     <body>
-        <div class="logo-container">
-            <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10" y="30" width="80" height="20" rx="3" fill="#dc2626"/>
-                <rect x="20" y="15" width="25" height="18" rx="2" fill="#dc2626"/>
-                <rect x="55" y="15" width="25" height="18" rx="2" fill="#dc2626"/>
-                <circle cx="25" cy="52" r="6" fill="#333333"/>
-                <circle cx="75" cy="52" r="6" fill="#333333"/>
-                <rect x="22" y="18" width="20" height="14" rx="1" fill="#87ceeb" opacity="0.6"/>
-                <rect x="58" y="18" width="20" height="14" rx="1" fill="#87ceeb" opacity="0.6"/>
-            </svg>
-            <div class="logo-text">RED CAR</div>
-        </div>
-        <div class="clock" id="clock">00:00:00</div>
+        <div class="header-logo">RED CAR</div>
+        <div class="header-clock" id="clock">00:00:00</div>
         
         <script>
             function updateClock() {
@@ -367,8 +313,8 @@ if st.session_state.pagina_atual == "dashboard":
     </html>
     """
     
-    # Renderizar o componente
-    components.html(clock_html, height=120)
+    # Renderizar o header
+    components.html(header_html, height=60)
     
     st.markdown("")
     st.markdown("### 📋 O que você deseja fazer?")
