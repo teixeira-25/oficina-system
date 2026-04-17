@@ -349,6 +349,12 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     tipo_servico = st.selectbox("Tipo de Serviço", tipos_servico, index=indice_tipo)
     st.markdown("#### Peças")
     registros_atuais = st.session_state[editor_state_key]
+    header_nome, header_qtd, header_unit, header_total, header_remove = st.columns([3.5, 1.2, 1.5, 1.4, 0.8])
+    header_nome.markdown("**Peça**")
+    header_qtd.markdown("**Quantidade**")
+    header_unit.markdown("**Valor Unitário**")
+    header_total.markdown("**Valor Total**")
+    header_remove.markdown("**Ação**")
 
     for indice, registro in enumerate(registros_atuais):
         col_nome, col_qtd, col_unit, col_total, col_remove = st.columns([3.5, 1.2, 1.5, 1.4, 0.8])
