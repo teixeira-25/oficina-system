@@ -199,7 +199,7 @@ if st.session_state.pagina_atual == "clientes":
                     with col_actions:
                         col_e, col_d, col_s = st.columns(3)
                         with col_e:
-                            if st.button("✓ Entrar", key=f"enter_{cliente['id']}", use_container_width=True, help="Ver carros deste cliente"):
+                            if st.button("✓", key=f"enter_{cliente['id']}", use_container_width=True, help="Ver carros deste cliente"):
                                 st.session_state.cliente_atual = cliente['id']
                                 st.session_state.pagina_atual = "carros"
                                 st.rerun()
@@ -305,7 +305,7 @@ elif st.session_state.pagina_atual == "carros":
                     with col_actions:
                         col_s, col_e, col_d = st.columns(3)
                         with col_s:
-                            if st.button("✓ Serviços", key=f"srv_{carro['id']}", use_container_width=True, help="Ver serviços"):
+                            if st.button("✓", key=f"srv_{carro['id']}", use_container_width=True, help="Ver serviços"):
                                 st.session_state.carro_atual = carro['id']
                                 st.session_state.pagina_atual = "servicos"
                                 st.rerun()
