@@ -320,6 +320,26 @@ def preparar_pecas_editor(pecas):
     ] or [{"Peca": "", "Quantidade": 1, "Valor Unitario": 0.0, "Total": 0.0}]
 
 
+def sanitizar_linhas_pecas_editor(registros):
+    """Mantem no maximo uma linha vazia e impede lixo visual no editor."""
+    linhas_preenchidas = []
+
+    for registro in registros:
+        nome = str(registro.get("Peca", "")).strip()
+        if nome:
+            linhas_preenchidas.append(
+                {
+                    "Peca": nome,
+                    "Quantidade": int(registro.get("Quantidade", 1) or 1),
+                    "Valor Unitario": float(registro.get("Valor Unitario", 0) or 0),
+                    "Total": float(registro.get("Total", 0) or 0),
+                }
+            )
+
+    linhas_preenchidas.append({"Peca": "", "Quantidade": 1, "Valor Unitario": 0.0, "Total": 0.0})
+    return linhas_preenchidas
+
+
 @st.dialog("Serviço", width="large")
 def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     tipos_servico = gerenciador.get_tipos_servico()
@@ -335,11 +355,17 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
         descricao_inicial = servico_atual.get("descricao", "")
         pecas_iniciais = servico_atual.get("pecas", [])
 
+    editor_state_key = f"editor_pecas_state_{modo}_{servico_atual['id'] if servico_atual else 'novo'}"
+    editor_widget_key = f"editor_pecas_widget_{modo}_{servico_atual['id'] if servico_atual else 'novo'}"
+
+    if editor_state_key not in st.session_state:
+        st.session_state[editor_state_key] = sanitizar_linhas_pecas_editor(preparar_pecas_editor(pecas_iniciais))
+
     indice_tipo = tipos_servico.index(tipo_inicial) if tipo_inicial in tipos_servico else 0
 
     tipo_servico = st.selectbox("Tipo de Serviço", tipos_servico, index=indice_tipo)
     pecas_editadas = st.data_editor(
-        preparar_pecas_editor(pecas_iniciais),
+        st.session_state[editor_state_key],
         num_rows="dynamic",
         use_container_width=True,
         hide_index=True,
@@ -350,8 +376,17 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
             "Valor Unitario": st.column_config.NumberColumn("Valor Unitário", min_value=0.0, step=0.01, format="R$ %.2f"),
             "Total": st.column_config.NumberColumn("Total", format="R$ %.2f"),
         },
-        key=f"editor_pecas_{modo}_{servico_atual['id'] if servico_atual else 'novo'}",
+        key=editor_widget_key,
     )
+    registros_editor = pecas_editadas.to_dict("records") if hasattr(pecas_editadas, "to_dict") else pecas_editadas
+    registros_sanitizados = sanitizar_linhas_pecas_editor(registros_editor)
+
+    if registros_sanitizados != registros_editor:
+        st.session_state[editor_state_key] = registros_sanitizados
+        st.session_state.pop(editor_widget_key, None)
+        st.rerun()
+
+    st.session_state[editor_state_key] = registros_sanitizados
     pecas = normalizar_pecas_editor(pecas_editadas)
     valor_total_pecas = sum(float(peca.get("total", 0) or 0) for peca in pecas)
 
@@ -380,6 +415,8 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
             st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
         else:
             st.session_state.pop("abrir_modal_novo_servico", None)
+        st.session_state.pop(editor_state_key, None)
+        st.session_state.pop(editor_widget_key, None)
         st.rerun()
 
     if salvar:
@@ -406,6 +443,8 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
                 st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
             else:
                 st.session_state.pop("abrir_modal_novo_servico", None)
+            st.session_state.pop(editor_state_key, None)
+            st.session_state.pop(editor_widget_key, None)
             st.success("✅ Serviço salvo com sucesso!", icon="✅")
             st.rerun()
         st.error("❌ Erro ao salvar serviço", icon="❌")
