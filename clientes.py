@@ -293,6 +293,7 @@ class GerenciadorClientes:
         for peca in pecas:
             nome = str(peca.get('nome', '')).strip()
             preco = peca.get('preco', 0)
+            quantidade = peca.get('quantidade', 1)
 
             if not nome:
                 continue
@@ -302,12 +303,21 @@ class GerenciadorClientes:
             except (TypeError, ValueError):
                 preco_float = 0.0
 
+            try:
+                quantidade_int = int(quantidade)
+            except (TypeError, ValueError):
+                quantidade_int = 1
+
             if preco_float < 0:
                 preco_float = 0.0
+            if quantidade_int <= 0:
+                quantidade_int = 1
 
             pecas_normalizadas.append({
                 'nome': nome,
-                'preco': preco_float
+                'preco': preco_float,
+                'quantidade': quantidade_int,
+                'total': round(preco_float * quantidade_int, 2),
             })
 
         return pecas_normalizadas
@@ -329,7 +339,7 @@ class GerenciadorClientes:
                 for carro in cliente['carros']:
                     for servico in carro['servicos']:
                         pecas = servico.get('pecas', [])
-                        valor_pecas = round(sum(float(peca.get('preco', 0) or 0) for peca in pecas), 2)
+                        valor_pecas = round(sum(float(peca.get('total', peca.get('preco', 0)) or 0) for peca in pecas), 2)
                         todos_servicos.append({
                             'servico_id': servico['id'],
                             'servico_tipo': servico['servico'],

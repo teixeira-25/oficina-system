@@ -277,7 +277,8 @@ def normalizar_pecas_editor(pecas_df):
 
     for registro in registros:
         nome = str(registro.get("Peca", "")).strip()
-        preco = registro.get("Preco", 0)
+        preco = registro.get("Valor Unitario", 0)
+        quantidade = registro.get("Quantidade", 1)
 
         if not nome:
             continue
@@ -287,19 +288,36 @@ def normalizar_pecas_editor(pecas_df):
         except (TypeError, ValueError):
             preco_float = 0.0
 
+        try:
+            quantidade_int = int(quantidade)
+        except (TypeError, ValueError):
+            quantidade_int = 1
+
         if preco_float < 0:
             preco_float = 0.0
+        if quantidade_int <= 0:
+            quantidade_int = 1
 
-        pecas.append({"nome": nome, "preco": preco_float})
+        pecas.append({
+            "nome": nome,
+            "preco": preco_float,
+            "quantidade": quantidade_int,
+            "total": round(preco_float * quantidade_int, 2),
+        })
 
     return pecas
 
 
 def preparar_pecas_editor(pecas):
     return [
-        {"Peca": peca.get("nome", ""), "Preco": float(peca.get("preco", 0) or 0)}
+        {
+            "Peca": peca.get("nome", ""),
+            "Quantidade": int(peca.get("quantidade", 1) or 1),
+            "Valor Unitario": float(peca.get("preco", 0) or 0),
+            "Total": float(peca.get("total", (peca.get("quantidade", 1) or 1) * (peca.get("preco", 0) or 0)) or 0),
+        }
         for peca in (pecas or [])
-    ] or [{"Peca": "", "Preco": 0.0}]
+    ] or [{"Peca": "", "Quantidade": 1, "Valor Unitario": 0.0, "Total": 0.0}]
 
 
 @st.dialog("Serviço")
@@ -326,9 +344,12 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
             num_rows="dynamic",
             use_container_width=True,
             hide_index=True,
+            disabled=["Total"],
             column_config={
                 "Peca": st.column_config.TextColumn("Peça"),
-                "Preco": st.column_config.NumberColumn("Preço", min_value=0.0, step=0.01, format="R$ %.2f"),
+                "Quantidade": st.column_config.NumberColumn("Quantidade", min_value=1, step=1, format="%d"),
+                "Valor Unitario": st.column_config.NumberColumn("Valor Unitário", min_value=0.0, step=0.01, format="R$ %.2f"),
+                "Total": st.column_config.NumberColumn("Total", format="R$ %.2f"),
             },
             key=f"editor_pecas_{modo}_{servico_atual['id'] if servico_atual else 'novo'}",
         )
@@ -341,17 +362,35 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     if cancelar:
         if servico_atual:
             st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
+        else:
+            st.session_state.pop("abrir_modal_novo_servico", None)
         st.rerun()
 
     if salvar:
         pecas = normalizar_pecas_editor(pecas_editadas)
         if modo == "criar":
-            resultado = gerenciador.adicionar_servico(cliente_id, carro_id, tipo_servico, descricao, pecas)
+            resultado = gerenciador.adicionar_servico(
+                cliente_id=cliente_id,
+                carro_id=carro_id,
+                servico=tipo_servico,
+                descricao=descricao,
+                pecas=pecas,
+            )
         else:
-            resultado = gerenciador.editar_servico(cliente_id, carro_id, servico_atual["id"], tipo_servico, descricao, pecas)
+            resultado = gerenciador.editar_servico(
+                cliente_id=cliente_id,
+                carro_id=carro_id,
+                servico_id=servico_atual["id"],
+                servico=tipo_servico,
+                descricao=descricao,
+                pecas=pecas,
+            )
 
         if resultado:
-            st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
+            if servico_atual:
+                st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
+            else:
+                st.session_state.pop("abrir_modal_novo_servico", None)
             st.success("✅ Serviço salvo com sucesso!", icon="✅")
             st.rerun()
         st.error("❌ Erro ao salvar serviço", icon="❌")
@@ -783,8 +822,9 @@ elif st.session_state.pagina_atual == "servicos":
                                 st.markdown(f"📅 {srv['data']}")
                                 pecas = srv.get('pecas', [])
                                 if pecas:
-                                    valor_pecas = sum(float(peca.get('preco', 0) or 0) for peca in pecas)
-                                    st.markdown(f"🔩 {len(pecas)} peça(s) • {formatar_moeda(valor_pecas)}")
+                                    total_itens = sum(int(peca.get('quantidade', 1) or 1) for peca in pecas)
+                                    valor_pecas = sum(float(peca.get('total', peca.get('preco', 0)) or 0) for peca in pecas)
+                                    st.markdown(f"🔩 {total_itens} item(ns) • {formatar_moeda(valor_pecas)}")
                                 if srv['descricao']:
                                     st.markdown(f"📝 *{srv['descricao']}*")
 
@@ -856,7 +896,8 @@ elif st.session_state.pagina_atual == "historico":
                         st.markdown(f"👤 {srv['cliente_nome']} • 🚗 {srv['carro_marca']} {srv['carro_modelo']} ({srv['carro_placa']})")
                         st.markdown(f"📅 {srv['data']}")
                         if srv.get('total_pecas', 0):
-                            st.markdown(f"🔩 {srv['total_pecas']} peça(s) • {formatar_moeda(srv.get('valor_pecas', 0))}")
+                            quantidade_total = sum(int(peca.get('quantidade', 1) or 1) for peca in srv.get('pecas', []))
+                            st.markdown(f"🔩 {quantidade_total} item(ns) • {formatar_moeda(srv.get('valor_pecas', 0))}")
                         if srv['descricao']:
                             st.markdown(f"📝 *{srv['descricao']}*")
                     
@@ -949,7 +990,8 @@ elif st.session_state.pagina_atual == "relatorios":
                                 st.markdown(f"👤 {srv['cliente_nome']}")
                                 st.markdown(f"🚗 {srv['carro_marca']} {srv['carro_modelo']} - Placa: {srv['carro_placa']}")
                                 if srv.get('total_pecas', 0):
-                                    st.markdown(f"🔩 {srv['total_pecas']} peça(s) • {formatar_moeda(srv.get('valor_pecas', 0))}")
+                                    quantidade_total = sum(int(peca.get('quantidade', 1) or 1) for peca in srv.get('pecas', []))
+                                    st.markdown(f"🔩 {quantidade_total} item(ns) • {formatar_moeda(srv.get('valor_pecas', 0))}")
                                 if srv['descricao']:
                                     st.markdown(f"📝 *{srv['descricao']}*")
                             
