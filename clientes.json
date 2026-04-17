@@ -1,0 +1,59 @@
+[
+  {
+    "id": "f437166b",
+    "nome": "João Silva",
+    "telefone": "11999999999",
+    "carros": [
+      {
+        "id": "9e8d2309",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "ano": "2020",
+        "placa": "ABC-1234",
+        "servicos": [
+          {
+            "id": "07a90143",
+            "servico": "Troca de Óleo",
+            "descricao": "Troca feita",
+            "data": "16/04/2026 21:30"
+          }
+        ],
+        "data_adicao": "16/04/2026 21:30"
+      },
+      {
+        "id": "de9ca6a7",
+        "marca": "Honda",
+        "modelo": "Civic",
+        "ano": "2019",
+        "placa": "XYZ-5678",
+        "servicos": [
+          {
+            "id": "15f5b7a6",
+            "servico": "Alinhamento",
+            "descricao": "",
+            "data": "16/04/2026 21:30"
+          }
+        ],
+        "data_adicao": "16/04/2026 21:30"
+      }
+    ],
+    "data_criacao": "16/04/2026 21:30"
+  },
+  {
+    "id": "747fb9be",
+    "nome": "Maria Santos",
+    "telefone": "21988888888",
+    "carros": [
+      {
+        "id": "da9582b7",
+        "marca": "Ford",
+        "modelo": "Fiesta",
+        "ano": "2021",
+        "placa": "DEF-9012",
+        "servicos": [],
+        "data_adicao": "16/04/2026 21:30"
+      }
+    ],
+    "data_criacao": "16/04/2026 21:30"
+  }
+]
