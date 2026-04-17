@@ -279,45 +279,96 @@ def obter_hora_digital():
 
 # ==================== PÁGINA 0: DASHBOARD ====================
 if st.session_state.pagina_atual == "dashboard":
-    # Header com logo e relógio
-    st.markdown("""
-    <div class="dashboard-header">
-        <div class="dashboard-logo">
-            <svg class="dashboard-logo-car" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
-                <!-- Carro vermelho estilizado -->
+    from datetime import datetime
+    import streamlit.components.v1 as components
+    
+    # Criar componente HTML com relógio funcional
+    clock_html = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            * { margin: 0; padding: 0; }
+            body {
+                background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 2rem;
+                border-radius: 0px;
+                box-shadow: 0 6px 20px rgba(249, 115, 22, 0.25);
+                color: white;
+                border: 3px solid #c2410c;
+                min-height: 100px;
+                font-family: Arial, sans-serif;
+            }
+            .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+            }
+            .logo-text {
+                font-size: 2rem;
+                font-weight: 900;
+                letter-spacing: 1px;
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .clock {
+                font-size: 1.75rem;
+                font-family: 'Courier New', monospace;
+                font-weight: bold;
+                letter-spacing: 3px;
+                background: rgba(255, 255, 255, 0.15);
+                padding: 0.5rem 1.25rem;
+                border-radius: 4px;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                min-width: 140px;
+                text-align: center;
+            }
+            svg {
+                width: 60px;
+                height: 60px;
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            }
+        </style>
+    </head>
+    <body>
+        <div class="logo-container">
+            <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
                 <rect x="10" y="30" width="80" height="20" rx="3" fill="#dc2626"/>
                 <rect x="20" y="15" width="25" height="18" rx="2" fill="#dc2626"/>
                 <rect x="55" y="15" width="25" height="18" rx="2" fill="#dc2626"/>
-                <!-- Rodas -->
                 <circle cx="25" cy="52" r="6" fill="#333333"/>
                 <circle cx="75" cy="52" r="6" fill="#333333"/>
-                <!-- Detalhe de vidro -->
                 <rect x="22" y="18" width="20" height="14" rx="1" fill="#87ceeb" opacity="0.6"/>
                 <rect x="58" y="18" width="20" height="14" rx="1" fill="#87ceeb" opacity="0.6"/>
             </svg>
-            <div class="dashboard-logo-text">RED CAR</div>
+            <div class="logo-text">RED CAR</div>
         </div>
-        <div class="dashboard-clock" id="clock">00:00:00</div>
-    </div>
-    
-    <script>
-        function atualizarRelogio() {
-            const agora = new Date();
-            const horas = agora.getHours().toString().padStart(2, '0');
-            const minutos = agora.getMinutes().toString().padStart(2, '0');
-            const segundos = agora.getSeconds().toString().padStart(2, '0');
-            const tempo = horas + ':' + minutos + ':' + segundos;
-            const clockElement = document.getElementById('clock');
-            if (clockElement) {
-                clockElement.textContent = tempo;
+        <div class="clock" id="clock">00:00:00</div>
+        
+        <script>
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('clock').textContent = hours + ':' + minutes + ':' + seconds;
             }
-        }
-        // Atualizar imediatamente
-        atualizarRelogio();
-        // Atualizar a cada segundo
-        setInterval(atualizarRelogio, 1000);
-    </script>
-    """, unsafe_allow_html=True)
+            updateClock();
+            setInterval(updateClock, 1000);
+        </script>
+    </body>
+    </html>
+    """
+    
+    # Renderizar o componente
+    components.html(clock_html, height=120)
     
     st.markdown("")
     st.markdown("### 📋 O que você deseja fazer?")
