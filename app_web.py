@@ -243,11 +243,11 @@ if st.session_state.pagina_atual == "clientes":
                                     st.session_state.pagina_atual = "carros"
                                     st.rerun()
                             with col_d:
-                                if st.button("✏️", key=f"edit_{cliente['id']}", use_container_width=True, help="Editar"):
+                                if st.button("✏️", key=f"btn_edit_cli_{cliente['id']}", use_container_width=True, help="Editar"):
                                     st.session_state[f"edit_{cliente['id']}"] = True
                                     st.rerun()
                             with col_s:
-                                if st.button("🗑️", key=f"del_{cliente['id']}", use_container_width=True, help="Deletar"):
+                                if st.button("🗑️", key=f"btn_del_cli_{cliente['id']}", use_container_width=True, help="Deletar"):
                                     if gerenciador.deletar_cliente(cliente['id']):
                                         st.success("✅ Cliente removido", icon="✅")
                                         st.rerun()
@@ -361,16 +361,16 @@ elif st.session_state.pagina_atual == "carros":
                     with col_actions:
                         col_s, col_e, col_d = st.columns(3)
                         with col_s:
-                            if st.button("✓", key=f"srv_{carro['id']}", use_container_width=True, help="Ver serviços"):
+                            if st.button("✓", key=f"btn_srv_{carro['id']}", use_container_width=True, help="Ver serviços"):
                                 st.session_state.carro_atual = carro['id']
                                 st.session_state.pagina_atual = "servicos"
                                 st.rerun()
                         with col_e:
-                            if st.button("✏️", key=f"edit_car_{carro['id']}", use_container_width=True, help="Editar"):
+                            if st.button("✏️", key=f"btn_edit_car_{carro['id']}", use_container_width=True, help="Editar"):
                                 st.session_state[f"edit_car_{carro['id']}"] = True
                                 st.rerun()
                         with col_d:
-                            if st.button("🗑️", key=f"del_car_{carro['id']}", use_container_width=True, help="Deletar"):
+                            if st.button("🗑️", key=f"btn_del_car_{carro['id']}", use_container_width=True, help="Deletar"):
                                 if gerenciador.deletar_carro(st.session_state.cliente_atual, carro['id']):
                                     st.success("✅ Carro removido", icon="✅")
                                     st.rerun()
@@ -490,11 +490,11 @@ elif st.session_state.pagina_atual == "servicos":
                             with col_actions:
                                 col_e, col_d = st.columns(2)
                                 with col_e:
-                                    if st.button("✏️", key=f"edit_srv_{srv['id']}", use_container_width=True, help="Editar"):
+                                    if st.button("✏️", key=f"btn_edit_srv_{srv['id']}", use_container_width=True, help="Editar"):
                                         st.session_state[f"edit_srv_{srv['id']}"] = True
                                         st.rerun()
                                 with col_d:
-                                    if st.button("🗑️", key=f"del_srv_{srv['id']}", use_container_width=True, help="Deletar"):
+                                    if st.button("🗑️", key=f"btn_del_srv_{srv['id']}", use_container_width=True, help="Deletar"):
                                         if gerenciador.deletar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id']):
                                             st.success("✅ Serviço removido", icon="✅")
                                             st.rerun()
