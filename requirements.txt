@@ -1,0 +1,15 @@
+# Requisitos do Sistema de Gerenciamento de Oficina
+
+# Este projeto usa apenas a biblioteca padrão do Python
+# tkinter - Interface gráfica (vem instalado com Python)
+# csv - Gerenciamento de arquivos CSV (padrão)
+# datetime - Registro de data e hora (padrão)
+# os - Operações com sistema operacional (padrão)
+
+# Python version: 3.7+
+
+# Para instalar tkinter (se necessário):
+# Ubuntu/Debian: sudo apt-get install python3-tk
+# Fedora: sudo dnf install python3-tkinter
+# macOS: já vem com Python do Homebrew
+# Windows: tkinter vem instalado com Python
