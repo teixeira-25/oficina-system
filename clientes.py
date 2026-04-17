@@ -183,9 +183,10 @@ class GerenciadorClientes:
             print(f"Erro ao deletar carro: {e}")
             return False
     
-    def adicionar_servico(self, cliente_id, carro_id, servico, descricao=""):
+    def adicionar_servico(self, cliente_id, carro_id, servico, descricao="", pecas=None):
         """Adiciona um serviço a um carro"""
         try:
+            pecas_normalizadas = self._normalizar_pecas(pecas)
             clientes = self._ler_clientes()
             
             for cliente in clientes:
@@ -196,6 +197,7 @@ class GerenciadorClientes:
                                 'id': self._gerar_id(),
                                 'servico': servico,
                                 'descricao': descricao,
+                                'pecas': pecas_normalizadas,
                                 'data': datetime.now().strftime("%d/%m/%Y %H:%M")
                             }
                             carro['servicos'].append(novo_servico)
@@ -216,9 +218,10 @@ class GerenciadorClientes:
                     return carro['servicos']
         return []
     
-    def editar_servico(self, cliente_id, carro_id, servico_id, servico, descricao=""):
+    def editar_servico(self, cliente_id, carro_id, servico_id, servico, descricao="", pecas=None):
         """Edita um serviço"""
         try:
+            pecas_normalizadas = self._normalizar_pecas(pecas)
             clientes = self._ler_clientes()
             
             for cliente in clientes:
@@ -229,6 +232,7 @@ class GerenciadorClientes:
                                 if srv['id'] == servico_id:
                                     srv['servico'] = servico
                                     srv['descricao'] = descricao
+                                    srv['pecas'] = pecas_normalizadas
                                     self._salvar_clientes(clientes)
                                     return True
             
@@ -279,6 +283,34 @@ class GerenciadorClientes:
         """Gera um ID único"""
         import uuid
         return str(uuid.uuid4())[:8]
+
+    def _normalizar_pecas(self, pecas):
+        """Normaliza a lista de peças para persistência estável."""
+        pecas_normalizadas = []
+        if not pecas:
+            return pecas_normalizadas
+
+        for peca in pecas:
+            nome = str(peca.get('nome', '')).strip()
+            preco = peca.get('preco', 0)
+
+            if not nome:
+                continue
+
+            try:
+                preco_float = round(float(preco), 2)
+            except (TypeError, ValueError):
+                preco_float = 0.0
+
+            if preco_float < 0:
+                preco_float = 0.0
+
+            pecas_normalizadas.append({
+                'nome': nome,
+                'preco': preco_float
+            })
+
+        return pecas_normalizadas
     
     # ==================== FUNÇÕES DE RELATÓRIO ====================
     
@@ -296,10 +328,15 @@ class GerenciadorClientes:
             for cliente in clientes:
                 for carro in cliente['carros']:
                     for servico in carro['servicos']:
+                        pecas = servico.get('pecas', [])
+                        valor_pecas = round(sum(float(peca.get('preco', 0) or 0) for peca in pecas), 2)
                         todos_servicos.append({
                             'servico_id': servico['id'],
                             'servico_tipo': servico['servico'],
                             'descricao': servico.get('descricao', ''),
+                            'pecas': pecas,
+                            'total_pecas': len(pecas),
+                            'valor_pecas': valor_pecas,
                             'data': servico['data'],
                             'cliente_nome': cliente['nome'],
                             'cliente_id': cliente['id'],

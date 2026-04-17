@@ -263,6 +263,99 @@ def calcular_altura_lista(total_itens):
         return ALTURA_LISTA_MINIMA
     return min(ALTURA_LISTA_MAXIMA, max(ALTURA_LISTA_MINIMA, total_itens * ALTURA_ITEM_LISTA))
 
+
+def formatar_moeda(valor):
+    return f"R$ {float(valor):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+def normalizar_pecas_editor(pecas_df):
+    pecas = []
+    if hasattr(pecas_df, "to_dict"):
+        registros = pecas_df.to_dict("records")
+    else:
+        registros = pecas_df
+
+    for registro in registros:
+        nome = str(registro.get("Peca", "")).strip()
+        preco = registro.get("Preco", 0)
+
+        if not nome:
+            continue
+
+        try:
+            preco_float = round(float(preco), 2)
+        except (TypeError, ValueError):
+            preco_float = 0.0
+
+        if preco_float < 0:
+            preco_float = 0.0
+
+        pecas.append({"nome": nome, "preco": preco_float})
+
+    return pecas
+
+
+def preparar_pecas_editor(pecas):
+    return [
+        {"Peca": peca.get("nome", ""), "Preco": float(peca.get("preco", 0) or 0)}
+        for peca in (pecas or [])
+    ] or [{"Peca": "", "Preco": 0.0}]
+
+
+@st.dialog("Serviço")
+def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
+    tipos_servico = gerenciador.get_tipos_servico()
+    titulo = "Criar Serviço" if modo == "criar" else "Editar Serviço"
+    st.markdown(f"### {titulo}")
+
+    tipo_inicial = ""
+    descricao_inicial = ""
+    pecas_iniciais = []
+
+    if servico_atual:
+        tipo_inicial = servico_atual.get("servico", "")
+        descricao_inicial = servico_atual.get("descricao", "")
+        pecas_iniciais = servico_atual.get("pecas", [])
+
+    indice_tipo = tipos_servico.index(tipo_inicial) if tipo_inicial in tipos_servico else 0
+
+    with st.form(f"form_modal_servico_{modo}_{servico_atual['id'] if servico_atual else 'novo'}"):
+        tipo_servico = st.selectbox("Tipo de Serviço", tipos_servico, index=indice_tipo)
+        pecas_editadas = st.data_editor(
+            preparar_pecas_editor(pecas_iniciais),
+            num_rows="dynamic",
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Peca": st.column_config.TextColumn("Peça"),
+                "Preco": st.column_config.NumberColumn("Preço", min_value=0.0, step=0.01, format="R$ %.2f"),
+            },
+            key=f"editor_pecas_{modo}_{servico_atual['id'] if servico_atual else 'novo'}",
+        )
+        descricao = st.text_area("Descrição", value=descricao_inicial, placeholder="Detalhes do serviço realizado...", height=120)
+
+        col_salvar, col_cancelar = st.columns(2)
+        salvar = col_salvar.form_submit_button("✓ Salvar", use_container_width=True, type="primary")
+        cancelar = col_cancelar.form_submit_button("✕ Cancelar", use_container_width=True)
+
+    if cancelar:
+        if servico_atual:
+            st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
+        st.rerun()
+
+    if salvar:
+        pecas = normalizar_pecas_editor(pecas_editadas)
+        if modo == "criar":
+            resultado = gerenciador.adicionar_servico(cliente_id, carro_id, tipo_servico, descricao, pecas)
+        else:
+            resultado = gerenciador.editar_servico(cliente_id, carro_id, servico_atual["id"], tipo_servico, descricao, pecas)
+
+        if resultado:
+            st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
+            st.success("✅ Serviço salvo com sucesso!", icon="✅")
+            st.rerun()
+        st.error("❌ Erro ao salvar serviço", icon="❌")
+
 # ==================== PÁGINA 0: DASHBOARD ====================
 if st.session_state.pagina_atual == "dashboard":
     from datetime import datetime
@@ -656,6 +749,10 @@ elif st.session_state.pagina_atual == "servicos":
                 voltar()
                 st.rerun()
         st.markdown("---")
+
+        if st.session_state.get("abrir_modal_novo_servico"):
+            st.session_state.pop("abrir_modal_novo_servico")
+            modal_servico("criar", st.session_state.cliente_atual, st.session_state.carro_atual)
         
         st.markdown("### 📋 Serviços Cadastrados")
         servicos = gerenciador.obter_servicos_carro(st.session_state.cliente_atual, st.session_state.carro_atual)
@@ -684,6 +781,10 @@ elif st.session_state.pagina_atual == "servicos":
                             with col_info:
                                 st.markdown(f"**{srv['servico']}**", help=f"ID: {srv['id']}")
                                 st.markdown(f"📅 {srv['data']}")
+                                pecas = srv.get('pecas', [])
+                                if pecas:
+                                    valor_pecas = sum(float(peca.get('preco', 0) or 0) for peca in pecas)
+                                    st.markdown(f"🔩 {len(pecas)} peça(s) • {formatar_moeda(valor_pecas)}")
                                 if srv['descricao']:
                                     st.markdown(f"📝 *{srv['descricao']}*")
 
@@ -700,47 +801,13 @@ elif st.session_state.pagina_atual == "servicos":
                                             st.rerun()
 
                         if st.session_state.get(f"edit_srv_{srv['id']}", False):
-                            st.divider()
-                            st.markdown("**✏️ Editar Serviço**")
-                            col_ed1, col_ed2 = st.columns([1, 2])
-                            with col_ed1:
-                                tipos_servico = gerenciador.get_tipos_servico()
-                                idx_atual = tipos_servico.index(srv['servico']) if srv['servico'] in tipos_servico else 0
-                                tipo_ed = st.selectbox("Tipo", tipos_servico, index=idx_atual, key=f"tipo_ed_{srv['id']}")
-                            with col_ed2:
-                                desc_ed = st.text_area("Descrição", value=srv['descricao'], key=f"desc_ed_{srv['id']}", height=80)
-
-                            col_s1, col_s2 = st.columns(2)
-                            with col_s1:
-                                if st.button("✓ Salvar", key=f"save_srv_{srv['id']}", use_container_width=True, type="primary"):
-                                    if gerenciador.editar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id'], tipo_ed, desc_ed):
-                                        st.success("✅ Atualizado", icon="✅")
-                                        st.session_state[f"edit_srv_{srv['id']}"] = False
-                                        st.rerun()
-                                    else:
-                                        st.error("❌ Erro ao atualizar", icon="❌")
-                            with col_s2:
-                                if st.button("✕ Cancelar", key=f"cancel_srv_{srv['id']}", use_container_width=True):
-                                    st.session_state[f"edit_srv_{srv['id']}"] = False
-                                    st.rerun()
+                            modal_servico("editar", st.session_state.cliente_atual, st.session_state.carro_atual, srv)
 
         st.divider()
         st.markdown("### ➕ Adicionar Serviço")
-        with st.form("form_novo_servico", clear_on_submit=True):
-            servico = st.selectbox("Tipo de Serviço", gerenciador.get_tipos_servico(), key="novo_srv")
-            descricao = st.text_area("Descrição (opcional)", key="nova_desc", placeholder="Detalhes do serviço realizado...", height=100)
-
-            submitted = st.form_submit_button("✓ Cadastrar Serviço", use_container_width=True, type="primary")
-
-            if submitted:
-                if servico:
-                    if gerenciador.adicionar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, servico, descricao):
-                        st.success("✅ Serviço cadastrado!", icon="✅")
-                        st.rerun()
-                    else:
-                        st.error("❌ Erro ao cadastrar", icon="❌")
-                else:
-                    st.warning("⚠️ Selecione um tipo de serviço", icon="⚠️")
+        if st.button("➕ Criar Serviço", use_container_width=True, type="primary"):
+            st.session_state["abrir_modal_novo_servico"] = True
+            st.rerun()
 
 # ==================== PÁGINA 4: HISTÓRICO DE SERVIÇOS ====================
 elif st.session_state.pagina_atual == "historico":
@@ -788,6 +855,8 @@ elif st.session_state.pagina_atual == "historico":
                         st.markdown(f"**{srv['servico_tipo']}**")
                         st.markdown(f"👤 {srv['cliente_nome']} • 🚗 {srv['carro_marca']} {srv['carro_modelo']} ({srv['carro_placa']})")
                         st.markdown(f"📅 {srv['data']}")
+                        if srv.get('total_pecas', 0):
+                            st.markdown(f"🔩 {srv['total_pecas']} peça(s) • {formatar_moeda(srv.get('valor_pecas', 0))}")
                         if srv['descricao']:
                             st.markdown(f"📝 *{srv['descricao']}*")
                     
@@ -879,6 +948,8 @@ elif st.session_state.pagina_atual == "relatorios":
                                 st.markdown(f"**{srv['servico_tipo']}**")
                                 st.markdown(f"👤 {srv['cliente_nome']}")
                                 st.markdown(f"🚗 {srv['carro_marca']} {srv['carro_modelo']} - Placa: {srv['carro_placa']}")
+                                if srv.get('total_pecas', 0):
+                                    st.markdown(f"🔩 {srv['total_pecas']} peça(s) • {formatar_moeda(srv.get('valor_pecas', 0))}")
                                 if srv['descricao']:
                                     st.markdown(f"📝 *{srv['descricao']}*")
                             
