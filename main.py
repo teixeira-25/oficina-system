@@ -208,55 +208,87 @@ class InterfaceOficina:
         
         janela_edicao = tk.Toplevel(janela_pai)
         janela_edicao.title("Editar Registro")
-        janela_edicao.geometry("500x450")
+        janela_edicao.geometry("550x480")
         janela_edicao.resizable(False, False)
         
-        # Frame principal
-        frame_edicao = ttk.Frame(janela_edicao, padding="15")
-        frame_edicao.pack(fill=tk.BOTH, expand=True)
+        # Centralizar janela na tela
+        janela_edicao.update_idletasks()
+        
+        # Frame principal com scroll (se necessário)
+        canvas = tk.Canvas(janela_edicao, bg='#f0f0f0', highlightthickness=0)
+        scrollbar_y = ttk.Scrollbar(janela_edicao, orient=tk.VERTICAL, command=canvas.yview)
+        frame_edicao = ttk.Frame(canvas, padding="15")
+        
+        frame_edicao.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=frame_edicao, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar_y.set)
         
         # Título
-        titulo = ttk.Label(frame_edicao, text="Editar Dados do Registro", 
-                          font=("Arial", 12, "bold"))
-        titulo.pack(pady=(0, 15))
+        titulo = ttk.Label(frame_edicao, text="✏️ Editar Dados do Registro", 
+                          font=("Arial", 14, "bold"))
+        titulo.pack(pady=(0, 20))
+        
+        # Separador visual
+        ttk.Separator(frame_edicao, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=10)
+        
+        # Frame para campos
+        frame_campos = ttk.Frame(frame_edicao)
+        frame_campos.pack(fill=tk.BOTH, expand=False, padx=10)
         
         # Campos de entrada
-        ttk.Label(frame_edicao, text="Marca:").grid(row=0, column=0, sticky=tk.W, pady=5)
-        entry_marca = ttk.Entry(frame_edicao, width=35)
-        entry_marca.grid(row=0, column=1, sticky=tk.EW, pady=5, padx=10)
+        ttk.Label(frame_campos, text="Marca:", font=("Arial", 10)).grid(row=0, column=0, sticky=tk.W, pady=8)
+        entry_marca = ttk.Entry(frame_campos, width=40, font=("Arial", 10))
+        entry_marca.grid(row=0, column=1, sticky=tk.EW, pady=8, padx=(15, 0))
         entry_marca.insert(0, str(registro[0]))
+        print(f"DEBUG: Marca inserida = '{registro[0]}'")
         
-        ttk.Label(frame_edicao, text="Modelo:").grid(row=1, column=0, sticky=tk.W, pady=5)
-        entry_modelo = ttk.Entry(frame_edicao, width=35)
-        entry_modelo.grid(row=1, column=1, sticky=tk.EW, pady=5, padx=10)
+        ttk.Label(frame_campos, text="Modelo:", font=("Arial", 10)).grid(row=1, column=0, sticky=tk.W, pady=8)
+        entry_modelo = ttk.Entry(frame_campos, width=40, font=("Arial", 10))
+        entry_modelo.grid(row=1, column=1, sticky=tk.EW, pady=8, padx=(15, 0))
         entry_modelo.insert(0, str(registro[1]))
+        print(f"DEBUG: Modelo inserido = '{registro[1]}'")
         
-        ttk.Label(frame_edicao, text="Ano:").grid(row=2, column=0, sticky=tk.W, pady=5)
-        entry_ano = ttk.Entry(frame_edicao, width=35)
-        entry_ano.grid(row=2, column=1, sticky=tk.EW, pady=5, padx=10)
+        ttk.Label(frame_campos, text="Ano:", font=("Arial", 10)).grid(row=2, column=0, sticky=tk.W, pady=8)
+        entry_ano = ttk.Entry(frame_campos, width=40, font=("Arial", 10))
+        entry_ano.grid(row=2, column=1, sticky=tk.EW, pady=8, padx=(15, 0))
         entry_ano.insert(0, str(registro[2]))
+        print(f"DEBUG: Ano inserido = '{registro[2]}'")
         
-        ttk.Label(frame_edicao, text="Placa:").grid(row=3, column=0, sticky=tk.W, pady=5)
-        entry_placa = ttk.Entry(frame_edicao, width=35)
-        entry_placa.grid(row=3, column=1, sticky=tk.EW, pady=5, padx=10)
+        ttk.Label(frame_campos, text="Placa:", font=("Arial", 10)).grid(row=3, column=0, sticky=tk.W, pady=8)
+        entry_placa = ttk.Entry(frame_campos, width=40, font=("Arial", 10))
+        entry_placa.grid(row=3, column=1, sticky=tk.EW, pady=8, padx=(15, 0))
         entry_placa.insert(0, str(registro[3]))
+        print(f"DEBUG: Placa inserida = '{registro[3]}'")
         
-        ttk.Label(frame_edicao, text="Serviço:").grid(row=4, column=0, sticky=tk.W, pady=5)
-        combo_servico = ttk.Combobox(frame_edicao, width=32, state="readonly",
+        ttk.Label(frame_campos, text="Serviço:", font=("Arial", 10)).grid(row=4, column=0, sticky=tk.W, pady=8)
+        combo_servico = ttk.Combobox(frame_campos, width=37, state="readonly", font=("Arial", 10),
                                     values=self.app.get_tipos_servico())
-        combo_servico.grid(row=4, column=1, sticky=tk.EW, pady=5, padx=10)
-        combo_servico.set(str(registro[4]))
+        combo_servico.grid(row=4, column=1, sticky=tk.EW, pady=8, padx=(15, 0))
         
-        ttk.Label(frame_edicao, text="Descrição:").grid(row=5, column=0, sticky=tk.NW, pady=5)
-        text_descricao = tk.Text(frame_edicao, width=37, height=4, font=("Arial", 10))
-        text_descricao.grid(row=5, column=1, sticky=tk.EW, pady=5, padx=10)
+        try:
+            combo_servico.set(str(registro[4]))
+            print(f"DEBUG: Serviço definido = '{registro[4]}'")
+        except:
+            print(f"DEBUG: Erro ao definir serviço '{registro[4]}'")
+        
+        ttk.Label(frame_campos, text="Descrição:", font=("Arial", 10)).grid(row=5, column=0, sticky=tk.NW, pady=8)
+        text_descricao = tk.Text(frame_campos, width=43, height=4, font=("Arial", 10))
+        text_descricao.grid(row=5, column=1, sticky=tk.EW, pady=8, padx=(15, 0))
         text_descricao.insert("1.0", str(registro[5]))
+        print(f"DEBUG: Descrição inserida = '{registro[5]}'")
         
-        frame_edicao.columnconfigure(1, weight=1)
+        frame_campos.columnconfigure(1, weight=1)
+        
+        # Separador visual
+        ttk.Separator(frame_edicao, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=10)
         
         # Frame de botões
         frame_botoes_edicao = ttk.Frame(frame_edicao)
-        frame_botoes_edicao.grid(row=6, column=0, columnspan=2, pady=20)
+        frame_botoes_edicao.pack(fill=tk.X, pady=20)
         
         def salvar_edicao():
             marca = entry_marca.get().strip()
@@ -282,11 +314,15 @@ class InterfaceOficina:
             else:
                 messagebox.showerror("Erro", "Não foi possível editar o registro.")
         
-        btn_salvar = ttk.Button(frame_botoes_edicao, text="Salvar", command=salvar_edicao)
-        btn_salvar.pack(side=tk.LEFT, padx=5)
+        btn_salvar = ttk.Button(frame_botoes_edicao, text="✅ Salvar", command=salvar_edicao, width=15)
+        btn_salvar.pack(side=tk.LEFT, padx=10)
         
-        btn_cancelar = ttk.Button(frame_botoes_edicao, text="Cancelar", command=janela_edicao.destroy)
-        btn_cancelar.pack(side=tk.LEFT, padx=5)
+        btn_cancelar = ttk.Button(frame_botoes_edicao, text="❌ Cancelar", command=janela_edicao.destroy, width=15)
+        btn_cancelar.pack(side=tk.LEFT, padx=10)
+        
+        # Colocar canvas e scrollbar
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar_y.pack(side=tk.RIGHT, fill=tk.Y)
 
 
 def main():
