@@ -16,82 +16,83 @@ st.markdown("""
 <style>
     /* Cores Red Car */
     :root {
-        --primary-color: #dc2626;
-        --primary-light: #ef4444;
-        --danger-color: #dc2626;
-        --success-color: #16a34a;
-        --warning-color: #f59e0b;
-        --neutral-light: #ffffff;
-        --neutral-border: #d1d5db;
-        --gray-primary: #666666;
-        --gray-secondary: #757575;
-        --text-primary: #1f2937;
-        --text-secondary: #6b7280;
+        --primary-color: #ef4444;
+        --primary-hover: #dc2626;
+        --bg-main: #f3f4f6;
+        --bg-card: #ffffff;
+        --border-color: #e5e7eb;
+        --text-main: #111827;
+        --text-muted: #6b7280;
     }
     
     /* Elementos Principais */
     .main {
-        padding: 2rem;
-        padding-top: 5rem;
-        background-color: #ffffff;
+        background-color: var(--bg-main);
+        padding-top: 3rem;
     }
     
     h1, h2, h3 {
-        color: var(--text-primary);
-        font-weight: 600;
+        color: var(--text-main);
+        font-weight: 700;
+        letter-spacing: -0.025em;
     }
     
     h1 {
-        font-size: 1.875rem;
-        margin-bottom: 1.5rem;
-        border-bottom: 3px solid var(--primary-color);
-        padding-bottom: 0.75rem;
+        font-size: 1.25rem;
+    }
+
+    /* Esconder o header padrão do Streamlit para o nosso fixo brilhar */
+    header[data-testid="stHeader"] {
+        display: none;
     }
     
     /* Cards */
     .stContainer {
-        border: 2px solid var(--neutral-border);
-        border-radius: 0px;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
         padding: 1rem;
-        background: white;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background: var(--bg-card);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         transition: all 0.2s ease;
     }
     
     .stContainer:hover {
-        box-shadow: 0 6px 12px rgba(220, 38, 38, 0.15);
-        border-color: var(--primary-color);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     
     /* Botões */
     .stButton>button {
-        border-radius: 0px;
+        border-radius: 8px;
         font-weight: 500;
-        transition: all 0.2s ease;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+        transition: all 0.15s ease-in-out;
+    }
+    
+    /* Botão Primário (Red) */
+    .stButton>button[kind="primary"] {
+        background-color: var(--primary-color);
         border: none;
     }
     
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .stButton>button[kind="primary"]:hover {
+        background-color: var(--primary-hover);
     }
-    
+
     /* Divider */
     hr {
-        margin: 1.5rem 0;
+        margin: 1rem 0;
         border: none;
-        border-top: 1px solid var(--neutral-border);
+        border-top: 1px solid var(--border-color);
     }
     
     /* Inputs */
     .stTextInput>div>div>input,
     .stSelectbox>div>div>select,
     .stTextArea>div>div>textarea {
-        border-radius: 0px;
-        border: 2px solid var(--neutral-border);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
         padding: 0.5rem 0.75rem;
-        font-size: 0.875rem;
-        transition: all 0.2s ease;
     }
     
     .stTextInput>div>div>input:focus,
@@ -101,37 +102,11 @@ st.markdown("""
         box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
     }
     
-    /* Alert */
-    .stAlert {
-        border-radius: 0px;
-        border-left: 4px solid;
-    }
-    
-    .stAlert[data-baseweb="notification"][data-state="information"] {
-        border-left-color: var(--primary-light);
-    }
-    
-    .stAlert[data-baseweb="notification"][data-state="success"] {
-        border-left-color: var(--success-color);
-    }
-    
-    .stAlert[data-baseweb="notification"][data-state="error"] {
-        border-left-color: var(--danger-color);
-    }
-    
-    .stAlert[data-baseweb="notification"][data-state="warning"] {
-        border-left-color: var(--warning-color);
-    }
-    
     /* Expander */
     .streamlit-expanderHeader {
-        border-radius: 0px;
-        background-color: var(--neutral-light);
-        border: 2px solid var(--neutral-border);
-    }
-    
-    .streamlit-expanderHeader:hover {
-        background-color: #f3f4f6;
+        border-radius: 8px;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
     }
     
     /* Scroll Container */
@@ -140,24 +115,6 @@ st.markdown("""
         overflow-y: auto;
         padding-right: 0.5rem;
         border-right: 1px solid var(--neutral-border);
-    }
-    
-    .scroll-container::-webkit-scrollbar {
-        width: 6px;
-    }
-    
-    .scroll-container::-webkit-scrollbar-track {
-        background: var(--neutral-light);
-        border-radius: 10px;
-    }
-    
-    .scroll-container::-webkit-scrollbar-thumb {
-        background: var(--neutral-border);
-        border-radius: 10px;
-    }
-    
-    .scroll-container::-webkit-scrollbar-thumb:hover {
-        background: var(--primary-light);
     }
     
     /* Top Header */
@@ -170,59 +127,11 @@ st.markdown("""
         justify-content: space-between;
         align-items: center;
         padding: 1rem 2rem;
-        background-color: #666666;
-        color: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        color: var(--text-main);
+        border-bottom: 1px solid var(--border-color);
         z-index: 999;
-    }
-    
-    .top-header-logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-        letter-spacing: 0.5px;
-    }
-    
-    .top-header-clock {
-        font-size: 1.25rem;
-        font-family: 'Courier New', monospace;
-        font-weight: bold;
-        letter-spacing: 2px;
-    }
-    
-    /* Menu Cards */
-    .menu-card {
-        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-        border: 3px solid var(--gray-primary);
-        border-radius: 0px;
-        padding: 2rem;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-    
-    .menu-card:hover {
-        border-color: var(--primary-color);
-        box-shadow: 0 8px 16px rgba(220, 38, 38, 0.2);
-        transform: translateY(-4px);
-        background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
-    }
-    
-    .menu-card-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-    
-    .menu-card-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.5rem;
-    }
-    
-    .menu-card-desc {
-        font-size: 0.875rem;
-        color: var(--text-secondary);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -684,18 +593,18 @@ if st.session_state.pagina_atual == "dashboard":
                 justify-content: space-between;
                 align-items: center;
                 padding: 0.5rem 2rem;
-                background-color: #666666;
-                color: white;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                background-color: white;
+                color: #111827;
+                border-bottom: 1px solid #e5e7eb;
                 z-index: 9999;
                 font-family: Arial, sans-serif;
                 height: 60px;
                 box-sizing: border-box;
             }
             .header-logo {
-                font-size: 1.5rem;
+                font-size: 1.25rem;
                 font-weight: bold;
-                letter-spacing: 0.5px;
+                color: #ef4444;
             }
             .header-clock {
                 font-size: 1.25rem;
@@ -727,66 +636,25 @@ if st.session_state.pagina_atual == "dashboard":
     # Renderizar o header
     components.html(header_html, height=68)
     
-    st.markdown("")
-    st.markdown("### 📋 O que você deseja fazer?")
-    st.markdown("---")
-    
-    # Menu principal em grid
-    col1, col2 = st.columns(2)
-    col3, col4 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        <div class="menu-card" onclick="document.querySelector('[data-testid=stButton]').click()">
-            <div class="menu-card-icon">👥</div>
-            <div class="menu-card-title">Registro de Clientes</div>
-            <div class="menu-card-desc">Gerenciar clientes, carros e serviços</div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Entrar no Registro", key="btn_clientes_dash", use_container_width=True, type="primary"):
-            st.session_state.pagina_atual = "clientes"
-            st.session_state.cliente_atual = None
-            st.session_state.carro_atual = None
-            st.rerun()
-    
-    with col2:
-        st.markdown("""
-        <div class="menu-card">
-            <div class="menu-card-icon">🕐</div>
-            <div class="menu-card-title">Histórico de Serviços</div>
-            <div class="menu-card-desc">Visualizar todos os serviços realizados</div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Ver Histórico", key="btn_historico_dash", use_container_width=True):
-            st.session_state.pagina_atual = "historico"
-            st.rerun()
-    
-    with col3:
-        st.markdown("""
-        <div class="menu-card">
-            <div class="menu-card-icon">📊</div>
-            <div class="menu-card-title">Relatórios Mensais</div>
-            <div class="menu-card-desc">Análise mensal com gráficos e estatísticas</div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Ver Relatórios", key="btn_relatorios_dash", use_container_width=True):
-            st.session_state.pagina_atual = "relatorios"
-            st.rerun()
-    
-    with col4:
-        st.markdown("""
-        <div class="menu-card">
-            <div class="menu-card-icon">⚙️</div>
-            <div class="menu-card-title">Configurações</div>
-            <div class="menu-card-desc">Informações do sistema</div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Acessar Configurações", key="btn_config_dash", use_container_width=True):
-            st.session_state.pagina_atual = "configuracoes"
-            st.rerun()
-    
-    st.divider()
-    st.markdown("<p style='text-align: center; color: #666666; font-size: 0.875rem; font-weight: bold;'>🚗 RED CAR • Sistema de Gerenciamento • 2026</p>", unsafe_allow_html=True)
+    st.markdown("### Menu Principal")
+
+    if st.button("👥 Registro de Clientes", key="btn_clientes_dash", use_container_width=True, type="primary"):
+        st.session_state.pagina_atual = "clientes"
+        st.session_state.cliente_atual = None
+        st.session_state.carro_atual = None
+        st.rerun()
+
+    if st.button("🕐 Histórico de Serviços", key="btn_historico_dash", use_container_width=True):
+        st.session_state.pagina_atual = "historico"
+        st.rerun()
+
+    if st.button("📊 Relatórios Mensais", key="btn_relatorios_dash", use_container_width=True):
+        st.session_state.pagina_atual = "relatorios"
+        st.rerun()
+
+    if st.button("⚙️ Configurações", key="btn_config_dash", use_container_width=True):
+        st.session_state.pagina_atual = "configuracoes"
+        st.rerun()
 
 # ==================== BARRA DE NAVEGAÇÃO (Para outras páginas) ====================
 elif st.session_state.pagina_atual != "dashboard":
