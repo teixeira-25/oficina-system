@@ -243,6 +243,8 @@ if "cliente_atual" not in st.session_state:
     st.session_state.cliente_atual = None
 if "carro_atual" not in st.session_state:
     st.session_state.carro_atual = None
+if "edit_servico_id" not in st.session_state:
+    st.session_state.edit_servico_id = None
 
 # Função para voltar à dashboard
 def voltar_dashboard():
@@ -256,6 +258,7 @@ def voltar():
     elif st.session_state.pagina_atual == "carros":
         st.session_state.pagina_atual = "clientes"
         st.session_state.cliente_atual = None
+    st.session_state.edit_servico_id = None
 
 # Função para obter hora atual
 def obter_hora_digital():
@@ -514,7 +517,7 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
 
     if cancelar:
         if servico_atual:
-            st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
+            st.session_state.edit_servico_id = None
         else:
             st.session_state.pop("abrir_modal_novo_servico", None)
         st.session_state.pop(editor_state_key, None)
@@ -541,7 +544,7 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
 
         if resultado:
             if servico_atual:
-                st.session_state.pop(f"edit_srv_{servico_atual['id']}", None)
+                st.session_state.edit_servico_id = None
             else:
                 st.session_state.pop("abrir_modal_novo_servico", None)
             st.session_state.pop(editor_state_key, None)
@@ -687,6 +690,7 @@ elif st.session_state.pagina_atual != "dashboard":
             st.session_state.pagina_atual = "clientes"
             st.session_state.cliente_atual = None
             st.session_state.carro_atual = None
+            st.session_state.edit_servico_id = None
             st.rerun()
 
     with col_nav2:
@@ -854,6 +858,7 @@ elif st.session_state.pagina_atual == "carros":
                                 if st.button("✓", key=f"btn_srv_{carro['id']}", use_container_width=True, help="Ver serviços"):
                                     st.session_state.carro_atual = carro['id']
                                     st.session_state.pagina_atual = "servicos"
+                                    st.session_state.edit_servico_id = None
                                     st.rerun()
                             with col_e:
                                 if st.button("✏️", key=f"btn_edit_car_{carro['id']}", use_container_width=True, help="Editar"):
@@ -985,7 +990,7 @@ elif st.session_state.pagina_atual == "servicos":
                                 col_e, col_d, col_p = st.columns(3)
                                 with col_e:
                                     if st.button("✏️", key=f"btn_edit_srv_{srv['id']}", use_container_width=True, help="Editar"):
-                                        st.session_state[f"edit_srv_{srv['id']}"] = True
+                                        st.session_state.edit_servico_id = srv['id']
                                         st.rerun()
                                 with col_d:
                                     if st.button("🗑️", key=f"btn_del_srv_{srv['id']}", use_container_width=True, help="Deletar"):
@@ -998,7 +1003,7 @@ elif st.session_state.pagina_atual == "servicos":
                                     pdf_b = gerar_pdf_servico(cliente['nome'], cliente['telefone'], carro_pdf, srv_pdf)
                                     st.download_button("📄", data=pdf_b, file_name=f"OS_{srv['id']}.pdf", mime="application/pdf", key=f"pdf_srv_{srv['id']}", help="Baixar PDF")
 
-                        if st.session_state.get(f"edit_srv_{srv['id']}", False):
+                        if st.session_state.edit_servico_id == srv['id']:
                             modal_servico("editar", st.session_state.cliente_atual, st.session_state.carro_atual, srv)
 
         st.divider()
