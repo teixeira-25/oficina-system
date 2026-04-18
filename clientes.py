@@ -5,6 +5,11 @@ import pandas as pd
 import uuid
 
 try:
+    from cryptography.fernet import Fernet
+except (ImportError, ModuleNotFoundError):
+    Fernet = None
+
+try:
     import streamlit as st
     from streamlit_gsheets import GSheetsConnection
 except ImportError:
@@ -31,10 +36,26 @@ class GerenciadorClientes:
         ]
         self.conn = None
         self.sheet_url = st.secrets.get("connections", {}).get("gsheets", {}).get("spreadsheet", None) if st else None
+        
+        # Configuração de Criptografia
+        key = st.secrets.get("auth", {}).get("encryption_key", None) if st else None
+        if key and Fernet:
+            self.cipher = Fernet(key.encode())
+        else:
+            self.cipher = None
+            if not Fernet:
+                print("⚠️ Erro: O módulo 'cryptography' não pôde ser carregado (falha no CFFI). Os dados não serão criptografados.")
+            else:
+                print("⚠️ Aviso: Chave de criptografia não encontrada. Dados serão salvos em texto aberto.")
+            
         self.inicializar_arquivo()
     
     def inicializar_arquivo(self):
         """Inicializa o arquivo JSON se não existir"""
+        # Se estivermos no ambiente Web (Streamlit), ignoramos o arquivo local
+        if st:
+            return
+            
         if not os.path.exists(self.arquivo_clientes):
             try:
                 with open(self.arquivo_clientes, 'w', encoding='utf-8') as f:
@@ -298,18 +319,19 @@ class GerenciadorClientes:
                         if c_id not in clientes_dict:
                             clientes_dict[c_id] = {
                                 'id': c_id, 'nome': row.get('cliente_nome', ''),
-                                'telefone': str(row.get('cliente_telefone', '')),
+                                'telefone': self._descriptografar(str(row.get('cliente_telefone', ''))),
                                 'carros': [], 'data_criacao': row.get('cliente_data_criacao', '')
                             }
-                        
+                            clientes_dict[c_id]['nome'] = self._descriptografar(clientes_dict[c_id]['nome'])
+
                         v_id = str(row.get('carro_id', ''))
                         if v_id and not pd.isna(v_id):
                             carro = next((c for c in clientes_dict[c_id]['carros'] if c['id'] == v_id), None)
                             if not carro:
                                 carro = {
-                                    'id': v_id, 'marca': row.get('carro_marca', ''),
-                                    'modelo': row.get('carro_modelo', ''), 'ano': str(row.get('carro_ano', '')),
-                                    'placa': row.get('carro_placa', ''), 'servicos': [],
+                                    'id': v_id, 'marca': self._descriptografar(row.get('carro_marca', '')),
+                                    'modelo': self._descriptografar(row.get('carro_modelo', '')), 'ano': str(row.get('carro_ano', '')),
+                                    'placa': self._descriptografar(row.get('carro_placa', '')), 'servicos': [],
                                     'data_adicao': row.get('carro_data_adicao', '')
                                 }
                                 clientes_dict[c_id]['carros'].append(carro)
@@ -317,15 +339,22 @@ class GerenciadorClientes:
                             s_id = str(row.get('servico_id', ''))
                             if s_id and not pd.isna(s_id):
                                 if not any(s['id'] == s_id for s in carro['servicos']):
+                                    serv_tipo = self._descriptografar(row.get('servico_tipo', ''))
+                                    serv_desc = self._descriptografar(row.get('servico_descricao', ''))
                                     carro['servicos'].append({
-                                        'id': s_id, 'servico': row.get('servico_tipo', ''),
-                                        'descricao': row.get('servico_descricao', ''),
-                                        'pecas': json.loads(row.get('servico_pecas_json', '[]')),
+                                        'id': s_id, 'servico': serv_tipo,
+                                        'descricao': serv_desc,
+                                        'pecas': json.loads(self._descriptografar(row.get('servico_pecas_json', '[]')) or '[]'),
                                         'data': row.get('servico_data', '')
                                     })
                     return list(clientes_dict.values())
+                return []
             except Exception as e:
                 print(f"Erro ao ler do Google Sheets: {e}")
+                return []
+            
+            # No modo Web, nunca tentamos ler o JSON local
+            return []
 
         try:
             if os.path.exists(self.arquivo_clientes):
@@ -342,32 +371,41 @@ class GerenciadorClientes:
             try:
                 dados_planilha = []
                 for c in clientes:
+                    c_nome_enc = self._criptografar(c['nome'])
+                    c_tel_enc = self._criptografar(c['telefone'])
+                    
                     if not c['carros']:
                         dados_planilha.append({
-                            'cliente_id': c['id'], 'cliente_nome': c['nome'], 'cliente_telefone': c['telefone'], 'cliente_data_criacao': c.get('data_criacao', ''),
+                            'cliente_id': c['id'], 'cliente_nome': c_nome_enc, 'cliente_telefone': c_tel_enc, 'cliente_data_criacao': c.get('data_criacao', ''),
                             'carro_id': '', 'carro_marca': '', 'carro_modelo': '', 'carro_ano': '', 'carro_placa': '', 'carro_data_adicao': '',
                             'servico_id': '', 'servico_tipo': '', 'servico_descricao': '', 'servico_data': '', 'servico_pecas_json': '[]'
                         })
                     for car in c['carros']:
+                        c_marca_enc = self._criptografar(car['marca'])
+                        c_modelo_enc = self._criptografar(car['modelo'])
+                        c_placa_enc = self._criptografar(car['placa'])
+                        
                         if not car['servicos']:
                             dados_planilha.append({
-                                'cliente_id': c['id'], 'cliente_nome': c['nome'], 'cliente_telefone': c['telefone'], 'cliente_data_criacao': c.get('data_criacao', ''),
-                                'carro_id': car['id'], 'carro_marca': car['marca'], 'carro_modelo': car['modelo'], 'carro_ano': car['ano'], 'carro_placa': car['placa'], 'carro_data_adicao': car.get('data_adicao', ''),
+                                'cliente_id': c['id'], 'cliente_nome': c_nome_enc, 'cliente_telefone': c_tel_enc, 'cliente_data_criacao': c.get('data_criacao', ''),
+                                'carro_id': car['id'], 'carro_marca': c_marca_enc, 'carro_modelo': c_modelo_enc, 'carro_ano': car['ano'], 'carro_placa': c_placa_enc, 'carro_data_adicao': car.get('data_adicao', ''),
                                 'servico_id': '', 'servico_tipo': '', 'servico_descricao': '', 'servico_data': '', 'servico_pecas_json': '[]'
                             })
                         for srv in car['servicos']:
                             dados_planilha.append({
-                                'cliente_id': c['id'], 'cliente_nome': c['nome'], 'cliente_telefone': c['telefone'], 'cliente_data_criacao': c.get('data_criacao', ''),
-                                'carro_id': car['id'], 'carro_marca': car['marca'], 'carro_modelo': car['modelo'], 'carro_ano': car['ano'], 'carro_placa': car['placa'], 'carro_data_adicao': car.get('data_adicao', ''),
-                                'servico_id': srv['id'], 'servico_tipo': srv['servico'], 'servico_descricao': srv.get('descricao', ''), 'servico_data': srv['data'],
-                                'servico_pecas_json': json.dumps(srv.get('pecas', []), ensure_ascii=False)
+                                'cliente_id': c['id'], 'cliente_nome': c_nome_enc, 'cliente_telefone': c_tel_enc, 'cliente_data_criacao': c.get('data_criacao', ''),
+                                'carro_id': car['id'], 'carro_marca': c_marca_enc, 'carro_modelo': c_modelo_enc, 'carro_ano': car['ano'], 'carro_placa': c_placa_enc, 'carro_data_adicao': car.get('data_adicao', ''),
+                                'servico_id': srv['id'], 'servico_tipo': self._criptografar(srv['servico']), 'servico_descricao': self._criptografar(srv.get('descricao', '')), 'servico_data': srv['data'],
+                                'servico_pecas_json': self._criptografar(json.dumps(srv.get('pecas', []), ensure_ascii=False))
                             })
                 
                 conn = st.connection("gsheets", type=GSheetsConnection)
                 df_final = pd.DataFrame(dados_planilha)
                 conn.update(data=df_final)
+                return # Sucesso, sai da função
             except Exception as e:
                 print(f"Erro ao salvar no Google Sheets: {e}")
+            return # No modo Web, não prossegue para salvar no JSON local
 
         try:
             with open(self.arquivo_clientes, 'w', encoding='utf-8') as f:
@@ -378,6 +416,23 @@ class GerenciadorClientes:
     def _gerar_id(self):
         """Gera um ID único"""
         return str(uuid.uuid4())[:8]
+
+    def _criptografar(self, texto):
+        """Criptografa um texto se a cifra estiver configurada"""
+        if not self.cipher or not texto:
+            return texto
+        return self.cipher.encrypt(str(texto).encode()).decode()
+
+    def _descriptografar(self, texto_encriptado):
+        """Descriptografa um texto se a cifra estiver configurada"""
+        if not self.cipher or not texto_encriptado:
+            return texto_encriptado
+        try:
+            # Verifica se parece um texto criptografado (evita erro com dados antigos)
+            if len(str(texto_encriptado)) < 20: return texto_encriptado
+            return self.cipher.decrypt(str(texto_encriptado).encode()).decode()
+        except Exception:
+            return texto_encriptado
 
     def _normalizar_pecas(self, pecas):
         """Normaliza a lista de peças para persistência estável."""

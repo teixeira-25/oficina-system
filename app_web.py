@@ -1204,41 +1204,6 @@ elif st.session_state.pagina_atual == "configuracoes":
     st.markdown("## ⚙️ Configurações")
     st.markdown("---")
     
-    col_cfg1, col_cfg2 = st.columns(2)
-    
-    with col_cfg1:
-        with st.container(border=True):
-            st.markdown("#### 🧪 Simulação")
-            st.write("Adicione dados fictícios para testar o sistema.")
-            if st.button("Gerar 5 Clientes de Teste", use_container_width=True):
-                for i in range(5):
-                    c = gerenciador.adicionar_cliente(f"Cliente Teste {i+1}", f"(88) 99999-000{i}")
-                    if c:
-                        gerenciador.adicionar_carro(c['id'], "Marca Teste", "Modelo X", "2024", f"TEST-{i}23")
-                st.success("✅ Dados de teste gerados!")
-                st.rerun()
-
-    with col_cfg2:
-        with st.container(border=True):
-            st.markdown("#### ⚠️ Zona de Perigo")
-            st.write("Esta ação apagará todos os registros permanentemente.")
-            
-            confirmacao = st.text_input("Digite 'APAGAR' para confirmar", placeholder="Confirmação")
-            
-            if st.button("🔥 Limpar Todo o Sistema", use_container_width=True, disabled=confirmacao != "APAGAR"):
-                if gerenciador.limpar_banco_dados():
-                    # Limpar parâmetros da URL e estado para evitar inconsistência
-                    st.session_state.cliente_atual = None
-                    st.session_state.carro_atual = None
-                    st.query_params.clear()
-                    st.toast("Banco de dados limpo com sucesso!", icon="🗑️")
-                    st.success("✅ Banco de dados reiniciado com sucesso!")
-                    st.rerun()
-                else:
-                    st.error("❌ Falha ao limpar banco de dados.")
-
-    st.divider()
-
     with st.expander("📋 Tipos de Serviço Disponíveis", expanded=False):
         tipos = gerenciador.get_tipos_servico()
         for i, tipo in enumerate(tipos, 1):
