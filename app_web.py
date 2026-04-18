@@ -614,6 +614,40 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
             st.rerun()
         st.error("❌ Erro ao salvar serviço", icon="❌")
 
+@st.dialog("Confirmar Exclusão", width="small")
+def modal_confirmar_exclusao_cliente(cliente):
+    st.warning(f"Tem certeza que deseja excluir o cliente **{cliente['nome']}**?")
+    st.write("Esta ação apagará permanentemente todos os carros e serviços vinculados a este cliente.")
+    col1, col2 = st.columns(2)
+    if col1.button("🔥 Sim, Excluir", type="primary", use_container_width=True):
+        if gerenciador.deletar_cliente(cliente['id']):
+            st.toast(f"Cliente {cliente['nome']} removido!", icon="🗑️")
+            st.rerun()
+    if col2.button("Cancelar", use_container_width=True):
+        st.rerun()
+
+@st.dialog("Confirmar Exclusão", width="small")
+def modal_confirmar_exclusao_carro(cliente_id, carro):
+    st.warning(f"Excluir o veículo **{carro['marca']} {carro['modelo']}** ({carro['placa']})?")
+    col1, col2 = st.columns(2)
+    if col1.button("🔥 Sim, Excluir", type="primary", use_container_width=True):
+        if gerenciador.deletar_carro(cliente_id, carro['id']):
+            st.toast(f"Veículo {carro['placa']} removido!", icon="🗑️")
+            st.rerun()
+    if col2.button("Cancelar", use_container_width=True):
+        st.rerun()
+
+@st.dialog("Confirmar Exclusão", width="small")
+def modal_confirmar_exclusao_servico(cliente_id, carro_id, srv):
+    st.warning(f"Deseja excluir o registro de serviço: **{srv['servico']}**?")
+    col1, col2 = st.columns(2)
+    if col1.button("🔥 Sim, Excluir", type="primary", use_container_width=True):
+        if gerenciador.deletar_servico(cliente_id, carro_id, srv['id']):
+            st.toast("Serviço removido com sucesso!", icon="🗑️")
+            st.rerun()
+    if col2.button("Cancelar", use_container_width=True):
+        st.rerun()
+
 # ==================== PÁGINA 0: DASHBOARD ====================
 if st.session_state.pagina_atual == "dashboard":
     import streamlit.components.v1 as components
@@ -784,11 +818,7 @@ if st.session_state.pagina_atual == "clientes":
                                     st.rerun()
                             with col_s:
                                 if st.button("🗑️", key=f"btn_del_cli_{cliente['id']}", use_container_width=True, help="Deletar"):
-                                    if gerenciador.deletar_cliente(cliente['id']):
-                                        st.success("✅ Cliente removido", icon="✅")
-                                        st.rerun()
-                                    else:
-                                        st.error("Erro ao deletar", icon="❌")
+                                    modal_confirmar_exclusao_cliente(cliente)
 
                         if st.session_state.get(f"edit_{cliente['id']}", False):
                             st.divider()
@@ -804,7 +834,7 @@ if st.session_state.pagina_atual == "clientes":
                                 if st.button("✓ Salvar", key=f"save_{cliente['id']}", use_container_width=True, type="primary"):
                                     if nome_ed and tel_ed:
                                         if gerenciador.editar_cliente(cliente['id'], nome_ed, tel_ed):
-                                            st.success("✅ Atualizado", icon="✅")
+                                            st.toast(f"Cliente {nome_ed} atualizado!", icon="✅")
                                             st.session_state[f"edit_{cliente['id']}"] = False
                                             st.rerun()
                                     else:
@@ -825,7 +855,7 @@ if st.session_state.pagina_atual == "clientes":
         if submitted:
             if nome and telefone:
                 if gerenciador.adicionar_cliente(nome, telefone):
-                    st.success("✅ Cliente cadastrado com sucesso!", icon="✅")
+                    st.success(f"✅ Cliente '{nome}' cadastrado com sucesso!", icon="✅")
                     st.rerun()
                 else:
                     st.error("❌ Erro ao cadastrar cliente", icon="❌")
@@ -892,9 +922,7 @@ elif st.session_state.pagina_atual == "carros":
                                     st.rerun()
                             with col_d:
                                 if st.button("🗑️", key=f"btn_del_car_{carro['id']}", use_container_width=True, help="Deletar"):
-                                    if gerenciador.deletar_carro(st.session_state.cliente_atual, carro['id']):
-                                        st.success("✅ Carro removido", icon="✅")
-                                        st.rerun()
+                                    modal_confirmar_exclusao_carro(st.session_state.cliente_atual, carro)
 
                         if st.session_state.get(f"edit_car_{carro['id']}", False):
                             st.divider()
@@ -914,7 +942,7 @@ elif st.session_state.pagina_atual == "carros":
                                         try:
                                             int(ano_ed)
                                             if gerenciador.editar_carro(st.session_state.cliente_atual, carro['id'], marca_ed, modelo_ed, ano_ed, placa_ed):
-                                                st.success("✅ Atualizado", icon="✅")
+                                                st.toast(f"Veículo {placa_ed} atualizado!", icon="✅")
                                                 st.session_state[f"edit_car_{carro['id']}"] = False
                                                 st.rerun()
                                         except ValueError:
@@ -941,7 +969,7 @@ elif st.session_state.pagina_atual == "carros":
                 try:
                     int(ano)
                     if gerenciador.adicionar_carro(st.session_state.cliente_atual, marca, modelo, ano, placa):
-                        st.success("✅ Carro cadastrado!", icon="✅")
+                        st.success(f"✅ Veículo {marca} {modelo} cadastrado!", icon="✅")
                         st.rerun()
                     else:
                         st.error("❌ Erro ao cadastrar", icon="❌")
@@ -1020,9 +1048,7 @@ elif st.session_state.pagina_atual == "servicos":
                                         st.rerun()
                                 with col_d:
                                     if st.button("🗑️", key=f"btn_del_srv_{srv['id']}", use_container_width=True, help="Deletar"):
-                                        if gerenciador.deletar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id']):
-                                            st.success("✅ Serviço removido", icon="✅")
-                                            st.rerun()
+                                        modal_confirmar_exclusao_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv)
                                 with col_p:
                                     carro_pdf = {'marca': carro['marca'], 'modelo': carro['modelo'], 'placa': carro['placa'], 'ano': carro['ano']}
                                     srv_pdf = {'id': srv['id'], 'servico': srv['servico'], 'data': srv['data'], 'descricao': srv['descricao'], 'pecas': srv.get('pecas', [])}
