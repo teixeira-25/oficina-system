@@ -1,4 +1,5 @@
 import streamlit as st
+from datetime import datetime
 from clientes import GerenciadorClientes
 
 try:
@@ -262,7 +263,6 @@ def voltar():
 
 # Função para obter hora atual
 def obter_hora_digital():
-    from datetime import datetime
     return datetime.now().strftime("%H:%M:%S")
 
 
@@ -371,6 +371,118 @@ def gerar_pdf_servico(cliente_nome, cliente_tel, carro_info, servico_info):
     pdf.ln(10)
     pdf.set_font("helvetica", "I", 8); pdf.cell(0, 10, "Documento gerado pelo Sistema Red Car.", align="C")
     return bytes(pdf.output())
+
+def gerar_pdf_relatorio_consolidado(servicos, titulo_periodo):
+    """Gera um PDF consolidado com todos os serviços do período."""
+    pdf = FPDF()
+    pdf.add_page()
+
+    # --- CABEÇALHO ---
+    pdf.set_fill_color(220, 38, 38)
+    pdf.rect(10, 10, 190, 35, 'F')
+    pdf.set_text_color(255, 255, 255)
+    pdf.set_font("helvetica", "B", 20)
+    pdf.cell(0, 12, "RED CAR", ln=True, align="C")
+    pdf.set_font("helvetica", "B", 10)
+    pdf.cell(0, 5, "Proprietário: Osvaldo Teixeira | CNPJ: 88.888.888/0001-55", ln=True, align="C")
+    pdf.set_font("helvetica", "", 9)
+    pdf.cell(0, 5, "Rua Dr. Irineu Pinheiro, 558 - Pimenta, Crato - CE", ln=True, align="C")
+    pdf.ln(13)
+
+    # Título do Relatório
+    pdf.set_text_color(0, 0, 0)
+    pdf.set_font("helvetica", "B", 14)
+    pdf.cell(0, 10, f"RELATÓRIO DE SERVIÇOS - {titulo_periodo}", ln=True, align="C", border="B")
+    pdf.ln(5)
+
+    # Resumo Estatístico
+    total_receita = sum(s.get('valor_pecas', 0) for s in servicos)
+    pdf.set_font("helvetica", "B", 10)
+    pdf.cell(95, 8, f"Total de Serviços: {len(servicos)}")
+    pdf.cell(95, 8, f"Receita Total Estimada: {formatar_moeda(total_receita)}", ln=True, align="R")
+    pdf.ln(5)
+
+    # Tabela de Serviços
+    pdf.set_fill_color(220, 38, 38)
+    pdf.set_text_color(255, 255, 255)
+    pdf.set_font("helvetica", "B", 8)
+    pdf.cell(20, 8, " Data", 1, 0, "L", fill=True)
+    pdf.cell(45, 8, " Cliente", 1, 0, "L", fill=True)
+    pdf.cell(45, 8, " Veículo", 1, 0, "L", fill=True)
+    pdf.cell(50, 8, " Serviço", 1, 0, "L", fill=True)
+    pdf.cell(30, 8, " Valor", 1, 1, "R", fill=True)
+
+    pdf.set_text_color(0, 0, 0)
+    pdf.set_font("helvetica", "", 7)
+    
+    for s in servicos:
+        cliente = (s['cliente_nome'][:25] + '..') if len(s['cliente_nome']) > 25 else s['cliente_nome']
+        veiculo = f"{s['carro_marca']} {s['carro_modelo']} ({s['carro_placa']})"
+        veiculo = (veiculo[:25] + '..') if len(veiculo) > 25 else veiculo
+        servico = (s['servico_tipo'][:30] + '..') if len(s['servico_tipo']) > 30 else s['servico_tipo']
+        
+        pdf.cell(20, 7, s['data'].split(' ')[0], 1)
+        pdf.cell(45, 7, f" {cliente}", 1)
+        pdf.cell(45, 7, f" {veiculo}", 1)
+        pdf.cell(50, 7, f" {servico}", 1)
+        pdf.cell(30, 7, f"{formatar_moeda(s['valor_pecas'])} ", 1, 1, "R")
+
+    pdf.ln(10)
+    pdf.set_font("helvetica", "I", 8)
+    pdf.cell(0, 10, f"Gerado em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}", align="R")
+    
+    return bytes(pdf.output())
+
+@st.dialog("Exportar Relatório Consolidado", width="large")
+def modal_exportar_relatorio():
+    st.markdown("Escolha o tipo de relatório e o período desejado para exportação.")
+    
+    tipo = st.radio("Tipo de Relatório", ["Diário", "Mensal", "Anual"], horizontal=True)
+    
+    servicos_filtrados = []
+    titulo_periodo = ""
+    todos = gerenciador.obter_todos_servicos()
+    
+    if tipo == "Diário":
+        data_sel = st.date_input("Selecione a Data", value=datetime.now())
+        data_str = data_sel.strftime("%d/%m/%Y")
+        titulo_periodo = f"DIÁRIO ({data_str})"
+        servicos_filtrados = [s for s in todos if s['data'].startswith(data_str)]
+        
+    elif tipo == "Mensal":
+        col_m, col_a = st.columns(2)
+        meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+        mes_sel = col_m.selectbox("Mês", meses, index=datetime.now().month - 1)
+        ano_sel = col_a.number_input("Ano", min_value=2020, max_value=2030, value=datetime.now().year)
+        mes_num = meses.index(mes_sel) + 1
+        titulo_periodo = f"MENSAL ({mes_sel}/{ano_sel})"
+        servicos_filtrados = [s for s in todos if datetime.strptime(s['data'], "%d/%m/%Y %H:%M").month == mes_num and datetime.strptime(s['data'], "%d/%m/%Y %H:%M").year == ano_sel]
+        
+    elif tipo == "Anual":
+        ano_sel = st.number_input("Ano", min_value=2020, max_value=2030, value=datetime.now().year)
+        titulo_periodo = f"ANUAL ({ano_sel})"
+        servicos_filtrados = [s for s in todos if datetime.strptime(s['data'], "%d/%m/%Y %H:%M").year == ano_sel]
+
+    st.divider()
+    
+    if not servicos_filtrados:
+        st.warning(f"Nenhum serviço encontrado para o período {titulo_periodo}.")
+    else:
+        st.success(f"Foram encontrados {len(servicos_filtrados)} serviços para o período {titulo_periodo}.")
+        pdf_bytes = gerar_pdf_relatorio_consolidado(servicos_filtrados, titulo_periodo)
+        
+        st.download_button(
+            label="📥 Baixar Relatório em PDF",
+            data=pdf_bytes,
+            file_name=f"Relatorio_{tipo}_{titulo_periodo.replace('/', '_')}.pdf",
+            mime="application/pdf",
+            use_container_width=True,
+            type="primary"
+        )
+    
+    if st.button("Fechar", use_container_width=True):
+        st.session_state.pop("abrir_modal_exportar", None)
+        st.rerun()
 
 def normalizar_pecas_editor(pecas_df):
     pecas = []
@@ -554,7 +666,6 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
 
 # ==================== PÁGINA 0: DASHBOARD ====================
 if st.session_state.pagina_atual == "dashboard":
-    from datetime import datetime
     import streamlit.components.v1 as components
     
     # Criar header fixo no topo com nome da oficina e relógio
@@ -1083,7 +1194,7 @@ elif st.session_state.pagina_atual == "relatorios":
         st.info("📌 Nenhum serviço registrado no sistema ainda.", icon="ℹ️")
     else:
         # Seletor de período
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([3, 1])
         
         with col1:
             # Criar opções de mês/ano
@@ -1092,9 +1203,13 @@ elif st.session_state.pagina_atual == "relatorios":
             mes, ano = map(int, periodo_selecionado.split('/'))
         
         with col2:
-            st.markdown("")  # Espaçamento
+            st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
             if st.button("📥 Exportar Relatório", use_container_width=True):
-                st.info("💡 Funcionalidade de exportação em desenvolvimento", icon="ℹ️")
+                st.session_state["abrir_modal_exportar"] = True
+                st.rerun()
+
+        if st.session_state.get("abrir_modal_exportar"):
+            modal_exportar_relatorio()
         
         st.divider()
         
