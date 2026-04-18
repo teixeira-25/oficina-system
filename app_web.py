@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime
+import hashlib
 from clientes import GerenciadorClientes
 
 try:
@@ -148,6 +149,15 @@ ALTURA_ITEM_LISTA = 120
 
 def check_password():
     """Retorna True se o usuário inseriu a senha correta."""
+    # Tenta restaurar a sessão a partir da URL (Hash seguro do usuário+senha)
+    if "authenticated" not in st.session_state or not st.session_state["authenticated"]:
+        try:
+            expected_token = hashlib.sha256((st.secrets["auth"]["username"] + st.secrets["auth"]["password"]).encode()).hexdigest()
+            if st.query_params.get("session") == expected_token:
+                st.session_state["authenticated"] = True
+        except (KeyError, AttributeError):
+            pass
+
     if "authenticated" not in st.session_state:
         st.session_state["authenticated"] = False
 
@@ -172,6 +182,8 @@ def check_password():
             try:
                 if user == st.secrets["auth"]["username"] and pw == st.secrets["auth"]["password"]:
                     st.session_state["authenticated"] = True
+                    # Persistir login na URL para permanência após refresh
+                    st.query_params["session"] = hashlib.sha256((user + pw).encode()).hexdigest()
                     st.rerun()
                 else:
                     st.error("Usuário ou senha incorretos.")
@@ -185,13 +197,20 @@ if not check_password():
 
 # Inicializar estado de navegação
 if "pagina_atual" not in st.session_state:
-    st.session_state.pagina_atual = "dashboard"
+    st.session_state.pagina_atual = st.query_params.get("p", "dashboard")
 if "cliente_atual" not in st.session_state:
-    st.session_state.cliente_atual = None
+    st.session_state.cliente_atual = st.query_params.get("c")
 if "carro_atual" not in st.session_state:
-    st.session_state.carro_atual = None
+    st.session_state.carro_atual = st.query_params.get("v")
 if "edit_servico_id" not in st.session_state:
     st.session_state.edit_servico_id = None
+
+# Sincronizar URL com o estado atual para suportar Refresh sem perda de contexto
+st.query_params["p"] = st.session_state.pagina_atual
+if st.session_state.cliente_atual: st.query_params["c"] = st.session_state.cliente_atual
+else: st.query_params.pop("c", None)
+if st.session_state.carro_atual: st.query_params["v"] = st.session_state.carro_atual
+else: st.query_params.pop("v", None)
 
 # Função para voltar à dashboard
 def voltar_dashboard():
@@ -243,8 +262,7 @@ def gerar_pdf_servico(cliente_nome, cliente_tel, carro_info, servico_info):
     # Número da OS e Data
     pdf.set_text_color(0, 0, 0)
     pdf.set_font("helvetica", "B", 10)
-    os_numero = servico_info.get('id', 'N/A').upper()
-    pdf.cell(95, 10, f"ORDEM DE SERVIÇO: #{os_numero}", border="B")
+    pdf.cell(95, 10, "ORDEM DE SERVIÇO", border="B")
     pdf.cell(95, 10, f"DATA: {servico_info['data']}", border="B", ln=True, align="R")
     pdf.ln(5)
 
@@ -299,20 +317,6 @@ def gerar_pdf_servico(cliente_nome, cliente_tel, carro_info, servico_info):
     pdf.set_text_color(255, 255, 255)
     pdf.cell(155, 10, "VALOR TOTAL DO SERVIÇO ", 0, 0, "R", fill=True)
     pdf.cell(35, 10, f"R$ {valor_total:.2f} ", 0, 1, "R", fill=True)
-
-    # --- TERMOS E ASSINATURAS ---
-    pdf.set_text_color(0, 0, 0)
-    pdf.ln(15)
-    pdf.set_font("helvetica", "I", 8)
-
-    pdf.ln(20)
-    pdf.set_font("helvetica", "", 10)
-    pdf.cell(90, 5, "________________________________________", ln=0, align="C")
-    pdf.cell(10, 5, "", ln=0)
-    pdf.cell(90, 5, "________________________________________", ln=1, align="C")
-    pdf.cell(90, 5, "Responsável Técnico", ln=0, align="C")
-    pdf.cell(10, 5, "", ln=0)
-    pdf.cell(90, 5, "Assinatura do Cliente", ln=1, align="C")
 
     pdf.ln(10)
     pdf.set_font("helvetica", "I", 8); pdf.cell(0, 10, "Documento gerado pelo Sistema Red Car.", align="C")
@@ -696,6 +700,7 @@ if st.session_state.pagina_atual == "dashboard":
     st.divider()
     if st.button("🚪 Sair do Sistema", key="btn_logout_dash", use_container_width=True):
         st.session_state["authenticated"] = False
+        st.query_params.clear()
         st.rerun()
 
 # ==================== BARRA DE NAVEGAÇÃO (Para outras páginas) ====================
