@@ -169,11 +169,14 @@ def check_password():
             pw = st.text_input("Senha", type="password", placeholder="Digite sua senha")
         
         if st.button("Entrar no Sistema", use_container_width=True, type="primary"):
-            if user == st.secrets["auth"]["username"] and pw == st.secrets["auth"]["password"]:
-                st.session_state["authenticated"] = True
-                st.rerun()
-            else:
-                st.error("Usuário ou senha incorretos.")
+            try:
+                if user == st.secrets["auth"]["username"] and pw == st.secrets["auth"]["password"]:
+                    st.session_state["authenticated"] = True
+                    st.rerun()
+                else:
+                    st.error("Usuário ou senha incorretos.")
+            except KeyError:
+                st.error("❌ Erro de Configuração: A seção [auth] não foi encontrada nos Secrets do Streamlit Cloud.")
     return False
 
 # Bloqueia a execução se não estiver autenticado

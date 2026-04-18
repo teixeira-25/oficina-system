@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime
 import pandas as pd
+import uuid
 
 try:
     import streamlit as st
@@ -307,7 +308,6 @@ class GerenciadorClientes:
     
     def _gerar_id(self):
         """Gera um ID único"""
-        import uuid
         return str(uuid.uuid4())[:8]
 
     def _normalizar_pecas(self, pecas):
