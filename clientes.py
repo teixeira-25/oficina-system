@@ -349,6 +349,7 @@ class GerenciadorClientes:
                             'valor_pecas': valor_pecas,
                             'data': servico['data'],
                             'cliente_nome': cliente['nome'],
+                            'cliente_telefone': cliente['telefone'],
                             'cliente_id': cliente['id'],
                             'carro_marca': carro['marca'],
                             'carro_modelo': carro['modelo'],

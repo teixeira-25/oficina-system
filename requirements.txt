@@ -7,6 +7,7 @@
 # os - Operações com sistema operacional (padrão)
 
 # Python version: 3.7+
+fpdf2==2.7.8
 
 # Para instalar tkinter (se necessário):
 # Ubuntu/Debian: sudo apt-get install python3-tk

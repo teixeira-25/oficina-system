@@ -1,6 +1,12 @@
 import streamlit as st
 from clientes import GerenciadorClientes
 
+try:
+    from fpdf import FPDF
+except ImportError:
+    st.error("Erro: A biblioteca 'fpdf2' não foi encontrada. Instale-a com: pip install fpdf2")
+    st.stop()
+
 # Configuração da página
 st.set_page_config(page_title="Sistema de Oficina", layout="wide", initial_sidebar_state="collapsed")
 
@@ -267,6 +273,101 @@ def calcular_altura_lista(total_itens):
 def formatar_moeda(valor):
     return f"R$ {float(valor):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
+@st.cache_data
+def gerar_pdf_servico(cliente_nome, cliente_tel, carro_info, servico_info):
+    """Gera o buffer de bytes de um PDF com os detalhes do serviço."""
+    pdf = FPDF()
+    pdf.add_page()
+
+    # --- CABEÇALHO ---
+    pdf.set_fill_color(220, 38, 38)  # Cor Vermelha Red Car
+    pdf.rect(10, 10, 190, 35, 'F')
+    pdf.set_text_color(255, 255, 255)
+    pdf.set_font("helvetica", "B", 20)
+    pdf.cell(0, 12, "RED CAR", ln=True, align="C")
+    pdf.set_font("helvetica", "B", 10)
+    pdf.cell(0, 5, "Proprietário: Osvaldo Teixeira | CNPJ: 88.888.888/0001-55", ln=True, align="C")
+    pdf.set_font("helvetica", "", 9)
+    pdf.cell(0, 5, "Rua Dr. Irineu Pinheiro, 558 - Pimenta, Crato - CE", ln=True, align="C")
+    pdf.ln(13)
+
+    # Número da OS e Data
+    pdf.set_text_color(0, 0, 0)
+    pdf.set_font("helvetica", "B", 10)
+    os_numero = servico_info.get('id', 'N/A').upper()
+    pdf.cell(95, 10, f"ORDEM DE SERVIÇO: #{os_numero}", border="B")
+    pdf.cell(95, 10, f"DATA: {servico_info['data']}", border="B", ln=True, align="R")
+    pdf.ln(5)
+
+    # --- DADOS DO CLIENTE E VEÍCULO ---
+    pdf.set_fill_color(240, 240, 240)
+    pdf.set_font("helvetica", "B", 11)
+    pdf.cell(0, 8, " INFORMAÇÕES GERAIS", ln=True, fill=True)
+    pdf.set_font("helvetica", "", 10)
+
+    col_width = 95
+    pdf.set_font("helvetica", "B", 10); pdf.cell(25, 7, "Cliente:"); pdf.set_font("helvetica", "", 10); pdf.cell(col_width - 25, 7, cliente_nome)
+    pdf.set_font("helvetica", "B", 10); pdf.cell(25, 7, "Veículo:"); pdf.set_font("helvetica", "", 10); pdf.cell(col_width - 25, 7, f"{carro_info['marca']} {carro_info['modelo']}", ln=True)
+
+    pdf.set_font("helvetica", "B", 10); pdf.cell(25, 7, "Telefone:"); pdf.set_font("helvetica", "", 10); pdf.cell(col_width - 25, 7, cliente_tel)
+    pdf.set_font("helvetica", "B", 10); pdf.cell(25, 7, "Placa/Ano:"); pdf.set_font("helvetica", "", 10); pdf.cell(col_width - 25, 7, f"{carro_info['placa']} / {carro_info['ano']}", ln=True)
+    pdf.ln(5)
+
+    # --- DESCRIÇÃO DO SERVIÇO ---
+    pdf.set_fill_color(240, 240, 240)
+    pdf.set_font("helvetica", "B", 11)
+    pdf.cell(0, 8, f" SERVIÇO: {servico_info['servico'].upper()}", ln=True, fill=True)
+    pdf.set_font("helvetica", "", 10)
+    pdf.ln(2)
+    desc = servico_info.get('descricao', 'Nenhum detalhe adicional informado.')
+    pdf.multi_cell(0, 6, desc)
+    pdf.ln(5)
+
+    # --- TABELA DE PEÇAS ---
+    pecas = servico_info.get('pecas', [])
+    if pecas:
+        pdf.set_fill_color(220, 38, 38)
+        pdf.set_text_color(255, 255, 255)
+        pdf.set_font("helvetica", "B", 10)
+        pdf.cell(100, 8, " Descrição da Peça / Material", 1, 0, "L", fill=True)
+        pdf.cell(20, 8, "Qtd", 1, 0, "C", fill=True)
+        pdf.cell(35, 8, "V. Unitário", 1, 0, "R", fill=True)
+        pdf.cell(35, 8, "Total", 1, 1, "R", fill=True)
+
+        pdf.set_text_color(0, 0, 0)
+        pdf.set_font("helvetica", "", 10)
+        for p in pecas:
+            pdf.cell(100, 8, f" {p['nome']}", 1)
+            pdf.cell(20, 8, str(p['quantidade']), 1, 0, "C")
+            pdf.cell(35, 8, f"R$ {float(p['preco']):.2f} ", 1, 0, "R")
+            pdf.cell(35, 8, f"R$ {float(p['total']):.2f} ", 1, 1, "R")
+
+    # --- TOTAL ---
+    pdf.ln(2)
+    valor_total = sum(float(p.get('total', 0)) for p in pecas)
+    pdf.set_font("helvetica", "B", 12)
+    pdf.set_fill_color(220, 38, 38)
+    pdf.set_text_color(255, 255, 255)
+    pdf.cell(155, 10, "VALOR TOTAL DO SERVIÇO ", 0, 0, "R", fill=True)
+    pdf.cell(35, 10, f"R$ {valor_total:.2f} ", 0, 1, "R", fill=True)
+
+    # --- TERMOS E ASSINATURAS ---
+    pdf.set_text_color(0, 0, 0)
+    pdf.ln(15)
+    pdf.set_font("helvetica", "I", 8)
+
+    pdf.ln(20)
+    pdf.set_font("helvetica", "", 10)
+    pdf.cell(90, 5, "________________________________________", ln=0, align="C")
+    pdf.cell(10, 5, "", ln=0)
+    pdf.cell(90, 5, "________________________________________", ln=1, align="C")
+    pdf.cell(90, 5, "Responsável Técnico", ln=0, align="C")
+    pdf.cell(10, 5, "", ln=0)
+    pdf.cell(90, 5, "Assinatura do Cliente", ln=1, align="C")
+
+    pdf.ln(10)
+    pdf.set_font("helvetica", "I", 8); pdf.cell(0, 10, "Documento gerado pelo Sistema Red Car.", align="C")
+    return bytes(pdf.output())
 
 def normalizar_pecas_editor(pecas_df):
     pecas = []
@@ -881,7 +982,7 @@ elif st.session_state.pagina_atual == "servicos":
                                     st.markdown(f"📝 *{srv['descricao']}*")
 
                             with col_actions:
-                                col_e, col_d = st.columns(2)
+                                col_e, col_d, col_p = st.columns(3)
                                 with col_e:
                                     if st.button("✏️", key=f"btn_edit_srv_{srv['id']}", use_container_width=True, help="Editar"):
                                         st.session_state[f"edit_srv_{srv['id']}"] = True
@@ -891,6 +992,11 @@ elif st.session_state.pagina_atual == "servicos":
                                         if gerenciador.deletar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id']):
                                             st.success("✅ Serviço removido", icon="✅")
                                             st.rerun()
+                                with col_p:
+                                    carro_pdf = {'marca': carro['marca'], 'modelo': carro['modelo'], 'placa': carro['placa'], 'ano': carro['ano']}
+                                    srv_pdf = {'id': srv['id'], 'servico': srv['servico'], 'data': srv['data'], 'descricao': srv['descricao'], 'pecas': srv.get('pecas', [])}
+                                    pdf_b = gerar_pdf_servico(cliente['nome'], cliente['telefone'], carro_pdf, srv_pdf)
+                                    st.download_button("📄", data=pdf_b, file_name=f"OS_{srv['id']}.pdf", mime="application/pdf", key=f"pdf_srv_{srv['id']}", help="Baixar PDF")
 
                         if st.session_state.get(f"edit_srv_{srv['id']}", False):
                             modal_servico("editar", st.session_state.cliente_atual, st.session_state.carro_atual, srv)
@@ -955,6 +1061,10 @@ elif st.session_state.pagina_atual == "historico":
                     
                     with col_details:
                         st.markdown(f"<div style='text-align: right; color: #6b7280; font-size: 0.875rem;'><strong>Ano:</strong> {srv['carro_ano']}</div>", unsafe_allow_html=True)
+                        carro_pdf = {'marca': srv['carro_marca'], 'modelo': srv['carro_modelo'], 'placa': srv['carro_placa'], 'ano': srv['carro_ano']}
+                        srv_pdf = {'id': srv['servico_id'], 'servico': srv['servico_tipo'], 'data': srv['data'], 'descricao': srv['descricao'], 'pecas': srv.get('pecas', [])}
+                        pdf_b = gerar_pdf_servico(srv['cliente_nome'], srv['cliente_telefone'], carro_pdf, srv_pdf)
+                        st.download_button("📄 Baixar PDF", data=pdf_b, file_name=f"OS_{srv['servico_id']}.pdf", mime="application/pdf", key=f"pdf_hist_{srv['servico_id']}", use_container_width=True)
 
 # ==================== PÁGINA 5: RELATÓRIOS MENSAIS ====================
 elif st.session_state.pagina_atual == "relatorios":
@@ -1049,6 +1159,10 @@ elif st.session_state.pagina_atual == "relatorios":
                             
                             with col_srv_details:
                                 st.markdown(f"<div style='text-align: right;'><strong>📅</strong><br/>{srv['data']}</div>", unsafe_allow_html=True)
+                                carro_pdf = {'marca': srv['carro_marca'], 'modelo': srv['carro_modelo'], 'placa': srv['carro_placa'], 'ano': srv['carro_ano']}
+                                srv_pdf = {'id': srv['servico_id'], 'servico': srv['servico_tipo'], 'data': srv['data'], 'descricao': srv['descricao'], 'pecas': srv.get('pecas', [])}
+                                pdf_b = gerar_pdf_servico(srv['cliente_nome'], srv['cliente_telefone'], carro_pdf, srv_pdf)
+                                st.download_button("📄 PDF", data=pdf_b, file_name=f"OS_REL_{srv['servico_id']}.pdf", mime="application/pdf", key=f"pdf_rel_{srv['servico_id']}", use_container_width=True)
 
 # ==================== PÁGINA 6: CONFIGURAÇÕES ====================
 elif st.session_state.pagina_atual == "configuracoes":
