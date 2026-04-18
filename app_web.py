@@ -1168,7 +1168,7 @@ elif st.session_state.pagina_atual == "configuracoes":
 st.divider()
 st.markdown("""
 <div style='text-align: center; color: #666666; font-size: 0.875rem; margin-top: 2rem;'>
-    <p><strong style='color: #dc2626;'>🚗 RED CAR</strong> • Sistema de Gerenciamento | Desenvolvido com ❤️</p>
+    <p><strong style='color: #dc2626;'>🚗 RED CAR</strong> • Sistema de Gerenciamento | Desenvolvido por Gabriel Teixeira</p>
     <p style='margin-top: 0.5rem;'><em>Versão Web • 2026</em></p>
 </div>
 """, unsafe_allow_html=True)
