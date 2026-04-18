@@ -146,6 +146,40 @@ ALTURA_LISTA_MAXIMA = 620
 ALTURA_LISTA_MINIMA = 140
 ALTURA_ITEM_LISTA = 120
 
+def check_password():
+    """Retorna True se o usuário inseriu a senha correta."""
+    if "authenticated" not in st.session_state:
+        st.session_state["authenticated"] = False
+
+    if st.session_state["authenticated"]:
+        return True
+
+    st.markdown("""
+        <div style='text-align: center; padding: 2rem 0;'>
+            <h1 style='color: #ef4444; font-size: 2.5rem;'>🚗 RED CAR</h1>
+            <p style='color: #6b7280;'>Acesso restrito ao sistema de gerenciamento</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    with st.container(border=True):
+        col_l, col_r = st.columns([1, 1])
+        with col_l:
+            user = st.text_input("Usuário", placeholder="Digite seu usuário")
+        with col_r:
+            pw = st.text_input("Senha", type="password", placeholder="Digite sua senha")
+        
+        if st.button("Entrar no Sistema", use_container_width=True, type="primary"):
+            if user == st.secrets["auth"]["username"] and pw == st.secrets["auth"]["password"]:
+                st.session_state["authenticated"] = True
+                st.rerun()
+            else:
+                st.error("Usuário ou senha incorretos.")
+    return False
+
+# Bloqueia a execução se não estiver autenticado
+if not check_password():
+    st.stop()
+
 # Inicializar estado de navegação
 if "pagina_atual" not in st.session_state:
     st.session_state.pagina_atual = "dashboard"
@@ -654,6 +688,11 @@ if st.session_state.pagina_atual == "dashboard":
 
     if st.button("⚙️ Configurações", key="btn_config_dash", use_container_width=True):
         st.session_state.pagina_atual = "configuracoes"
+        st.rerun()
+
+    st.divider()
+    if st.button("🚪 Sair do Sistema", key="btn_logout_dash", use_container_width=True):
+        st.session_state["authenticated"] = False
         st.rerun()
 
 # ==================== BARRA DE NAVEGAÇÃO (Para outras páginas) ====================
