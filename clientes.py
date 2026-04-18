@@ -274,7 +274,7 @@ class GerenciadorClientes:
             return False
     
     def limpar_banco_dados(self):
-        """Remove todos os dados do sistema de forma definitiva."""
+        """Remove todos os dados do sistema (Local e Google Sheets)"""
         try:
             self._salvar_clientes([])
             return True
