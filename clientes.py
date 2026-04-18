@@ -273,6 +273,15 @@ class GerenciadorClientes:
             print(f"Erro ao deletar serviço: {e}")
             return False
     
+    def limpar_banco_dados(self):
+        """Remove todos os dados do sistema de forma definitiva."""
+        try:
+            self._salvar_clientes([])
+            return True
+        except Exception as e:
+            print(f"Erro ao limpar banco de dados: {e}")
+            return False
+
     # Métodos privados
     def _ler_clientes(self):
         """Lê clientes do arquivo JSON"""
@@ -280,8 +289,41 @@ class GerenciadorClientes:
             try:
                 conn = st.connection("gsheets", type=GSheetsConnection)
                 df = conn.read(ttl=0)
-                if not df.empty and "json_data" in df.columns:
-                    return json.loads(df.iloc[0]["json_data"])
+                if df is not None and not df.empty:
+                    clientes_dict = {}
+                    for _, row in df.iterrows():
+                        c_id = str(row.get('cliente_id', ''))
+                        if not c_id or pd.isna(c_id): continue
+                        
+                        if c_id not in clientes_dict:
+                            clientes_dict[c_id] = {
+                                'id': c_id, 'nome': row.get('cliente_nome', ''),
+                                'telefone': str(row.get('cliente_telefone', '')),
+                                'carros': [], 'data_criacao': row.get('cliente_data_criacao', '')
+                            }
+                        
+                        v_id = str(row.get('carro_id', ''))
+                        if v_id and not pd.isna(v_id):
+                            carro = next((c for c in clientes_dict[c_id]['carros'] if c['id'] == v_id), None)
+                            if not carro:
+                                carro = {
+                                    'id': v_id, 'marca': row.get('carro_marca', ''),
+                                    'modelo': row.get('carro_modelo', ''), 'ano': str(row.get('carro_ano', '')),
+                                    'placa': row.get('carro_placa', ''), 'servicos': [],
+                                    'data_adicao': row.get('carro_data_adicao', '')
+                                }
+                                clientes_dict[c_id]['carros'].append(carro)
+                            
+                            s_id = str(row.get('servico_id', ''))
+                            if s_id and not pd.isna(s_id):
+                                if not any(s['id'] == s_id for s in carro['servicos']):
+                                    carro['servicos'].append({
+                                        'id': s_id, 'servico': row.get('servico_tipo', ''),
+                                        'descricao': row.get('servico_descricao', ''),
+                                        'pecas': json.loads(row.get('servico_pecas_json', '[]')),
+                                        'data': row.get('servico_data', '')
+                                    })
+                    return list(clientes_dict.values())
             except Exception as e:
                 print(f"Erro ao ler do Google Sheets: {e}")
 
@@ -298,9 +340,32 @@ class GerenciadorClientes:
         """Salva clientes no arquivo JSON"""
         if st and self.sheet_url:
             try:
+                dados_planilha = []
+                for c in clientes:
+                    if not c['carros']:
+                        dados_planilha.append({
+                            'cliente_id': c['id'], 'cliente_nome': c['nome'], 'cliente_telefone': c['telefone'], 'cliente_data_criacao': c.get('data_criacao', ''),
+                            'carro_id': '', 'carro_marca': '', 'carro_modelo': '', 'carro_ano': '', 'carro_placa': '', 'carro_data_adicao': '',
+                            'servico_id': '', 'servico_tipo': '', 'servico_descricao': '', 'servico_data': '', 'servico_pecas_json': '[]'
+                        })
+                    for car in c['carros']:
+                        if not car['servicos']:
+                            dados_planilha.append({
+                                'cliente_id': c['id'], 'cliente_nome': c['nome'], 'cliente_telefone': c['telefone'], 'cliente_data_criacao': c.get('data_criacao', ''),
+                                'carro_id': car['id'], 'carro_marca': car['marca'], 'carro_modelo': car['modelo'], 'carro_ano': car['ano'], 'carro_placa': car['placa'], 'carro_data_adicao': car.get('data_adicao', ''),
+                                'servico_id': '', 'servico_tipo': '', 'servico_descricao': '', 'servico_data': '', 'servico_pecas_json': '[]'
+                            })
+                        for srv in car['servicos']:
+                            dados_planilha.append({
+                                'cliente_id': c['id'], 'cliente_nome': c['nome'], 'cliente_telefone': c['telefone'], 'cliente_data_criacao': c.get('data_criacao', ''),
+                                'carro_id': car['id'], 'carro_marca': car['marca'], 'carro_modelo': car['modelo'], 'carro_ano': car['ano'], 'carro_placa': car['placa'], 'carro_data_adicao': car.get('data_adicao', ''),
+                                'servico_id': srv['id'], 'servico_tipo': srv['servico'], 'servico_descricao': srv.get('descricao', ''), 'servico_data': srv['data'],
+                                'servico_pecas_json': json.dumps(srv.get('pecas', []), ensure_ascii=False)
+                            })
+                
                 conn = st.connection("gsheets", type=GSheetsConnection)
-                df = pd.DataFrame([{"json_data": json.dumps(clientes, ensure_ascii=False)}])
-                conn.update(data=df)
+                df_final = pd.DataFrame(dados_planilha)
+                conn.update(data=df_final)
             except Exception as e:
                 print(f"Erro ao salvar no Google Sheets: {e}")
 

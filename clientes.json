@@ -5062,5 +5062,90 @@
       }
     ],
     "data_criacao": "12/03/2026 01:21"
+  },
+  {
+    "id": "33207d3a",
+    "nome": "Cliente Teste 1",
+    "telefone": "(88) 99999-0000",
+    "carros": [
+      {
+        "id": "9f8bee31",
+        "marca": "Marca Teste",
+        "modelo": "Modelo X",
+        "ano": "2024",
+        "placa": "TEST-023",
+        "servicos": [],
+        "data_adicao": "18/04/2026 18:01"
+      }
+    ],
+    "data_criacao": "18/04/2026 18:01"
+  },
+  {
+    "id": "ec1a7266",
+    "nome": "Cliente Teste 2",
+    "telefone": "(88) 99999-0001",
+    "carros": [
+      {
+        "id": "a2b3a733",
+        "marca": "Marca Teste",
+        "modelo": "Modelo X",
+        "ano": "2024",
+        "placa": "TEST-123",
+        "servicos": [],
+        "data_adicao": "18/04/2026 18:01"
+      }
+    ],
+    "data_criacao": "18/04/2026 18:01"
+  },
+  {
+    "id": "65f7797b",
+    "nome": "Cliente Teste 3",
+    "telefone": "(88) 99999-0002",
+    "carros": [
+      {
+        "id": "f9f433bb",
+        "marca": "Marca Teste",
+        "modelo": "Modelo X",
+        "ano": "2024",
+        "placa": "TEST-223",
+        "servicos": [],
+        "data_adicao": "18/04/2026 18:01"
+      }
+    ],
+    "data_criacao": "18/04/2026 18:01"
+  },
+  {
+    "id": "9106109e",
+    "nome": "Cliente Teste 4",
+    "telefone": "(88) 99999-0003",
+    "carros": [
+      {
+        "id": "c4ce522d",
+        "marca": "Marca Teste",
+        "modelo": "Modelo X",
+        "ano": "2024",
+        "placa": "TEST-323",
+        "servicos": [],
+        "data_adicao": "18/04/2026 18:01"
+      }
+    ],
+    "data_criacao": "18/04/2026 18:01"
+  },
+  {
+    "id": "9d00f555",
+    "nome": "Cliente Teste 5",
+    "telefone": "(88) 99999-0004",
+    "carros": [
+      {
+        "id": "ad1cd435",
+        "marca": "Marca Teste",
+        "modelo": "Modelo X",
+        "ano": "2024",
+        "placa": "TEST-423",
+        "servicos": [],
+        "data_adicao": "18/04/2026 18:01"
+      }
+    ],
+    "data_criacao": "18/04/2026 18:01"
   }
 ]
