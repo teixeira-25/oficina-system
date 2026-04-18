@@ -112,7 +112,7 @@ st.markdown("""
     
     /* Scroll Container */
     .scroll-container {
-        max-height: 600px;
+        max-height: 800px;
         overflow-y: auto;
         padding-right: 0.5rem;
         border-right: 1px solid var(--neutral-border);
@@ -143,9 +143,9 @@ def get_gerenciador():
     return GerenciadorClientes()
 
 gerenciador = get_gerenciador()
-ALTURA_LISTA_MAXIMA = 620
+ALTURA_LISTA_MAXIMA = 800
 ALTURA_LISTA_MINIMA = 140
-ALTURA_ITEM_LISTA = 120
+ALTURA_ITEM_LISTA = 140
 
 def check_password():
     """Retorna True se o usuário inseriu a senha correta."""
