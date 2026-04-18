@@ -113,12 +113,16 @@ class GerenciadorClientes:
             return False
     
     def deletar_cliente(self, cliente_id):
-        """Deleta um cliente e todos seus carros"""
+        """Deleta um cliente e todos seus carros e serviços (exclusão em cascata)"""
         try:
             clientes = self._ler_clientes()
+            tamanho_original = len(clientes)
             clientes = [c for c in clientes if c['id'] != cliente_id]
-            self._salvar_clientes(clientes)
-            return True
+            
+            if len(clientes) < tamanho_original:
+                self._salvar_clientes(clientes)
+                return True
+            return False # Cliente não encontrado
         except Exception as e:
             print(f"Erro ao deletar cliente: {e}")
             return False
