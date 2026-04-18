@@ -843,7 +843,6 @@ elif st.session_state.pagina_atual == "servicos":
         st.markdown("---")
 
         if st.session_state.get("abrir_modal_novo_servico"):
-            st.session_state.pop("abrir_modal_novo_servico")
             modal_servico("criar", st.session_state.cliente_atual, st.session_state.carro_atual)
         
         st.markdown("### 📋 Serviços Cadastrados")

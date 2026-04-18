@@ -472,32 +472,6 @@ class InterfaceOficina:
                        values=(carro['marca'], carro['modelo'], carro['ano'], carro['placa'], num_servicos),
                        iid=carro['id'])
     
-    def editar_carro(self, cliente_id, carro_id, marca, modelo, ano, placa):
-        """Edita um carro - método faltante"""
-        try:
-            clientes = self.gerenciador._ler_clientes()
-            
-            for cliente in clientes:
-                if cliente['id'] == cliente_id:
-                    for carro in cliente['carros']:
-                        if carro['id'] == carro_id:
-                            carro['marca'] = marca
-                            carro['modelo'] = modelo
-                            carro['ano'] = ano
-                            carro['placa'] = placa
-                            self.gerenciador._salvar_clientes(clientes)
-                            return True
-            
-            return False
-        except Exception as e:
-            print(f"Erro ao editar carro: {e}")
-            return False
-    
-    # Adicionar método ao gerenciador
-    def _setup_gerenciador(self):
-        """Adiciona método editar_carro ao gerenciador"""
-        self.gerenciador.editar_carro = self.editar_carro.__get__(self.gerenciador, type(self.gerenciador))
-    
     # ===== PÁGINA 3: SERVIÇOS =====
     def mostrar_pagina_servicos(self):
         """Exibe a página de serviços do carro"""
@@ -680,9 +654,6 @@ class InterfaceOficina:
 def main():
     root = tk.Tk()
     app = InterfaceOficina(root)
-    # Adicionar método editar_carro ao gerenciador
-    app._setup_gerenciador()
-    app.gerenciador.editar_carro = app.editar_carro
     root.mainloop()
 
 
