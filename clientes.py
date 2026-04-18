@@ -1,6 +1,13 @@
 import json
 import os
 from datetime import datetime
+import pandas as pd
+
+try:
+    import streamlit as st
+    from streamlit_gsheets import GSheetsConnection
+except ImportError:
+    st = None
 
 class GerenciadorClientes:
     """Gerencia clientes e seus carros"""
@@ -21,6 +28,8 @@ class GerenciadorClientes:
             "Suspensão",
             "Outro"
         ]
+        self.conn = None
+        self.sheet_url = st.secrets.get("connections", {}).get("gsheets", {}).get("spreadsheet", None) if st else None
         self.inicializar_arquivo()
     
     def inicializar_arquivo(self):
@@ -262,6 +271,15 @@ class GerenciadorClientes:
     # Métodos privados
     def _ler_clientes(self):
         """Lê clientes do arquivo JSON"""
+        if st and self.sheet_url:
+            try:
+                conn = st.connection("gsheets", type=GSheetsConnection)
+                df = conn.read(ttl=0)
+                if not df.empty and "json_data" in df.columns:
+                    return json.loads(df.iloc[0]["json_data"])
+            except Exception as e:
+                print(f"Erro ao ler do Google Sheets: {e}")
+
         try:
             if os.path.exists(self.arquivo_clientes):
                 with open(self.arquivo_clientes, 'r', encoding='utf-8') as f:
@@ -273,6 +291,14 @@ class GerenciadorClientes:
     
     def _salvar_clientes(self, clientes):
         """Salva clientes no arquivo JSON"""
+        if st and self.sheet_url:
+            try:
+                conn = st.connection("gsheets", type=GSheetsConnection)
+                df = pd.DataFrame([{"json_data": json.dumps(clientes, ensure_ascii=False)}])
+                conn.update(data=df)
+            except Exception as e:
+                print(f"Erro ao salvar no Google Sheets: {e}")
+
         try:
             with open(self.arquivo_clientes, 'w', encoding='utf-8') as f:
                 json.dump(clientes, f, ensure_ascii=False, indent=2)
