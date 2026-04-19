@@ -1,10 +1,10 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Oficina - Sistema de Gerenciamento
-Comment=Sistema para registrar serviços e dados de carros
-Exec=/home/gabriel/code/projeto\ oficina/Projeto\ PYTHON/rodar.sh
-Path=/home/gabriel/code/projeto\ oficina/Projeto\ PYTHON/
+Name=Oficina Red Car
+Comment=Abrir Sistema de Gerenciamento da Oficina
+Exec=bash "/home/gabriel/code/projeto oficina/Projeto PYTHON/rodar.sh"
+Icon=system-run
 Terminal=false
-Icon=accessories-text-editor
-Categories=Utility;
+StartupNotify=true
+Categories=Office;Development;

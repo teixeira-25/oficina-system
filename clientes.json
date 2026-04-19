@@ -42,5 +42,105 @@
       }
     ],
     "data_criacao": "18/04/2026 18:40"
+  },
+  {
+    "id": "b27e0a4c",
+    "nome": "Edmozer Cavalcante",
+    "telefone": "(85) 9 89534334",
+    "carros": [
+      {
+        "id": "794ac61a",
+        "marca": "GM",
+        "modelo": "Camaro",
+        "ano": "2025",
+        "placa": "ED-CRACK123",
+        "servicos": [
+          {
+            "id": "be06a1f8",
+            "servico": "Troca de Filtro de Ar",
+            "descricao": "Troca de filtro de ar mais repor gua do carro.",
+            "pecas": [
+              {
+                "nome": "Filtro De ar",
+                "preco": 30.0,
+                "quantidade": 1,
+                "total": 30.0
+              },
+              {
+                "nome": "Tampa do filtro de ar",
+                "preco": 25.0,
+                "quantidade": 1,
+                "total": 25.0
+              },
+              {
+                "nome": "Agua desmineralizada",
+                "preco": 10.0,
+                "quantidade": 3,
+                "total": 30.0
+              },
+              {
+                "nome": "Mao de obra",
+                "preco": 40.0,
+                "quantidade": 1,
+                "total": 40.0
+              }
+            ],
+            "data": "18/04/2026 21:07"
+          }
+        ],
+        "data_adicao": "18/04/2026 21:05"
+      }
+    ],
+    "data_criacao": "18/04/2026 21:05"
+  },
+  {
+    "id": "b7f6d858",
+    "nome": "Miguel Fiesca",
+    "telefone": "(88) 9 92535306",
+    "carros": [
+      {
+        "id": "21a7575d",
+        "marca": "Wolks",
+        "modelo": "Gol  1.0",
+        "ano": "2011",
+        "placa": "TGH-3526",
+        "servicos": [
+          {
+            "id": "98d66f9b",
+            "servico": "Outro",
+            "descricao": "Troca da tampa de válvula.",
+            "pecas": [
+              {
+                "nome": "Tampa de valvula",
+                "preco": 100.0,
+                "quantidade": 1,
+                "total": 100.0
+              },
+              {
+                "nome": "Silicone",
+                "preco": 20.0,
+                "quantidade": 1,
+                "total": 20.0
+              },
+              {
+                "nome": "Oleo",
+                "preco": 15.0,
+                "quantidade": 2,
+                "total": 30.0
+              },
+              {
+                "nome": "Mao de Obra",
+                "preco": 60.0,
+                "quantidade": 1,
+                "total": 60.0
+              }
+            ],
+            "data": "19/04/2026 16:21"
+          }
+        ],
+        "data_adicao": "19/04/2026 16:19"
+      }
+    ],
+    "data_criacao": "19/04/2026 16:19"
   }
 ]
