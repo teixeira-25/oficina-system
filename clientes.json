@@ -1,146 +1,46 @@
 [
   {
-    "id": "ecd807f8",
-    "nome": "Gabriel Teixeira",
-    "telefone": "(88) 9 98399547",
+    "id": "578b92a7",
+    "nome": "Irán (Água)",
+    "telefone": "(88) 9 81188107",
     "carros": [
       {
-        "id": "7f99943e",
-        "marca": "Ford",
-        "modelo": "Fiesta",
-        "ano": "2005",
-        "placa": "POC-9036",
-        "servicos": [
-          {
-            "id": "ca7792dc",
-            "servico": "Troca de Óleo",
-            "descricao": "",
-            "pecas": [
-              {
-                "nome": "Filtro de oleo",
-                "preco": 25.0,
-                "quantidade": 1,
-                "total": 25.0
-              },
-              {
-                "nome": "Oleo",
-                "preco": 22.0,
-                "quantidade": 4,
-                "total": 88.0
-              },
-              {
-                "nome": "Mao de Obra",
-                "preco": 50.0,
-                "quantidade": 1,
-                "total": 50.0
-              }
-            ],
-            "data": "18/04/2026 18:42"
-          }
-        ],
-        "data_adicao": "18/04/2026 18:41"
-      }
-    ],
-    "data_criacao": "18/04/2026 18:40"
-  },
-  {
-    "id": "b27e0a4c",
-    "nome": "Edmozer Cavalcante",
-    "telefone": "(85) 9 89534334",
-    "carros": [
-      {
-        "id": "794ac61a",
+        "id": "594f1b35",
         "marca": "GM",
-        "modelo": "Camaro",
-        "ano": "2025",
-        "placa": "ED-CRACK123",
+        "modelo": "PRISMA 1.4",
+        "ano": "2010",
+        "placa": " COLOCAR DEPOIS",
         "servicos": [
           {
-            "id": "be06a1f8",
-            "servico": "Troca de Filtro de Ar",
-            "descricao": "Troca de filtro de ar mais repor gua do carro.",
-            "pecas": [
-              {
-                "nome": "Filtro De ar",
-                "preco": 30.0,
-                "quantidade": 1,
-                "total": 30.0
-              },
-              {
-                "nome": "Tampa do filtro de ar",
-                "preco": 25.0,
-                "quantidade": 1,
-                "total": 25.0
-              },
-              {
-                "nome": "Agua desmineralizada",
-                "preco": 10.0,
-                "quantidade": 3,
-                "total": 30.0
-              },
-              {
-                "nome": "Mao de obra",
-                "preco": 40.0,
-                "quantidade": 1,
-                "total": 40.0
-              }
-            ],
-            "data": "18/04/2026 21:07"
-          }
-        ],
-        "data_adicao": "18/04/2026 21:05"
-      }
-    ],
-    "data_criacao": "18/04/2026 21:05"
-  },
-  {
-    "id": "b7f6d858",
-    "nome": "Miguel Fiesca",
-    "telefone": "(88) 9 92535306",
-    "carros": [
-      {
-        "id": "21a7575d",
-        "marca": "Wolks",
-        "modelo": "Gol  1.0",
-        "ano": "2011",
-        "placa": "TGH-3526",
-        "servicos": [
-          {
-            "id": "98d66f9b",
+            "id": "f06b0e82",
             "servico": "Outro",
-            "descricao": "Troca da tampa de válvula.",
+            "descricao": "SERVIÇO DO CABEÇOTE\n",
             "pecas": [
               {
-                "nome": "Tampa de valvula",
-                "preco": 100.0,
+                "nome": "PROTEÇÃO DA CORREIA DENTADA",
+                "preco": 105.0,
                 "quantidade": 1,
-                "total": 100.0
+                "total": 105.0
               },
               {
-                "nome": "Silicone",
-                "preco": 20.0,
-                "quantidade": 1,
-                "total": 20.0
-              },
-              {
-                "nome": "Oleo",
+                "nome": "BUJÃO DO ÓLEO",
                 "preco": 15.0,
-                "quantidade": 2,
-                "total": 30.0
+                "quantidade": 1,
+                "total": 15.0
               },
               {
-                "nome": "Mao de Obra",
-                "preco": 60.0,
+                "nome": "MÃO DE OBRA",
+                "preco": 800.0,
                 "quantidade": 1,
-                "total": 60.0
+                "total": 800.0
               }
             ],
-            "data": "19/04/2026 16:21"
+            "data": "19/04/2026 23:02"
           }
         ],
-        "data_adicao": "19/04/2026 16:19"
+        "data_adicao": "19/04/2026 22:57"
       }
     ],
-    "data_criacao": "19/04/2026 16:19"
+    "data_criacao": "19/04/2026 22:54"
   }
 ]
