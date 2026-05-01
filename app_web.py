@@ -1,6 +1,5 @@
 import streamlit as st
 from datetime import datetime
-import hashlib
 from clientes import GerenciadorClientes
 
 try:
@@ -10,7 +9,7 @@ except ImportError:
     st.stop()
 
 # Configuração da página
-st.set_page_config(page_title="Sistema de Oficina", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Sistema de Oficina", layout="wide", initial_sidebar_state="expanded")
 
 # CSS Customizado para Design Profissional
 st.markdown("""
@@ -42,11 +41,18 @@ st.markdown("""
         font-size: 1.25rem;
     }
 
-    /* Esconder o header padrão do Streamlit para o nosso fixo brilhar */
-    header[data-testid="stHeader"] {
-        display: none;
+    /* Garante que o botão de abrir/fechar a barra lateral esteja sempre acessível e no topo */
+    [data-testid="stHeader"] {
+        background-color: rgba(0, 0, 0, 0) !important;
+        border-bottom: none !important;
+        z-index: 10000 !important;
+        display: flex !important;
     }
     
+    /* Esconder o menu de opções (três pontos) e botão de deploy */
+    [data-testid="stHeader"] > div:last-child {
+        display: none !important;
+    }
     /* Cards */
     .stContainer {
         border: 1px solid var(--border-color);
@@ -147,53 +153,6 @@ ALTURA_LISTA_MAXIMA = 800
 ALTURA_LISTA_MINIMA = 140
 ALTURA_ITEM_LISTA = 140
 
-def check_password():
-    """Retorna True se o usuário inseriu a senha correta."""
-    # Tenta restaurar a sessão a partir da URL (Hash seguro do usuário+senha)
-    if "authenticated" not in st.session_state or not st.session_state["authenticated"]:
-        try:
-            expected_token = hashlib.sha256((st.secrets["auth"]["username"] + st.secrets["auth"]["password"]).encode()).hexdigest()
-            if st.query_params.get("session") == expected_token:
-                st.session_state["authenticated"] = True
-        except (KeyError, AttributeError):
-            pass
-
-    if "authenticated" not in st.session_state:
-        st.session_state["authenticated"] = False
-
-    if st.session_state["authenticated"]:
-        return True
-
-    st.markdown("""
-        <div style='text-align: center; padding: 2rem 0;'>
-            <h1 style='color: #ef4444; font-size: 2.5rem;'>🚗 RED CAR</h1>
-            <p style='color: #6b7280;'>Acesso restrito ao sistema de gerenciamento</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-    with st.container(border=True):
-        col_l, col_r = st.columns([1, 1])
-        with col_l:
-            user = st.text_input("Usuário", placeholder="Digite seu usuário")
-        with col_r:
-            pw = st.text_input("Senha", type="password", placeholder="Digite sua senha")
-        
-        if st.button("Entrar no Sistema", use_container_width=True, type="primary"):
-            try:
-                if user == st.secrets["auth"]["username"] and pw == st.secrets["auth"]["password"]:
-                    st.session_state["authenticated"] = True
-                    # Persistir login na URL para permanência após refresh
-                    st.query_params["session"] = hashlib.sha256((user + pw).encode()).hexdigest()
-                    st.rerun()
-                else:
-                    st.error("Usuário ou senha incorretos.")
-            except KeyError:
-                st.error("❌ Erro de Configuração: A seção [auth] não foi encontrada nos Secrets do Streamlit Cloud.")
-    return False
-
-# Bloqueia a execução se não estiver autenticado
-if not check_password():
-    st.stop()
 
 # Inicializar estado de navegação
 if "pagina_atual" not in st.session_state:
@@ -211,6 +170,33 @@ if st.session_state.cliente_atual: st.query_params["c"] = st.session_state.clien
 else: st.query_params.pop("c", None)
 if st.session_state.carro_atual: st.query_params["v"] = st.session_state.carro_atual
 else: st.query_params.pop("v", None)
+
+# ==================== BARRA LATERAL DE NAVEGAÇÃO ====================
+with st.sidebar:
+    st.markdown("<h2 style='text-align: center; color: #ef4444;'>🚗 RED CAR</h2>", unsafe_allow_html=True)
+    st.divider()
+    
+    if st.button("🏠 Dashboard", use_container_width=True, type="primary" if st.session_state.pagina_atual == "dashboard" else "secondary"):
+        st.session_state.pagina_atual = "dashboard"
+        st.rerun()
+
+    if st.button("👥 Clientes", use_container_width=True, type="primary" if st.session_state.pagina_atual == "clientes" else "secondary"):
+        st.session_state.pagina_atual = "clientes"
+        st.session_state.cliente_atual = None
+        st.session_state.carro_atual = None
+        st.rerun()
+
+    if st.button("🕐 Histórico", use_container_width=True, type="primary" if st.session_state.pagina_atual == "historico" else "secondary"):
+        st.session_state.pagina_atual = "historico"
+        st.rerun()
+
+    if st.button("📊 Relatórios", use_container_width=True, type="primary" if st.session_state.pagina_atual == "relatorios" else "secondary"):
+        st.session_state.pagina_atual = "relatorios"
+        st.rerun()
+
+    if st.button("⚙️ Configurações", use_container_width=True, type="primary" if st.session_state.pagina_atual == "configuracoes" else "secondary"):
+        st.session_state.pagina_atual = "configuracoes"
+        st.rerun()
 
 # Função para voltar à dashboard
 def voltar_dashboard():
@@ -671,7 +657,7 @@ if st.session_state.pagina_atual == "dashboard":
                 background-color: white;
                 color: #111827;
                 border-bottom: 1px solid #e5e7eb;
-                z-index: 9999;
+                z-index: 9999; /* Fica abaixo do stHeader que agora é 10000 */
                 font-family: Arial, sans-serif;
                 height: 60px;
                 box-sizing: border-box;
@@ -711,65 +697,6 @@ if st.session_state.pagina_atual == "dashboard":
     # Renderizar o header
     components.html(header_html, height=68)
     
-    st.markdown("### Menu Principal")
-
-    if st.button("👥 Registro de Clientes", key="btn_clientes_dash", use_container_width=True, type="primary"):
-        st.session_state.pagina_atual = "clientes"
-        st.session_state.cliente_atual = None
-        st.session_state.carro_atual = None
-        st.rerun()
-
-    if st.button("🕐 Histórico de Serviços", key="btn_historico_dash", use_container_width=True):
-        st.session_state.pagina_atual = "historico"
-        st.rerun()
-
-    if st.button("📊 Relatórios Mensais", key="btn_relatorios_dash", use_container_width=True):
-        st.session_state.pagina_atual = "relatorios"
-        st.rerun()
-
-    if st.button("⚙️ Configurações", key="btn_config_dash", use_container_width=True):
-        st.session_state.pagina_atual = "configuracoes"
-        st.rerun()
-
-    st.divider()
-    if st.button("🚪 Sair do Sistema", key="btn_logout_dash", use_container_width=True):
-        st.session_state["authenticated"] = False
-        st.query_params.clear()
-        st.rerun()
-
-# ==================== BARRA DE NAVEGAÇÃO (Para outras páginas) ====================
-elif st.session_state.pagina_atual != "dashboard":
-    col_nav_home, col_nav1, col_nav2, col_nav3, col_nav4 = st.columns([0.5, 1, 1, 1, 1])
-    
-    with col_nav_home:
-        if st.button("🏠", use_container_width=True, help="Voltar ao menu principal"):
-            voltar_dashboard()
-    
-    with col_nav1:
-        if st.button("👥 Clientes", use_container_width=True, type="primary" if st.session_state.pagina_atual == "clientes" else "secondary"):
-            st.session_state.pagina_atual = "clientes"
-            st.session_state.cliente_atual = None
-            st.session_state.carro_atual = None
-            st.session_state.edit_servico_id = None
-            st.rerun()
-
-    with col_nav2:
-        if st.button("🕐 Histórico", use_container_width=True, type="primary" if st.session_state.pagina_atual == "historico" else "secondary"):
-            st.session_state.pagina_atual = "historico"
-            st.rerun()
-
-    with col_nav3:
-        if st.button("📊 Relatórios", use_container_width=True, type="primary" if st.session_state.pagina_atual == "relatorios" else "secondary"):
-            st.session_state.pagina_atual = "relatorios"
-            st.rerun()
-
-    with col_nav4:
-        if st.button("⚙️ Configurações", use_container_width=True, type="secondary"):
-            st.session_state.pagina_atual = "configuracoes"
-            st.rerun()
-    
-    st.divider()
-
 # ==================== PÁGINA 1: CLIENTES ====================
 if st.session_state.pagina_atual == "clientes":
     st.markdown("## 👥 Gerenciamento de Clientes")
