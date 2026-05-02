@@ -9,33 +9,54 @@
         "marca": "GM",
         "modelo": "PRISMA 1.4",
         "ano": "2010",
-        "placa": " COLOCAR DEPOIS",
+        "placa": "HXT-1234",
         "servicos": [
           {
             "id": "f06b0e82",
-            "servico": "Outro",
-            "descricao": "SERVIÇO DO CABEÇOTE\n",
+            "servico": "Motor",
+            "descricao": "SERVIÇO DO CABEÇOTE",
             "pecas": [
               {
-                "nome": "PROTEÇÃO DA CORREIA DENTADA",
-                "preco": 105.0,
+                "nome": "Junta do cabeçote",
+                "preco": 120.0,
                 "quantidade": 1,
-                "total": 105.0
+                "total": 120.0
               },
               {
-                "nome": "BUJÃO DO ÓLEO",
-                "preco": 15.0,
+                "nome": "Parafusos",
+                "preco": 80.0,
                 "quantidade": 1,
-                "total": 15.0
+                "total": 80.0
               },
               {
-                "nome": "MÃO DE OBRA",
-                "preco": 800.0,
+                "nome": "Mão de obra",
+                "preco": 900.0,
                 "quantidade": 1,
-                "total": 800.0
+                "total": 900.0
               }
             ],
             "data": "19/04/2026 23:02",
+            "status": "Concluído"
+          },
+          {
+            "id": "srv002",
+            "servico": "Revisão",
+            "descricao": "Troca de óleo e filtros",
+            "pecas": [
+              {
+                "nome": "Óleo 5W30",
+                "preco": 40.0,
+                "quantidade": 4,
+                "total": 160.0
+              },
+              {
+                "nome": "Filtro de óleo",
+                "preco": 30.0,
+                "quantidade": 1,
+                "total": 30.0
+              }
+            ],
+            "data": "25/04/2026 10:15",
             "status": "Em andamento"
           }
         ],
@@ -43,5 +64,117 @@
       }
     ],
     "data_criacao": "19/04/2026 22:54"
+  },
+  {
+    "id": "cli002",
+    "nome": "João Silva",
+    "telefone": "(88) 9 99999999",
+    "carros": [
+      {
+        "id": "car002",
+        "marca": "Fiat",
+        "modelo": "Uno Mille",
+        "ano": "2008",
+        "placa": "ABC-9876",
+        "servicos": [
+          {
+            "id": "srv003",
+            "servico": "Freios",
+            "descricao": "Troca de pastilhas",
+            "pecas": [
+              {
+                "nome": "Pastilha de freio",
+                "preco": 150.0,
+                "quantidade": 1,
+                "total": 150.0
+              }
+            ],
+            "data": "01/05/2026 09:00",
+            "status": "Em andamento"
+          }
+        ],
+        "data_adicao": "01/05/2026 08:50"
+      },
+      {
+        "id": "car003",
+        "marca": "Volkswagen",
+        "modelo": "Gol G5",
+        "ano": "2012",
+        "placa": "DEF-4567",
+        "servicos": [
+          {
+            "id": "srv004",
+            "servico": "Suspensão",
+            "descricao": "Troca de amortecedores",
+            "pecas": [
+              {
+                "nome": "Amortecedor",
+                "preco": 200.0,
+                "quantidade": 2,
+                "total": 400.0
+              }
+            ],
+            "data": "28/04/2026 14:30",
+            "status": "Concluído"
+          }
+        ],
+        "data_adicao": "28/04/2026 14:00"
+      }
+    ],
+    "data_criacao": "01/05/2026 08:40"
+  },
+  {
+    "id": "cli003",
+    "nome": "Maria Oliveira",
+    "telefone": "(88) 9 88888888",
+    "carros": [
+      {
+        "id": "car004",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "ano": "2018",
+        "placa": "GHI-1122",
+        "servicos": [
+          {
+            "id": "srv005",
+            "servico": "Revisão",
+            "descricao": "Revisão completa 100k km",
+            "pecas": [
+              {
+                "nome": "Filtro de ar",
+                "preco": 60.0,
+                "quantidade": 1,
+                "total": 60.0
+              },
+              {
+                "nome": "Filtro de combustível",
+                "preco": 90.0,
+                "quantidade": 1,
+                "total": 90.0
+              }
+            ],
+            "data": "02/05/2026 11:00",
+            "status": "Em andamento"
+          },
+          {
+            "id": "srv006",
+            "servico": "Ar condicionado",
+            "descricao": "Recarga de gás",
+            "pecas": [
+              {
+                "nome": "Gás R134a",
+                "preco": 120.0,
+                "quantidade": 1,
+                "total": 120.0
+              }
+            ],
+            "data": "15/04/2026 16:00",
+            "status": "Cancelado"
+          }
+        ],
+        "data_adicao": "15/04/2026 15:30"
+      }
+    ],
+    "data_criacao": "15/04/2026 15:00"
   }
 ]

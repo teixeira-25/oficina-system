@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime
+import pandas as pd
 from clientes import GerenciadorClientes
 
 try:
@@ -608,6 +609,54 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
             st.rerun()
         st.error("❌ Erro ao salvar serviço", icon="❌")
 
+@st.dialog("Ficha do Serviço", width="large")
+def modal_visualizar_servico(srv):
+    """Exibe os detalhes de um serviço em modo de apenas leitura."""
+    st.markdown(f"### {srv['servico_tipo']}")
+    
+    status = srv.get('status', 'Em andamento')
+    color = "blue" if status == "Em andamento" else "orange" if status == "Pausado" else "green"
+    st.markdown(f"**Status:** :{color}[{status}]")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown(f"**👤 Cliente:** {srv['cliente_nome']}")
+        st.markdown(f"**📞 Telefone:** {srv['cliente_telefone']}")
+    with col2:
+        st.markdown(f"**🚗 Veículo:** {srv['carro_marca']} {srv['carro_modelo']}")
+        st.markdown(f"**📋 Placa/Ano:** {srv['carro_placa']} / {srv['carro_ano']}")
+    
+    st.markdown(f"**📅 Data de Entrada:** {srv['data']}")
+    
+    st.divider()
+    
+    pecas = srv.get('pecas', [])
+    if pecas:
+        st.markdown("#### 🔩 Peças e Materiais")
+        # Formata os dados para uma visualização limpa em tabela
+        dados_tabela = []
+        for p in pecas:
+            dados_tabela.append({
+                "Descrição": p['nome'],
+                "Qtd": p['quantidade'],
+                "V. Unitário": formatar_moeda(p['preco']),
+                "Subtotal": formatar_moeda(p['total'])
+            })
+        st.table(dados_tabela)
+        st.markdown(f"**Valor Total em Peças:** {formatar_moeda(srv.get('valor_pecas', 0))}")
+    
+    if srv['descricao']:
+        st.markdown("#### 📝 Descrição / Observações")
+        st.info(srv['descricao'])
+        
+    st.divider()
+    if st.button("✏️ Ir para Edição do Serviço", use_container_width=True, type="primary"):
+        st.session_state.cliente_atual = srv['cliente_id']
+        st.session_state.carro_atual = srv['carro_id']
+        st.session_state.edit_servico_id = srv['servico_id']
+        st.session_state.pagina_atual = "servicos"
+        st.rerun()
+
 @st.dialog("Confirmar Exclusão", width="small")
 def modal_confirmar_exclusao_cliente(cliente):
     st.warning(f"Tem certeza que deseja excluir o cliente **{cliente['nome']}**?")
@@ -726,10 +775,7 @@ if st.session_state.pagina_atual == "dashboard":
                         gerenciador.editar_servico(srv['cliente_id'], srv['carro_id'], srv['servico_id'], status="Finalizado")
                         st.rerun()
                     if st.button("Ver Ficha", key=f"dash_go_{srv['servico_id']}", use_container_width=True):
-                        st.session_state.cliente_atual = srv['cliente_id']
-                        st.session_state.carro_atual = srv['carro_id']
-                        st.session_state.pagina_atual = "servicos"
-                        st.rerun()
+                        modal_visualizar_servico(srv)
 
 # ==================== PÁGINA 1: CLIENTES ====================
 if st.session_state.pagina_atual == "clientes":
@@ -1159,7 +1205,6 @@ elif st.session_state.pagina_atual == "relatorios":
             with col_graph1:
                 st.markdown("### 📈 Top Serviços")
                 if relatorio['tipos_servico']:
-                    import pandas as pd
                     df_tipos = pd.DataFrame(list(relatorio['tipos_servico'].items()), columns=['Tipo', 'Quantidade'])
                     df_tipos = df_tipos.sort_values('Quantidade', ascending=False)
                     st.bar_chart(df_tipos.set_index('Tipo'))
@@ -1169,7 +1214,6 @@ elif st.session_state.pagina_atual == "relatorios":
             with col_graph2:
                 st.markdown("### 👥 Top Clientes")
                 if relatorio['clientes']:
-                    import pandas as pd
                     df_clientes = pd.DataFrame(list(relatorio['clientes'].items()), columns=['Cliente', 'Quantidade'])
                     df_clientes = df_clientes.sort_values('Quantidade', ascending=False).head(5)
                     st.bar_chart(df_clientes.set_index('Cliente'))
