@@ -650,12 +650,25 @@ def modal_visualizar_servico(srv):
         st.info(srv['descricao'])
         
     st.divider()
-    if st.button("✏️ Ir para Edição do Serviço", use_container_width=True, type="primary"):
-        st.session_state.cliente_atual = srv['cliente_id']
-        st.session_state.carro_atual = srv['carro_id']
-        st.session_state.edit_servico_id = srv['servico_id']
-        st.session_state.pagina_atual = "servicos"
-        st.rerun()
+    col_pdf, col_edit = st.columns(2)
+    with col_pdf:
+        carro_pdf = {'marca': srv['carro_marca'], 'modelo': srv['carro_modelo'], 'placa': srv['carro_placa'], 'ano': srv['carro_ano']}
+        srv_pdf = {'id': srv['servico_id'], 'servico': srv['servico_tipo'], 'data': srv['data'], 'descricao': srv['descricao'], 'pecas': srv.get('pecas', [])}
+        pdf_b = gerar_pdf_servico(srv['cliente_nome'], srv['cliente_telefone'], carro_pdf, srv_pdf)
+        st.download_button(
+            label="📄 Baixar PDF da OS",
+            data=pdf_b,
+            file_name=f"OS_{srv['servico_id']}.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+    with col_edit:
+        if st.button("✏️ Ir para Edição", use_container_width=True, type="primary"):
+            st.session_state.cliente_atual = srv['cliente_id']
+            st.session_state.carro_atual = srv['carro_id']
+            st.session_state.edit_servico_id = srv['servico_id']
+            st.session_state.pagina_atual = "servicos"
+            st.rerun()
 
 @st.dialog("Confirmar Exclusão", width="small")
 def modal_confirmar_exclusao_cliente(cliente):
@@ -751,9 +764,27 @@ if st.session_state.pagina_atual == "dashboard":
     # Renderizar o header
     components.html(header_html, height=68)
 
-    st.markdown("### 🛠️ Serviços em Andamento")
+    # Cálculos das métricas para o Dashboard
     todos_servicos = gerenciador.obter_todos_servicos()
+    hoje = datetime.now()
+    
     andamento = [s for s in todos_servicos if s.get('status') == "Em andamento"]
+    pausados = [s for s in todos_servicos if s.get('status') == "Pausado"]
+    concluidos_mes = [
+        s for s in todos_servicos 
+        if s.get('status') == "Finalizado" and 
+        datetime.strptime(s['data'], "%d/%m/%Y %H:%M").month == hoje.month and
+        datetime.strptime(s['data'], "%d/%m/%Y %H:%M").year == hoje.year
+    ]
+
+    # Exibição dos indicadores rápidos
+    col_m1, col_m2, col_m3 = st.columns(3)
+    col_m1.metric("🛠️ Em Andamento", len(andamento))
+    col_m2.metric("✅ Concluídos (Mês)", len(concluidos_mes))
+    col_m3.metric("⏸️ Pausados", len(pausados))
+
+    st.divider()
+    st.markdown("### 📋 Lista de Serviços em Andamento")
 
     if not andamento:
         st.info("📌 Nenhum serviço em andamento no momento.")
@@ -774,8 +805,16 @@ if st.session_state.pagina_atual == "dashboard":
                     if b2.button("✅", key=f"dash_fin_{srv['servico_id']}", help="Finalizar"):
                         gerenciador.editar_servico(srv['cliente_id'], srv['carro_id'], srv['servico_id'], status="Finalizado")
                         st.rerun()
-                    if st.button("Ver Ficha", key=f"dash_go_{srv['servico_id']}", use_container_width=True):
-                        modal_visualizar_servico(srv)
+                    
+                    c_ficha, c_pdf = st.columns([3, 1])
+                    with c_ficha:
+                        if st.button("Ver Ficha", key=f"dash_go_{srv['servico_id']}", use_container_width=True):
+                            modal_visualizar_servico(srv)
+                    with c_pdf:
+                        carro_pdf = {'marca': srv['carro_marca'], 'modelo': srv['carro_modelo'], 'placa': srv['carro_placa'], 'ano': srv['carro_ano']}
+                        srv_pdf = {'id': srv['servico_id'], 'servico': srv['servico_tipo'], 'data': srv['data'], 'descricao': srv['descricao'], 'pecas': srv.get('pecas', [])}
+                        pdf_b = gerar_pdf_servico(srv['cliente_nome'], srv['cliente_telefone'], carro_pdf, srv_pdf)
+                        st.download_button("📄", data=pdf_b, file_name=f"OS_{srv['servico_id']}.pdf", mime="application/pdf", key=f"pdf_dash_{srv['servico_id']}", help="Baixar PDF rápido")
 
 # ==================== PÁGINA 1: CLIENTES ====================
 if st.session_state.pagina_atual == "clientes":
