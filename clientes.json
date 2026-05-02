@@ -36,7 +36,7 @@
               }
             ],
             "data": "19/04/2026 23:02",
-            "status": "Finalizado"
+            "status": "Em andamento"
           },
           {
             "id": "srv002",
@@ -115,7 +115,7 @@
               }
             ],
             "data": "28/04/2026 14:30",
-            "status": "Concluído"
+            "status": "Em andamento"
           }
         ],
         "data_adicao": "28/04/2026 14:00"
@@ -169,7 +169,7 @@
               }
             ],
             "data": "15/04/2026 16:00",
-            "status": "Cancelado"
+            "status": "Em andamento"
           }
         ],
         "data_adicao": "15/04/2026 15:30"

@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from datetime import datetime, timedelta
 import pandas as pd
 from clientes import GerenciadorClientes
@@ -118,7 +119,7 @@ st.markdown("""
     
     /* Scroll Container */
     .scroll-container {
-        max-height: 800px;
+        max-height: 1200px;
         overflow-y: auto;
         padding-right: 0.5rem;
         border-right: 1px solid var(--neutral-border);
@@ -149,9 +150,9 @@ def get_gerenciador():
     return GerenciadorClientes()
 
 gerenciador = get_gerenciador()
-ALTURA_LISTA_MAXIMA = 800
+ALTURA_LISTA_MAXIMA = 1200
 ALTURA_LISTA_MINIMA = 140
-ALTURA_ITEM_LISTA = 140
+ALTURA_ITEM_LISTA = 200
 
 
 # Inicializar estado de navegação
@@ -190,10 +191,6 @@ with st.sidebar:
         st.session_state.pagina_atual = "historico"
         st.rerun()
 
-    if st.button("📊 Relatórios", use_container_width=True, type="primary" if st.session_state.pagina_atual == "relatorios" else "secondary"):
-        st.session_state.pagina_atual = "relatorios"
-        st.rerun()
-
     if st.button("⚙️ Configurações", use_container_width=True, type="primary" if st.session_state.pagina_atual == "configuracoes" else "secondary"):
         st.session_state.pagina_atual = "configuracoes"
         st.rerun()
@@ -230,6 +227,7 @@ def formatar_moeda(valor):
 @st.cache_data
 def gerar_pdf_servico(cliente_nome, cliente_tel, carro_info, servico_info):
     """Gera o buffer de bytes de um PDF com os detalhes do serviço."""
+    cfg = gerenciador.config
     pdf = FPDF()
     pdf.add_page()
 
@@ -237,12 +235,17 @@ def gerar_pdf_servico(cliente_nome, cliente_tel, carro_info, servico_info):
     pdf.set_fill_color(220, 38, 38)  # Cor Vermelha Red Car
     pdf.rect(10, 10, 190, 35, 'F')
     pdf.set_text_color(255, 255, 255)
+    
+    if cfg.get("logo_path") and os.path.exists(cfg["logo_path"]):
+        pdf.image(cfg["logo_path"], x=15, y=12, h=30)
+        pdf.set_x(50)
+
     pdf.set_font("helvetica", "B", 20)
-    pdf.cell(0, 12, "RED CAR", ln=True, align="C")
+    pdf.cell(0, 12, cfg.get("nome", "RED CAR"), ln=True, align="C")
     pdf.set_font("helvetica", "B", 10)
-    pdf.cell(0, 5, "Proprietário: Osvaldo Teixeira | CNPJ: 88.888.888/0001-55", ln=True, align="C")
+    pdf.cell(0, 5, f"Proprietário: {cfg.get('proprietario')} | CNPJ: {cfg.get('cnpj')}", ln=True, align="C")
     pdf.set_font("helvetica", "", 9)
-    pdf.cell(0, 5, "Rua Dr. Irineu Pinheiro, 558 - Pimenta, Crato - CE", ln=True, align="C")
+    pdf.cell(0, 5, cfg.get("endereco"), ln=True, align="C")
     pdf.ln(13)
 
     # Número da OS e Data
@@ -308,8 +311,9 @@ def gerar_pdf_servico(cliente_nome, cliente_tel, carro_info, servico_info):
     pdf.set_font("helvetica", "I", 8); pdf.cell(0, 10, "Documento gerado pelo Sistema Red Car.", align="C")
     return bytes(pdf.output())
 
-def gerar_pdf_relatorio_consolidado(servicos, titulo_periodo):
-    """Gera um PDF consolidado com todos os serviços do período."""
+def gerar_pdf_busca_historico(servicos, resumo_filtros):
+    """Gera um PDF profissional com os resultados da busca atual no histórico."""
+    cfg = gerenciador.config
     pdf = FPDF()
     pdf.add_page()
 
@@ -317,50 +321,56 @@ def gerar_pdf_relatorio_consolidado(servicos, titulo_periodo):
     pdf.set_fill_color(220, 38, 38)
     pdf.rect(10, 10, 190, 35, 'F')
     pdf.set_text_color(255, 255, 255)
+    
+    if cfg.get("logo_path") and os.path.exists(cfg["logo_path"]):
+        pdf.image(cfg["logo_path"], x=15, y=12, h=30)
+
     pdf.set_font("helvetica", "B", 20)
-    pdf.cell(0, 12, "RED CAR", ln=True, align="C")
+    pdf.cell(0, 12, cfg.get("nome", "RED CAR"), ln=True, align="C")
     pdf.set_font("helvetica", "B", 10)
-    pdf.cell(0, 5, "Proprietário: Osvaldo Teixeira | CNPJ: 88.888.888/0001-55", ln=True, align="C")
+    pdf.cell(0, 5, f"Proprietário: {cfg.get('proprietario')} | CNPJ: {cfg.get('cnpj')}", ln=True, align="C")
     pdf.set_font("helvetica", "", 9)
-    pdf.cell(0, 5, "Rua Dr. Irineu Pinheiro, 558 - Pimenta, Crato - CE", ln=True, align="C")
+    pdf.cell(0, 5, cfg.get("endereco"), ln=True, align="C")
     pdf.ln(13)
 
-    # Título do Relatório
+    # Título e Filtros
     pdf.set_text_color(0, 0, 0)
     pdf.set_font("helvetica", "B", 14)
-    pdf.cell(0, 10, f"RELATÓRIO DE SERVIÇOS - {titulo_periodo}", ln=True, align="C", border="B")
+    pdf.cell(0, 10, "RELATÓRIO DE BUSCA CUSTOMIZADA", ln=True, align="C", border="B")
+    pdf.set_font("helvetica", "I", 9)
+    pdf.multi_cell(0, 6, f"Filtros aplicados: {resumo_filtros}")
     pdf.ln(5)
 
-    # Resumo Estatístico
+    # Resumo Financeiro
     total_receita = sum(s.get('valor_pecas', 0) for s in servicos)
     pdf.set_font("helvetica", "B", 10)
-    pdf.cell(95, 8, f"Total de Serviços: {len(servicos)}")
-    pdf.cell(95, 8, f"Receita Total Estimada: {formatar_moeda(total_receita)}", ln=True, align="R")
+    pdf.cell(95, 8, f"Serviços encontrados: {len(servicos)}")
+    pdf.cell(95, 8, f"Total em Materiais: {formatar_moeda(total_receita)}", ln=True, align="R")
     pdf.ln(5)
 
-    # Tabela de Serviços
+    # Tabela
     pdf.set_fill_color(220, 38, 38)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font("helvetica", "B", 8)
     pdf.cell(20, 8, " Data", 1, 0, "L", fill=True)
-    pdf.cell(45, 8, " Cliente", 1, 0, "L", fill=True)
-    pdf.cell(45, 8, " Veículo", 1, 0, "L", fill=True)
-    pdf.cell(50, 8, " Serviço", 1, 0, "L", fill=True)
+    pdf.cell(40, 8, " Cliente", 1, 0, "L", fill=True)
+    pdf.cell(40, 8, " Veículo", 1, 0, "L", fill=True)
+    pdf.cell(60, 8, " Tipo de Serviço", 1, 0, "L", fill=True)
     pdf.cell(30, 8, " Valor", 1, 1, "R", fill=True)
 
     pdf.set_text_color(0, 0, 0)
     pdf.set_font("helvetica", "", 7)
     
     for s in servicos:
-        cliente = (s['cliente_nome'][:25] + '..') if len(s['cliente_nome']) > 25 else s['cliente_nome']
+        cliente = (s['cliente_nome'][:22] + '..') if len(s['cliente_nome']) > 22 else s['cliente_nome']
         veiculo = f"{s['carro_marca']} {s['carro_modelo']} ({s['carro_placa']})"
-        veiculo = (veiculo[:25] + '..') if len(veiculo) > 25 else veiculo
-        servico = (s['servico_tipo'][:30] + '..') if len(s['servico_tipo']) > 30 else s['servico_tipo']
+        veiculo = (veiculo[:22] + '..') if len(veiculo) > 22 else veiculo
+        servico = (s['servico_tipo'][:35] + '..') if len(s['servico_tipo']) > 35 else s['servico_tipo']
         
         pdf.cell(20, 7, s['data'].split(' ')[0], 1)
-        pdf.cell(45, 7, f" {cliente}", 1)
-        pdf.cell(45, 7, f" {veiculo}", 1)
-        pdf.cell(50, 7, f" {servico}", 1)
+        pdf.cell(40, 7, f" {cliente}", 1)
+        pdf.cell(40, 7, f" {veiculo}", 1)
+        pdf.cell(60, 7, f" {servico}", 1)
         pdf.cell(30, 7, f"{formatar_moeda(s['valor_pecas'])} ", 1, 1, "R")
 
     pdf.ln(10)
@@ -368,57 +378,6 @@ def gerar_pdf_relatorio_consolidado(servicos, titulo_periodo):
     pdf.cell(0, 10, f"Gerado em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}", align="R")
     
     return bytes(pdf.output())
-
-@st.dialog("Exportar Relatório Consolidado", width="large")
-def modal_exportar_relatorio():
-    st.markdown("Escolha o tipo de relatório e o período desejado para exportação.")
-    
-    tipo = st.radio("Tipo de Relatório", ["Diário", "Mensal", "Anual"], horizontal=True)
-    
-    servicos_filtrados = []
-    titulo_periodo = ""
-    todos = gerenciador.obter_todos_servicos()
-    
-    if tipo == "Diário":
-        data_sel = st.date_input("Selecione a Data", value=datetime.now())
-        data_str = data_sel.strftime("%d/%m/%Y")
-        titulo_periodo = f"DIÁRIO ({data_str})"
-        servicos_filtrados = [s for s in todos if s['data'].startswith(data_str)]
-        
-    elif tipo == "Mensal":
-        col_m, col_a = st.columns(2)
-        meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-        mes_sel = col_m.selectbox("Mês", meses, index=datetime.now().month - 1)
-        ano_sel = col_a.number_input("Ano", min_value=2020, max_value=2030, value=datetime.now().year)
-        mes_num = meses.index(mes_sel) + 1
-        titulo_periodo = f"MENSAL ({mes_sel}/{ano_sel})"
-        servicos_filtrados = [s for s in todos if datetime.strptime(s['data'], "%d/%m/%Y %H:%M").month == mes_num and datetime.strptime(s['data'], "%d/%m/%Y %H:%M").year == ano_sel]
-        
-    elif tipo == "Anual":
-        ano_sel = st.number_input("Ano", min_value=2020, max_value=2030, value=datetime.now().year)
-        titulo_periodo = f"ANUAL ({ano_sel})"
-        servicos_filtrados = [s for s in todos if datetime.strptime(s['data'], "%d/%m/%Y %H:%M").year == ano_sel]
-
-    st.divider()
-    
-    if not servicos_filtrados:
-        st.warning(f"Nenhum serviço encontrado para o período {titulo_periodo}.")
-    else:
-        st.success(f"Foram encontrados {len(servicos_filtrados)} serviços para o período {titulo_periodo}.")
-        pdf_bytes = gerar_pdf_relatorio_consolidado(servicos_filtrados, titulo_periodo)
-        
-        st.download_button(
-            label="📥 Baixar Relatório em PDF",
-            data=pdf_bytes,
-            file_name=f"Relatorio_{tipo}_{titulo_periodo.replace('/', '_')}.pdf",
-            mime="application/pdf",
-            use_container_width=True,
-            type="primary"
-        )
-    
-    if st.button("Fechar", use_container_width=True):
-        st.session_state.pop("abrir_modal_exportar", None)
-        st.rerun()
 
 def normalizar_pecas_editor(pecas_df):
     pecas = []
@@ -1234,7 +1193,31 @@ elif st.session_state.pagina_atual == "historico":
         if match_search and match_status and match_cliente and match_carro and match_data:
             servicos_filtrados.append(srv)
     
-    st.markdown(f"**Exibindo:** {len(servicos_filtrados)} serviço(s)")
+    # --- CABEÇALHO DA LISTAGEM COM DOWNLOAD ---
+    col_res, col_dl = st.columns([3, 1])
+    with col_res:
+        st.markdown(f"**Exibindo:** {len(servicos_filtrados)} serviço(s)")
+    
+    with col_dl:
+        if servicos_filtrados:
+            # Gerar resumo para o cabeçalho do PDF
+            filtros_usados = []
+            if search_hist: filtros_usados.append(f"Busca: '{search_hist}'")
+            if filtro_status != "Todos": filtros_usados.append(f"Status: {filtro_status}")
+            if filtro_cliente != "Todos": filtros_usados.append(f"Cliente: {filtro_cliente}")
+            filtros_usados.append(f"Datas: {data_inicio.strftime('%d/%m/%Y')} a {data_fim.strftime('%d/%m/%Y')}")
+            resumo_texto = " | ".join(filtros_usados)
+
+            pdf_busca = gerar_pdf_busca_historico(servicos_filtrados, resumo_texto)
+            st.download_button(
+                label="📥 Baixar Resultados",
+                data=pdf_busca,
+                file_name=f"Busca_Historico_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
+                mime="application/pdf",
+                use_container_width=True,
+                help="Exportar resultados filtrados para PDF"
+            )
+
     st.divider()
     
     if not servicos_filtrados:
@@ -1269,115 +1252,76 @@ elif st.session_state.pagina_atual == "historico":
                         pdf_b = gerar_pdf_servico(srv['cliente_nome'], srv['cliente_telefone'], carro_pdf, srv_pdf)
                         st.download_button("📄 Baixar OS", data=pdf_b, file_name=f"OS_{srv['servico_id']}.pdf", mime="application/pdf", key=f"pdf_hist_{srv['servico_id']}", use_container_width=True)
 
-# ==================== PÁGINA 5: RELATÓRIOS MENSAIS ====================
-elif st.session_state.pagina_atual == "relatorios":
-    st.markdown("## 📊 Relatórios Mensais")
-    st.markdown("---")
-    
-    # Obter meses com dados
-    periodos = gerenciador.obter_meses_com_dados()
-    
-    if not periodos:
-        st.info("📌 Nenhum serviço registrado no sistema ainda.", icon="ℹ️")
-    else:
-        # Seletor de período
-        col1, col2 = st.columns([3, 1])
-        
-        with col1:
-            # Criar opções de mês/ano
-            opcoes_periodo = [f"{mes:02d}/{ano}" for mes, ano in periodos]
-            periodo_selecionado = st.selectbox("Selecione o período", opcoes_periodo, key="periodo_rel")
-            mes, ano = map(int, periodo_selecionado.split('/'))
-        
-        with col2:
-            st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
-            if st.button("📥 Exportar Relatório", use_container_width=True):
-                st.session_state["abrir_modal_exportar"] = True
-                st.rerun()
-
-        if st.session_state.get("abrir_modal_exportar"):
-            modal_exportar_relatorio()
-        
-        st.divider()
-        
-        # Gerar relatório
-        relatorio = gerenciador.gerar_relatorio_mensal(mes, ano)
-        
-        if relatorio:
-            # Estatísticas gerais
-            col_stats1, col_stats2, col_stats3 = st.columns(3)
-            
-            with col_stats1:
-                st.metric("Total de Serviços", relatorio['total_servicos'])
-            
-            with col_stats2:
-                st.metric("Tipos de Serviço", len(relatorio['tipos_servico']))
-            
-            with col_stats3:
-                st.metric("Clientes Atendidos", len(relatorio['clientes']))
-            
-            st.divider()
-            
-            # Gráficos
-            col_graph1, col_graph2 = st.columns(2)
-            
-            with col_graph1:
-                st.markdown("### 📈 Top Serviços")
-                if relatorio['tipos_servico']:
-                    df_tipos = pd.DataFrame(list(relatorio['tipos_servico'].items()), columns=['Tipo', 'Quantidade'])
-                    df_tipos = df_tipos.sort_values('Quantidade', ascending=False)
-                    st.bar_chart(df_tipos.set_index('Tipo'))
-                else:
-                    st.info("Sem dados", icon="ℹ️")
-            
-            with col_graph2:
-                st.markdown("### 👥 Top Clientes")
-                if relatorio['clientes']:
-                    df_clientes = pd.DataFrame(list(relatorio['clientes'].items()), columns=['Cliente', 'Quantidade'])
-                    df_clientes = df_clientes.sort_values('Quantidade', ascending=False).head(5)
-                    st.bar_chart(df_clientes.set_index('Cliente'))
-                else:
-                    st.info("Sem dados", icon="ℹ️")
-            
-            st.divider()
-            
-            # Listagem detalhada
-            st.markdown("### 📋 Serviços do Período")
-
-            if not relatorio['servicos']:
-                st.info("📌 Nenhum serviço encontrado para o período selecionado.", icon="ℹ️")
-            else:
-                with st.container(height=calcular_altura_lista(len(relatorio['servicos'])), border=False):
-                    for srv in relatorio['servicos']:
-                        with st.container(border=True):
-                            col_srv_info, col_srv_details = st.columns([2.5, 1.5])
-                            
-                            with col_srv_info:
-                                st.markdown(f"**{srv['servico_tipo']}**")
-                                st.markdown(f"👤 {srv['cliente_nome']}")
-                                st.markdown(f"🚗 {srv['carro_marca']} {srv['carro_modelo']} - Placa: {srv['carro_placa']}")
-                                if srv.get('total_pecas', 0):
-                                    quantidade_total = sum(int(peca.get('quantidade', 1) or 1) for peca in srv.get('pecas', []))
-                                    st.markdown(f"🔩 {quantidade_total} item(ns) • {formatar_moeda(srv.get('valor_pecas', 0))}")
-                                if srv['descricao']:
-                                    st.markdown(f"📝 *{srv['descricao']}*")
-                            
-                            with col_srv_details:
-                                st.markdown(f"<div style='text-align: right;'><strong>📅</strong><br/>{srv['data']}</div>", unsafe_allow_html=True)
-                                carro_pdf = {'marca': srv['carro_marca'], 'modelo': srv['carro_modelo'], 'placa': srv['carro_placa'], 'ano': srv['carro_ano']}
-                                srv_pdf = {'id': srv['servico_id'], 'servico': srv['servico_tipo'], 'data': srv['data'], 'descricao': srv['descricao'], 'pecas': srv.get('pecas', [])}
-                                pdf_b = gerar_pdf_servico(srv['cliente_nome'], srv['cliente_telefone'], carro_pdf, srv_pdf)
-                                st.download_button("📄 PDF", data=pdf_b, file_name=f"OS_REL_{srv['servico_id']}.pdf", mime="application/pdf", key=f"pdf_rel_{srv['servico_id']}", use_container_width=True)
-
 # ==================== PÁGINA 6: CONFIGURAÇÕES ====================
 elif st.session_state.pagina_atual == "configuracoes":
     st.markdown("## ⚙️ Configurações")
     st.markdown("---")
     
-    with st.expander("📋 Tipos de Serviço Disponíveis", expanded=False):
-        tipos = gerenciador.get_tipos_servico()
-        for i, tipo in enumerate(tipos, 1):
-            st.write(f"{i}. {tipo}")
+    tab_oficina, tab_servicos = st.tabs(["🏢 Dados da Oficina", "🛠️ Catálogo de Serviços"])
+    
+    with tab_oficina:
+        st.markdown("### 🏢 Informações da Oficina")
+        st.info("Essas informações aparecerão no cabeçalho dos PDFs gerados pelo sistema.")
+        
+        with st.form("form_dados_oficina"):
+            col1, col2 = st.columns(2)
+            nome_oficina = col1.text_input("Nome da Oficina", value=gerenciador.config.get("nome", ""))
+            proprietario = col2.text_input("Proprietário", value=gerenciador.config.get("proprietario", ""))
+            cnpj = col1.text_input("CNPJ", value=gerenciador.config.get("cnpj", ""))
+            telefone = col2.text_input("Telefone", value=gerenciador.config.get("telefone", ""))
+            endereco = st.text_input("Endereço", value=gerenciador.config.get("endereco", ""))
+            
+            if st.form_submit_button("💾 Salvar Informações", use_container_width=True):
+                novos_dados = {
+                    "nome": nome_oficina,
+                    "proprietario": proprietario,
+                    "cnpj": cnpj,
+                    "telefone": telefone,
+                    "endereco": endereco
+                }
+                if gerenciador.atualizar_config(novos_dados):
+                    st.toast("✅ Informações da oficina atualizadas!", icon="🏢")
+                    st.rerun()
+                else:
+                    st.error("❌ Erro ao salvar configurações.")
+
+    with tab_servicos:
+        st.markdown("### 🛠️ Gerenciar Catálogo de Serviços")
+        st.info("Adicione ou remova os tipos de serviço que aparecem nos formulários de cadastro e edição.")
+        
+        servicos_atuais = gerenciador.get_tipos_servico()
+        
+        # Interface para adicionar novo serviço
+        col_txt, col_btn = st.columns([3, 1])
+        with col_txt:
+            novo_servico = st.text_input("Novo tipo de serviço", placeholder="Ex: Higienização de Ar", key="input_novo_srv_cfg")
+        with col_btn:
+            st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+            if st.button("➕ Adicionar", use_container_width=True, type="primary"):
+                if novo_servico.strip():
+                    if novo_servico.strip() not in servicos_atuais:
+                        servicos_atuais.append(novo_servico.strip())
+                        if gerenciador.atualizar_config({"servicos": servicos_atuais}):
+                            st.toast(f"✅ Serviço '{novo_servico}' adicionado com sucesso!", icon="🛠️")
+                            st.rerun()
+                    else:
+                        st.warning("⚠️ Este serviço já existe na lista.")
+                else:
+                    st.warning("⚠️ Digite um nome para o serviço antes de adicionar.")
+
+        st.divider()
+        st.markdown("#### Serviços Ativos")
+        if not servicos_atuais:
+            st.write("Nenhum serviço configurado.")
+        else:
+            for i, serv in enumerate(servicos_atuais):
+                c_nome, c_del = st.columns([5, 1])
+                c_nome.write(f"• {serv}")
+                if c_del.button("🗑️", key=f"del_srv_cfg_{i}", help=f"Remover {serv}"):
+                    removido = servicos_atuais.pop(i)
+                    if gerenciador.atualizar_config({"servicos": servicos_atuais}):
+                        st.toast(f"🗑️ Serviço '{removido}' removido da lista.", icon="🗑️")
+                        st.rerun()
 
 # Footer
 st.divider()

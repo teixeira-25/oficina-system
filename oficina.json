@@ -1,0 +1,23 @@
+{
+  "nome": "RED CAR",
+  "proprietario": "Osvaldo Teixeira",
+  "cnpj": "88.888.888/0001-55",
+  "endereco": "Rua Dr. Irineu Pinheiro, 558 - Pimenta, Crato - CE",
+  "telefone": "(88) 9 9934-8668",
+  "logo_path": "logo_oficina.png",
+  "dark_mode": true,
+  "servicos": [
+    "Troca de Óleo",
+    "Troca de Filtro de Ar",
+    "Troca de Pneus",
+    "Revisão Geral",
+    "Reparo do Motor",
+    "Reparo de Freios",
+    "Ar Condicionado",
+    "Elétrica",
+    "Suspensão",
+    "Outro",
+    "Troca da Tampa De Valvula",
+    "Troca De Filtro de Ar Condicionado"
+  ]
+}

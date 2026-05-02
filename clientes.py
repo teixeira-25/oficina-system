@@ -20,20 +20,31 @@ class GerenciadorClientes:
     
     def __init__(self):
         self.arquivo_clientes = "clientes.json"
-        self.tipos_servico = [
-            "Troca de Óleo",
-            "Troca de Filtro de Ar",
-            "Balanceamento de Pneus",
-            "Alinhamento",
-            "Troca de Pneus",
-            "Revisão Geral",
-            "Reparo do Motor",
-            "Reparo de Freios",
-            "Ar Condicionado",
-            "Elétrica",
-            "Suspensão",
-            "Outro"
-        ]
+        self.arquivo_config = "oficina.json"
+        
+        # Configuração padrão caso o arquivo não exista
+        self.config_padrao = {
+            "nome": "RED CAR",
+            "proprietario": "Osvaldo Teixeira",
+            "cnpj": "88.888.888/0001-55",
+            "endereco": "Rua Dr. Irineu Pinheiro, 558 - Pimenta, Crato - CE",
+            "telefone": "(88) 99999-9999",
+            "servicos": [
+                "Troca de Óleo", "Troca de Filtro de Ar", "Balanceamento de Pneus",
+                "Alinhamento", "Troca de Pneus", "Revisão Geral", "Reparo do Motor",
+                "Reparo de Freios", "Ar Condicionado", "Elétrica", "Suspensão", "Outro"
+            ]
+        }
+        
+        # Carregar configurações
+        self.config = self.config_padrao.copy()
+        if os.path.exists(self.arquivo_config):
+            try:
+                with open(self.arquivo_config, 'r', encoding='utf-8') as f:
+                    self.config.update(json.load(f))
+            except Exception as e:
+                print(f"Erro ao carregar oficina.json: {e}")
+
         self.conn = None
         self.sheet_url = st.secrets.get("connections", {}).get("gsheets", {}).get("spreadsheet", None) if st else None
         
@@ -63,9 +74,20 @@ class GerenciadorClientes:
             except Exception as e:
                 print(f"Erro ao criar arquivo JSON: {e}")
     
+    def atualizar_config(self, novos_dados):
+        """Atualiza e salva as configurações da oficina"""
+        self.config.update(novos_dados)
+        try:
+            with open(self.arquivo_config, 'w', encoding='utf-8') as f:
+                json.dump(self.config, f, ensure_ascii=False, indent=2)
+            return True
+        except Exception as e:
+            print(f"Erro ao salvar configurações: {e}")
+            return False
+
     def get_tipos_servico(self):
-        """Retorna lista de tipos de serviço"""
-        return self.tipos_servico
+        """Retorna lista de tipos de serviço configurados"""
+        return self.config.get("servicos", self.config_padrao["servicos"])
     
     def adicionar_cliente(self, nome, telefone):
         """
