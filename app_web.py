@@ -484,11 +484,13 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     tipo_inicial = ""
     descricao_inicial = ""
     pecas_iniciais = []
+    status_inicial = "Em andamento"
 
     if servico_atual:
         tipo_inicial = servico_atual.get("servico", "")
         descricao_inicial = servico_atual.get("descricao", "")
         pecas_iniciais = servico_atual.get("pecas", [])
+        status_inicial = servico_atual.get("status", "Em andamento")
 
     editor_state_key = f"editor_pecas_state_{modo}_{servico_atual['id'] if servico_atual else 'novo'}"
 
@@ -498,6 +500,11 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
     indice_tipo = tipos_servico.index(tipo_inicial) if tipo_inicial in tipos_servico else 0
 
     tipo_servico = st.selectbox("Tipo de Serviço", tipos_servico, index=indice_tipo)
+    
+    status_opcoes = ["Em andamento", "Pausado", "Finalizado"]
+    idx_status = status_opcoes.index(status_inicial) if status_inicial in status_opcoes else 0
+    novo_status = st.selectbox("Status do Serviço", status_opcoes, index=idx_status)
+
     st.markdown("#### Peças")
     registros_atuais = st.session_state[editor_state_key]
     header_nome, header_qtd, header_unit, header_total, header_remove = st.columns([3.5, 1.2, 1.5, 1.4, 0.8])
@@ -578,6 +585,7 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
                 servico=tipo_servico,
                 descricao=descricao,
                 pecas=pecas,
+                status=novo_status,
             )
         else:
             resultado = gerenciador.editar_servico(
@@ -587,6 +595,7 @@ def modal_servico(modo, cliente_id, carro_id, servico_atual=None):
                 servico=tipo_servico,
                 descricao=descricao,
                 pecas=pecas,
+                status=novo_status,
             )
 
         if resultado:
@@ -692,7 +701,36 @@ if st.session_state.pagina_atual == "dashboard":
     
     # Renderizar o header
     components.html(header_html, height=68)
-    
+
+    st.markdown("### 🛠️ Serviços em Andamento")
+    todos_servicos = gerenciador.obter_todos_servicos()
+    andamento = [s for s in todos_servicos if s.get('status') == "Em andamento"]
+
+    if not andamento:
+        st.info("📌 Nenhum serviço em andamento no momento.")
+    else:
+        for srv in andamento:
+            with st.container(border=True):
+                col_info, col_actions = st.columns([4, 2])
+                with col_info:
+                    st.markdown(f"**{srv['servico_tipo']}**")
+                    st.markdown(f"🚗 {srv['carro_marca']} {srv['carro_modelo']} ({srv['carro_placa']})")
+                    st.markdown(f"👤 {srv['cliente_nome']} • 📅 {srv['data']}")
+                with col_actions:
+                    st.markdown("Mudar para:")
+                    b1, b2 = st.columns(2)
+                    if b1.button("⏸️", key=f"dash_pau_{srv['servico_id']}", help="Pausar"):
+                        gerenciador.editar_servico(srv['cliente_id'], srv['carro_id'], srv['servico_id'], status="Pausado")
+                        st.rerun()
+                    if b2.button("✅", key=f"dash_fin_{srv['servico_id']}", help="Finalizar"):
+                        gerenciador.editar_servico(srv['cliente_id'], srv['carro_id'], srv['servico_id'], status="Finalizado")
+                        st.rerun()
+                    if st.button("Ver Ficha", key=f"dash_go_{srv['servico_id']}", use_container_width=True):
+                        st.session_state.cliente_atual = srv['cliente_id']
+                        st.session_state.carro_atual = srv['carro_id']
+                        st.session_state.pagina_atual = "servicos"
+                        st.rerun()
+
 # ==================== PÁGINA 1: CLIENTES ====================
 if st.session_state.pagina_atual == "clientes":
     st.markdown("## 👥 Gerenciamento de Clientes")
@@ -955,6 +993,21 @@ elif st.session_state.pagina_atual == "servicos":
                             with col_info:
                                 st.markdown(f"**{srv['servico']}**", help=f"ID: {srv['id']}")
                                 st.markdown(f"📅 {srv['data']}")
+                                
+                                # Badge de Status
+                                status = srv.get('status', 'Em andamento')
+                                color = "blue" if status == "Em andamento" else "orange" if status == "Pausado" else "green"
+                                st.markdown(f":{color}[**{status}**]")
+                                
+                                # Troca rápida
+                                q1, q2, q3 = st.columns(3)
+                                if q1.button("🛠️", key=f"q_and_{srv['id']}", help="Em andamento"):
+                                    gerenciador.editar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id'], status="Em andamento"); st.rerun()
+                                if q2.button("⏸️", key=f"q_pau_{srv['id']}", help="Pausado"):
+                                    gerenciador.editar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id'], status="Pausado"); st.rerun()
+                                if q3.button("✅", key=f"q_fin_{srv['id']}", help="Finalizado"):
+                                    gerenciador.editar_servico(st.session_state.cliente_atual, st.session_state.carro_atual, srv['id'], status="Finalizado"); st.rerun()
+
                                 pecas = srv.get('pecas', [])
                                 if pecas:
                                     total_itens = sum(int(peca.get('quantidade', 1) or 1) for peca in pecas)
@@ -1033,6 +1086,11 @@ elif st.session_state.pagina_atual == "historico":
                         st.markdown(f"**{srv['servico_tipo']}**")
                         st.markdown(f"👤 {srv['cliente_nome']} • 🚗 {srv['carro_marca']} {srv['carro_modelo']} ({srv['carro_placa']})")
                         st.markdown(f"📅 {srv['data']}")
+                        
+                        status = srv.get('status', 'Em andamento')
+                        color = "blue" if status == "Em andamento" else "orange" if status == "Pausado" else "green"
+                        st.markdown(f":{color}[**{status}**]")
+
                         if srv.get('total_pecas', 0):
                             quantidade_total = sum(int(peca.get('quantidade', 1) or 1) for peca in srv.get('pecas', []))
                             st.markdown(f"🔩 {quantidade_total} item(ns) • {formatar_moeda(srv.get('valor_pecas', 0))}")

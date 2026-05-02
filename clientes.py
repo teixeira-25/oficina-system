@@ -218,7 +218,7 @@ class GerenciadorClientes:
             print(f"Erro ao deletar carro: {e}")
             return False
     
-    def adicionar_servico(self, cliente_id, carro_id, servico, descricao="", pecas=None):
+    def adicionar_servico(self, cliente_id, carro_id, servico, descricao="", pecas=None, status="Em andamento"):
         """Adiciona um serviço a um carro"""
         try:
             pecas_normalizadas = self._normalizar_pecas(pecas)
@@ -233,6 +233,7 @@ class GerenciadorClientes:
                                 'servico': servico,
                                 'descricao': descricao,
                                 'pecas': pecas_normalizadas,
+                                'status': status,
                                 'data': datetime.now().strftime("%d/%m/%Y %H:%M")
                             }
                             carro['servicos'].append(novo_servico)
@@ -253,10 +254,9 @@ class GerenciadorClientes:
                     return carro['servicos']
         return []
     
-    def editar_servico(self, cliente_id, carro_id, servico_id, servico, descricao="", pecas=None):
-        """Edita um serviço"""
+    def editar_servico(self, cliente_id, carro_id, servico_id, servico=None, descricao=None, pecas=None, status=None):
+        """Edita um serviço permitindo atualizações parciais."""
         try:
-            pecas_normalizadas = self._normalizar_pecas(pecas)
             clientes = self._ler_clientes()
             
             for cliente in clientes:
@@ -265,9 +265,14 @@ class GerenciadorClientes:
                         if carro['id'] == carro_id:
                             for srv in carro['servicos']:
                                 if srv['id'] == servico_id:
-                                    srv['servico'] = servico
-                                    srv['descricao'] = descricao
-                                    srv['pecas'] = pecas_normalizadas
+                                    if servico is not None:
+                                        srv['servico'] = servico
+                                    if descricao is not None:
+                                        srv['descricao'] = descricao
+                                    if pecas is not None:
+                                        srv['pecas'] = self._normalizar_pecas(pecas)
+                                    if status is not None:
+                                        srv['status'] = status
                                     self._salvar_clientes(clientes)
                                     return True
             
@@ -345,7 +350,8 @@ class GerenciadorClientes:
                                         'id': s_id, 'servico': serv_tipo,
                                         'descricao': serv_desc,
                                         'pecas': json.loads(self._descriptografar(row.get('servico_pecas_json', '[]')) or '[]'),
-                                        'data': row.get('servico_data', '')
+                                        'data': row.get('servico_data', ''),
+                                        'status': self._descriptografar(row.get('servico_status', 'Em andamento'))
                                     })
                     return list(clientes_dict.values())
                 return []
@@ -396,7 +402,8 @@ class GerenciadorClientes:
                                 'cliente_id': c['id'], 'cliente_nome': c_nome_enc, 'cliente_telefone': c_tel_enc, 'cliente_data_criacao': c.get('data_criacao', ''),
                                 'carro_id': car['id'], 'carro_marca': c_marca_enc, 'carro_modelo': c_modelo_enc, 'carro_ano': car['ano'], 'carro_placa': c_placa_enc, 'carro_data_adicao': car.get('data_adicao', ''),
                                 'servico_id': srv['id'], 'servico_tipo': self._criptografar(srv['servico']), 'servico_descricao': self._criptografar(srv.get('descricao', '')), 'servico_data': srv['data'],
-                                'servico_pecas_json': self._criptografar(json.dumps(srv.get('pecas', []), ensure_ascii=False))
+                                'servico_pecas_json': self._criptografar(json.dumps(srv.get('pecas', []), ensure_ascii=False)),
+                                'servico_status': self._criptografar(srv.get('status', 'Em andamento'))
                             })
                 
                 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -498,6 +505,8 @@ class GerenciadorClientes:
                             'total_pecas': len(pecas),
                             'valor_pecas': valor_pecas,
                             'data': servico['data'],
+                            'status': servico.get('status', 'Em andamento'),
+                            'carro_id': carro['id'],
                             'cliente_nome': cliente['nome'],
                             'cliente_telefone': cliente['telefone'],
                             'cliente_id': cliente['id'],
