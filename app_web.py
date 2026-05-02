@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 from clientes import GerenciadorClientes
 
@@ -1127,45 +1127,123 @@ elif st.session_state.pagina_atual == "servicos":
 
 # ==================== PÁGINA 4: HISTÓRICO DE SERVIÇOS ====================
 elif st.session_state.pagina_atual == "historico":
-    st.markdown("## 🕐 Histórico de Serviços")
+    st.markdown("##  Gerenciamento Geral de Serviços")
     st.markdown("---")
-    
-    # Search e filtros
-    col_search, col_filter = st.columns([2, 1])
-    
-    with col_search:
-        search_historico = st.text_input("🔍 Buscar por cliente, carro ou serviço", placeholder="Digite para filtrar...", key="search_hist")
-    
-    with col_filter:
-        filtro_tipo = st.selectbox("Filtrar por tipo", ["Todos"] + gerenciador.get_tipos_servico(), key="filter_tipo_hist")
     
     # Obter todos os serviços
     todos_servicos = gerenciador.obter_todos_servicos()
     
+    # --- BARRA DE FILTROS ---
+    col_search, col_status, col_cliente, col_carro = st.columns([1.5, 1, 1, 1])
+    
+    with col_search:
+        search_hist = st.text_input("🔍 Busca rápida", placeholder="Nome, placa, tipo...", key="search_hist")
+    
+    with col_status:
+        status_opcoes = ["Todos", "Em andamento", "Pausado", "Finalizado"]
+        filtro_status = st.selectbox("🚩 Status", status_opcoes, key="hist_filter_status")
+    
+    with col_cliente:
+        lista_clientes = sorted(list(set(s['cliente_nome'] for s in todos_servicos)))
+        filtro_cliente = st.selectbox("👤 Cliente", ["Todos"] + lista_clientes, key="hist_filter_cliente")
+    
+    with col_carro:
+        # Se um cliente estiver selecionado, filtra os carros apenas daquele cliente
+        if filtro_cliente != "Todos":
+            lista_carros = sorted(list(set(f"{s['carro_marca']} {s['carro_modelo']} ({s['carro_placa']})" for s in todos_servicos if s['cliente_nome'] == filtro_cliente)))
+        else:
+            lista_carros = sorted(list(set(f"{s['carro_marca']} {s['carro_modelo']} ({s['carro_placa']})" for s in todos_servicos)))
+        filtro_carro = st.selectbox("🚗 Veículo", ["Todos"] + lista_carros, key="hist_filter_carro")
+
+    # --- FILTRO TEMPORAL E ATALHOS ---
+    today = datetime.now().date()
+    if "hist_date_start" not in st.session_state:
+        st.session_state.hist_date_start = today - timedelta(days=30)
+    if "hist_date_end" not in st.session_state:
+        st.session_state.hist_date_end = today
+
+    # Definimos as colunas para o layout
+    col_date1, col_date2, col_quick = st.columns([1, 1, 1.5])
+
+    with col_quick:
+        opcoes_rapidas = ["Filtros Rápidos...", "Hoje", "Ontem", "Semana Passada", "Mês Atual", "Mês Passado"]
+
+        def handle_reset():
+            st.session_state.hist_date_start = today - timedelta(days=30)
+            st.session_state.hist_date_end = today
+            st.session_state.search_hist = ""
+            st.session_state.hist_filter_status = "Todos"
+            st.session_state.hist_filter_cliente = "Todos"
+            st.session_state.hist_filter_carro = "Todos"
+            st.session_state.quick_filter_select = "Filtros Rápidos..."
+
+        def handle_quick_filter():
+            selecao = st.session_state.quick_filter_select
+            if selecao == "Filtros Rápidos...":
+                return
+            
+            if selecao == "Hoje":
+                st.session_state.hist_date_start, st.session_state.hist_date_end = today, today
+            elif selecao == "Ontem":
+                st.session_state.hist_date_start = today - timedelta(days=1)
+                st.session_state.hist_date_end = today - timedelta(days=1)
+            elif selecao == "Semana Passada":
+                st.session_state.hist_date_start = today - timedelta(days=today.weekday() + 7)
+                st.session_state.hist_date_end = st.session_state.hist_date_start + timedelta(days=6)
+            elif selecao == "Mês Atual":
+                st.session_state.hist_date_start = today.replace(day=1)
+                st.session_state.hist_date_end = today
+            elif selecao == "Mês Passado":
+                last_day_last_month = today.replace(day=1) - timedelta(days=1)
+                st.session_state.hist_date_start = last_day_last_month.replace(day=1)
+                st.session_state.hist_date_end = last_day_last_month
+
+        c_sel, c_btn = st.columns([2.2, 1])
+        with c_sel:
+            st.selectbox("⚡ Atalhos", opcoes_rapidas, index=0, key="quick_filter_select", on_change=handle_quick_filter)
+        with c_btn:
+            st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+            st.button("🧹 Limpar", on_click=handle_reset, use_container_width=True, help="Resetar todos os filtros")
+
+    with col_date1:
+        data_inicio = st.date_input("📅 Início", value=st.session_state.hist_date_start, key="hist_date_start")
+    with col_date2:
+        data_fim = st.date_input("📅 Fim", value=st.session_state.hist_date_end, key="hist_date_end")
+
     # Aplicar filtros
     servicos_filtrados = []
     for srv in todos_servicos:
-        match_search = (search_historico.lower() in srv['cliente_nome'].lower() or
-                       search_historico.lower() in srv['carro_marca'].lower() or
-                       search_historico.lower() in srv['carro_modelo'].lower() or
-                       search_historico.lower() in srv['carro_placa'].lower() or
-                       search_historico.lower() in srv['servico_tipo'].lower())
+        # Filtro de Texto (Search bar)
+        match_search = (search_hist.lower() in srv['cliente_nome'].lower() or
+                       search_hist.lower() in srv['carro_marca'].lower() or
+                       search_hist.lower() in srv['carro_modelo'].lower() or
+                       search_hist.lower() in srv['carro_placa'].lower() or
+                       search_hist.lower() in srv['servico_tipo'].lower())
         
-        match_tipo = filtro_tipo == "Todos" or srv['servico_tipo'] == filtro_tipo
+        # Filtros de Seleção
+        match_status = filtro_status == "Todos" or srv.get('status') == filtro_status
+        match_cliente = filtro_cliente == "Todos" or srv['cliente_nome'] == filtro_cliente
         
-        if match_search and match_tipo:
+        carro_srv_str = f"{srv['carro_marca']} {srv['carro_modelo']} ({srv['carro_placa']})"
+        match_carro = filtro_carro == "Todos" or carro_srv_str == filtro_carro
+        
+        # Filtro de Data
+        data_srv = datetime.strptime(srv['data'], "%d/%m/%Y %H:%M").date()
+        match_data = data_inicio <= data_srv <= data_fim
+
+        if match_search and match_status and match_cliente and match_carro and match_data:
             servicos_filtrados.append(srv)
     
-    st.markdown(f"**Total de serviços:** {len(servicos_filtrados)}")
+    st.markdown(f"**Exibindo:** {len(servicos_filtrados)} serviço(s)")
     st.divider()
     
     if not servicos_filtrados:
-        st.info("📌 Nenhum serviço encontrado com os filtros aplicados.", icon="ℹ️")
+        st.info("🔎 Nenhum serviço encontrado com os filtros selecionados.", icon="ℹ️")
     else:
         with st.container(height=calcular_altura_lista(len(servicos_filtrados)), border=False):
             for srv in servicos_filtrados:
                 with st.container(border=True):
-                    col_info, col_details = st.columns([2, 1])
+                    col_info, col_details = st.columns([3, 1])
                     
                     with col_info:
                         st.markdown(f"**{srv['servico_tipo']}**")
@@ -1183,11 +1261,13 @@ elif st.session_state.pagina_atual == "historico":
                             st.markdown(f"📝 *{srv['descricao']}*")
                     
                     with col_details:
-                        st.markdown(f"<div style='text-align: right; color: #6b7280; font-size: 0.875rem;'><strong>Ano:</strong> {srv['carro_ano']}</div>", unsafe_allow_html=True)
+                        if st.button("👁️ Ver Ficha", key=f"hist_go_{srv['servico_id']}", use_container_width=True):
+                            modal_visualizar_servico(srv)
+                            
                         carro_pdf = {'marca': srv['carro_marca'], 'modelo': srv['carro_modelo'], 'placa': srv['carro_placa'], 'ano': srv['carro_ano']}
                         srv_pdf = {'id': srv['servico_id'], 'servico': srv['servico_tipo'], 'data': srv['data'], 'descricao': srv['descricao'], 'pecas': srv.get('pecas', [])}
                         pdf_b = gerar_pdf_servico(srv['cliente_nome'], srv['cliente_telefone'], carro_pdf, srv_pdf)
-                        st.download_button("📄 Baixar PDF", data=pdf_b, file_name=f"OS_{srv['servico_id']}.pdf", mime="application/pdf", key=f"pdf_hist_{srv['servico_id']}", use_container_width=True)
+                        st.download_button("📄 Baixar OS", data=pdf_b, file_name=f"OS_{srv['servico_id']}.pdf", mime="application/pdf", key=f"pdf_hist_{srv['servico_id']}", use_container_width=True)
 
 # ==================== PÁGINA 5: RELATÓRIOS MENSAIS ====================
 elif st.session_state.pagina_atual == "relatorios":
