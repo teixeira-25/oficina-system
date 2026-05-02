@@ -41,18 +41,17 @@ st.markdown("""
         font-size: 1.25rem;
     }
 
-    /* Garante que o botão de abrir/fechar a barra lateral esteja sempre acessível e no topo */
+    /* Torna o header transparente para não sobrepor o design customizado */
     [data-testid="stHeader"] {
         background-color: rgba(0, 0, 0, 0) !important;
-        border-bottom: none !important;
-        z-index: 10000 !important;
-        display: flex !important;
+        z-index: 1000 !important;
     }
     
-    /* Esconder o menu de opções (três pontos) e botão de deploy */
-    [data-testid="stHeader"] > div:last-child {
+    /* Esconde apenas o menu de opções e o botão de deploy sem afetar o botão da sidebar */
+    #MainMenu, [data-testid="stAppDeploy"], .stDeployButton {
         display: none !important;
     }
+
     /* Cards */
     .stContainer {
         border: 1px solid var(--border-color);
@@ -646,21 +645,18 @@ if st.session_state.pagina_atual == "dashboard":
         <style>
             * { margin: 0; padding: 0; }
             body {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 0.5rem 2rem;
+                padding: 0 1.5rem;
                 background-color: white;
                 color: #111827;
-                border-bottom: 1px solid #e5e7eb;
-                z-index: 9999; /* Fica abaixo do stHeader que agora é 10000 */
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
                 font-family: Arial, sans-serif;
                 height: 60px;
                 box-sizing: border-box;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             }
             .header-logo {
                 font-size: 1.25rem;
